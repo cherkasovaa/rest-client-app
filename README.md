@@ -15,17 +15,23 @@ REST Client App is a lightweight tool for interacting with RESTful APIs, allowin
 7. **Git Hooks:** [Husky](https://github.com/typicode/husky#readme) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org/)
 
 ## Project Architecture
-
-├── app/                # Next.js App Router (routing)
-│   ├── layout.tsx      # Imports from src/app/providers
-│   ├── page.tsx        # Imports from src/pages/home
-├── src/                # FSD structure
-│   ├── app/            # FSD app layer 
-│   ├── entities/
-│   ├── features/
-│   ├── pages/          # FSD pages layer
+``` text
+├── app/                  # Next.js App Router (routing)
+│   ├── layout.tsx        # Imports from src/app/providers
+│   ├── page.tsx          # Imports from src/pages/home
+│   ├── folder-name/
+│   │   └── [id]/
+│   │       └── page.tsx  # Imports from src/pages/folder-name
+├── pages/                # Stub Next.js pages folder
+│   ├── README.md         # Description of why this folder exists
+├── src/                  # FSD structure
+│   ├── app/              # FSD app layer 
+│   ├── entities/  
+│   ├── features/  
+│   ├── pages/            # FSD pages layer
 │   ├── shared/
 │   ├── widgets/
+```
 
 ## Getting Started
 
