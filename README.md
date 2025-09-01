@@ -1,4 +1,5 @@
 # Rest Client App
+
 ![Static Badge](https://img.shields.io/badge/status-in_progress-blue)
 
 REST Client App is a lightweight tool for interacting with RESTful APIs, allowing users to create and send HTTP requests, manage headers and bodies, and review their request history.
@@ -12,6 +13,19 @@ REST Client App is a lightweight tool for interacting with RESTful APIs, allowin
 5. **Testing:** [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 6. **Code Quality:** [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)
 7. **Git Hooks:** [Husky](https://github.com/typicode/husky#readme) + [lint-staged](https://github.com/lint-staged/lint-staged) + [commitlint](https://commitlint.js.org/)
+
+## Project Architecture
+
+├── app/                # Next.js App Router (routing)
+│   ├── layout.tsx      # Imports from src/app/providers
+│   ├── page.tsx        # Imports from src/pages/home
+├── src/                # FSD structure
+│   ├── app/            # FSD app layer 
+│   ├── entities/
+│   ├── features/
+│   ├── pages/          # FSD pages layer
+│   ├── shared/
+│   ├── widgets/
 
 ## Getting Started
 
@@ -95,6 +109,7 @@ The project uses Conventional Commits to standardize commit messages. The messag
 Example: `feat: add login page`
 
 Allowed types:
+
 - `feat`: a new feature
 - `fix`: a bug fix
 - `docs`: documentation changes
@@ -104,7 +119,9 @@ Allowed types:
 - `chore`: updates to build tasks, configs, etc
 
 ## Team
+
 **Developers:**
+
 - [Kseniia](https://github.com/akseee/)
 - [Tatyana](https://github.com/dem-tv/)
 - [Alina](https://github.com/cherkasovaa/)
