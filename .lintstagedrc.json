@@ -1,0 +1,6 @@
+{
+  "*.{js,ts,jsx,tsx}": [
+    "npx eslint --fix --config eslint.config.mjs",
+    "npx prettier --write --ignore-unknown"
+  ]
+}
