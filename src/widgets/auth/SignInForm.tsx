@@ -41,8 +41,7 @@ export function SignInForm() {
     try {
       await signInWithEmailAndPassword(data.email, data.password);
     } catch (err) {
-      // TODO: error handling
-      console.log(err);
+      toastError('Some error has occured');
     }
   }
 
