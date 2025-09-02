@@ -8,10 +8,10 @@ export const signUpSchema = z
       .regex(/\d/, {
         error: 'Password should contain at least 1 number',
       })
-      .regex(/[A-Z]/, {
+      .regex(/[A-ZА-ЯЁ]/, {
         error: 'Password should contain at least 1 uppercase letter',
       })
-      .regex(/[a-z]/, {
+      .regex(/[a-zа-яё]/, {
         error: 'Password should contain at least 1 lowercase letter',
       })
       .regex(/[!@#$%^&*()_+]/, {

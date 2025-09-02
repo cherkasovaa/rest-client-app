@@ -35,6 +35,7 @@ export function SignUpForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormModel>({
+    mode: 'onChange',
     resolver: zodResolver(signUpSchema),
   });
 

@@ -35,6 +35,7 @@ export function SignInForm() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(signInSchema),
+    mode: 'onChange',
   });
 
   async function onRegister(data: SignUpFormModel) {
