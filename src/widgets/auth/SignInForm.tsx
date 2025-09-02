@@ -1,0 +1,84 @@
+'use client';
+
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  Stack,
+} from '@mui/material';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '../../../app/firebase/config.ts';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signInSchema } from '@/widgets/auth/shared/signInSchema.ts';
+import { z } from 'zod';
+import { useEffect } from 'react';
+import { generateFirebaseAuthErrorMessage } from '@/shared/utils/generateFirebaseAuthErrorMessage .ts';
+import { useToast } from '@/shared/hooks/useToast.tsx';
+
+type SignUpFormModel = z.infer<typeof signInSchema>;
+
+export function SignInForm() {
+  const { ToastElement, toastError } = useToast();
+  const [
+    signInWithEmailAndPassword,
+    _signInData,
+    isPendingSignIn,
+    signInError,
+  ] = useSignInWithEmailAndPassword(auth);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(signInSchema),
+  });
+
+  async function onRegister(data: SignUpFormModel) {
+    try {
+      await signInWithEmailAndPassword(data.email, data.password);
+    } catch (err) {
+      // TODO: error handling
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    if (signInError) {
+      toastError(generateFirebaseAuthErrorMessage(signInError.code));
+    }
+  }, [signInError, toastError]);
+
+  return (
+    <form onSubmit={handleSubmit(onRegister)}>
+      <Stack direction={'column'} spacing={2}>
+        <FormControl>
+          <FormLabel htmlFor={'email'}>Email address</FormLabel>
+          <Input
+            id={'email'}
+            placeholder="example@domain.com"
+            {...register('email')}
+          />
+          <FormHelperText error>{errors.email?.message}</FormHelperText>
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor={'password'}>Password</FormLabel>
+          <Input
+            type={'password'}
+            id={'password'}
+            placeholder="*****"
+            {...register('password')}
+          />
+          <FormHelperText error>{errors.password?.message}</FormHelperText>
+        </FormControl>
+        <Button loading={isPendingSignIn} type="submit">
+          Register!
+        </Button>
+      </Stack>
+      {ToastElement}
+    </form>
+  );
+}
