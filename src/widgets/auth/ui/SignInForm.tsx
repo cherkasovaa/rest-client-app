@@ -8,50 +8,49 @@ import {
   Input,
   Stack,
 } from '@mui/material';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '../../../app/firebase/config.ts';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '../../../../app/firebase/config.ts';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signUpSchema } from './shared/signUpSchema.ts';
-import { useToast } from '@/shared/hooks/useToast.tsx';
+import { signInSchema } from '../model/signInSchema.ts';
+import { z } from 'zod';
 import { useEffect } from 'react';
-import { generateFirebaseAuthErrorMessage } from '@/shared/utils/generateFirebaseAuthErrorMessage .ts';
+import { generateFirebaseAuthErrorMessage } from '@/shared/utils/generateFirebaseAuthErrorMessage.ts';
+import { useToast } from '@/shared/hooks/useToast.tsx';
 
-export type FormModel = z.infer<typeof signUpSchema>;
+type SignUpFormModel = z.infer<typeof signInSchema>;
 
-export function SignUpForm() {
+export function SignInForm() {
   const { ToastElement, toastError } = useToast();
   const [
-    createUserWithEmailAndPassword,
-    _signupData,
-    isPendingSignup,
-    signUpError,
-  ] = useCreateUserWithEmailAndPassword(auth);
+    signInWithEmailAndPassword,
+    _signInData,
+    isPendingSignIn,
+    signInError,
+  ] = useSignInWithEmailAndPassword(auth);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormModel>({
+  } = useForm({
+    resolver: zodResolver(signInSchema),
     mode: 'onChange',
-    resolver: zodResolver(signUpSchema),
   });
 
-  async function onRegister(data: FormModel) {
+  async function onRegister(data: SignUpFormModel) {
     try {
-      await createUserWithEmailAndPassword(data.email, data.password);
+      await signInWithEmailAndPassword(data.email, data.password);
     } catch (err) {
       toastError('Some error has occured');
     }
   }
 
   useEffect(() => {
-    if (signUpError) {
-      toastError(generateFirebaseAuthErrorMessage(signUpError.code));
+    if (signInError) {
+      toastError(generateFirebaseAuthErrorMessage(signInError.code));
     }
-  }, [signUpError, toastError]);
+  }, [signInError, toastError]);
 
   return (
     <form onSubmit={handleSubmit(onRegister)}>
@@ -75,19 +74,7 @@ export function SignUpForm() {
           />
           <FormHelperText error>{errors.password?.message}</FormHelperText>
         </FormControl>
-        <FormControl>
-          <FormLabel htmlFor={'confirmPassword'}>Confirm password</FormLabel>
-          <Input
-            type={'password'}
-            id={'confirmPassword'}
-            placeholder="*****"
-            {...register('confirmPassword')}
-          />
-          <FormHelperText error>
-            {errors.confirmPassword?.message}
-          </FormHelperText>
-        </FormControl>
-        <Button loading={isPendingSignup} type="submit">
+        <Button loading={isPendingSignIn} type="submit">
           Register!
         </Button>
       </Stack>
