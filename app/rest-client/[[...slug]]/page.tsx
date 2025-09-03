@@ -1,8 +1,7 @@
 'use client';
-
 import dynamic from 'next/dynamic';
 
-const RestClient = dynamic(() => import('../../src/widgets/Client'), {
+const RestClient = dynamic(() => import('../../../src/widgets/Client'), {
   ssr: false,
   loading: () => <p>Loading...</p>,
 });

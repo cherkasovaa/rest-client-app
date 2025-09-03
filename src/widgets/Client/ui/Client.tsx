@@ -1,74 +1,98 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-  Stack,
-} from '@mui/material';
-import { useState } from 'react';
-import SendIcon from '@mui/icons-material/Send';
+'use client';
+import { Box, Paper, Tab, Tabs, Typography, Stack } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
+
 import { RequestBody } from '@/features/RequestBody';
 import { RequestHeaders } from '@/features/RequestHeaders/ui/RequestHeaders';
 import { RequestCode } from '@/features/RequestCode';
 import { CustomTabPanel } from '@/shared/ui/CustomPanel/CustomPanel';
 import { a11yProps } from '../model/a11yProps';
-
-const URL_METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
+import {
+  HTTP_CONFIG,
+  isValidHttpMethod,
+  type HttpMethod,
+} from '../../../shared/config/httpSettings';
+import { usePathname } from 'next/navigation';
+import { ClientFormControl } from '@/features/ClientFormControl';
+import { decodeBase64, encodeBase64 } from '../model/base64';
 
 const Client = () => {
-  const [method, setMethod] = useState(URL_METHODS[0]);
-  const [url, setUrl] = useState('');
-
   const [tab, setTab] = useState(0);
+  const [method, setMethod] = useState<HttpMethod>(HTTP_CONFIG.DEFAULT_METHOD);
+  const [endpoint, setEndpoint] = useState('');
+
+  const pathname = usePathname() ?? '';
+
+  const parseUrl = useCallback(() => {
+    const parts = pathname.split('/').filter(Boolean);
+    if (parts[0] !== 'rest-client') return null;
+
+    const decodedEndpoint = parts[2] ? decodeBase64(parts[2]) : '';
+
+    return {
+      method: parts[1]?.toUpperCase(),
+      endpoint: decodedEndpoint,
+      body: parts[3] ? decodeURIComponent(parts[3]) : '',
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    const parsed = parseUrl();
+    if (!parsed) return;
+
+    const validMethod =
+      parsed.method && isValidHttpMethod(parsed.method)
+        ? parsed.method
+        : HTTP_CONFIG.DEFAULT_METHOD;
+
+    setMethod(validMethod);
+    setEndpoint(parsed.endpoint || '');
+
+    const encodedEndpoint = parsed.endpoint
+      ? `/${encodeBase64(parsed.endpoint)}`
+      : '';
+
+    const newPath = `/rest-client/${validMethod}${encodedEndpoint}`;
+
+    if (pathname !== newPath) {
+      window.history.replaceState(null, '', newPath);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const encodedEndpoint = endpoint ? `/${encodeBase64(endpoint)}` : '';
+    const newPath = `/rest-client/${method}${encodedEndpoint}`;
+
+    if (window.location.pathname !== newPath) {
+      window.history.replaceState(null, '', newPath);
+    }
+  }, [method, endpoint]);
 
   const handleRequest = async () => {
-    console.log('sending data');
+    console.log('will fetch data');
+  };
+
+  const handleMethodChange = (value: string) => {
+    if (isValidHttpMethod(value.toUpperCase())) {
+      setMethod(value.toUpperCase() as HttpMethod);
+    }
+  };
+
+  const handleEndpointChange = (value: string) => {
+    setEndpoint(value);
   };
 
   return (
     <Stack spacing={3} p={3}>
       <Box>
-        <FormControl
-          fullWidth
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 4fr 1fr',
-            gap: 10,
-          }}
-        >
-          <InputLabel>Method</InputLabel>
-          <Select
-            value={method ?? URL_METHODS[0]}
-            id="method"
-            label="Method"
-            onChange={(e) => setMethod(e.target.value)}
-          >
-            {URL_METHODS.map((m) => {
-              return (
-                <MenuItem key={m} value={m}>
-                  {m}
-                </MenuItem>
-              );
-            })}
-          </Select>
-          <TextField
-            fullWidth
-            label="Request URL"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          ></TextField>
-          <Button variant="contained" onClick={handleRequest}>
-            <SendIcon />
-            Send
-          </Button>
-        </FormControl>
+        <ClientFormControl
+          method={method}
+          handleMethodChange={handleMethodChange}
+          endpoint={endpoint}
+          handleEndpointChange={handleEndpointChange}
+          handleRequest={handleRequest}
+        />
       </Box>
       <Box>
         <Tabs
@@ -103,7 +127,7 @@ const Client = () => {
             fontFamily: 'monospace',
           }}
         >
-          the reponse code will be here
+          {'the response will be here soon'}
         </Paper>
       </Box>
     </Stack>
