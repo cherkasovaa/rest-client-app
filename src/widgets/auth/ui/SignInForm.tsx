@@ -75,7 +75,7 @@ export function SignInForm() {
           <FormHelperText error>{errors.password?.message}</FormHelperText>
         </FormControl>
         <Button loading={isPendingSignIn} type="submit">
-          Register!
+          Sign in!
         </Button>
       </Stack>
       {ToastElement}

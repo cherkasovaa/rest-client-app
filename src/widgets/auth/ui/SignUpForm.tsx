@@ -88,7 +88,7 @@ export function SignUpForm() {
           </FormHelperText>
         </FormControl>
         <Button loading={isPendingSignup} type="submit">
-          Register!
+          Sign up!
         </Button>
       </Stack>
       {ToastElement}
