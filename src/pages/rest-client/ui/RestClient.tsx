@@ -1,20 +1,18 @@
-'use client';
-import { Box, Paper, Tab, Tabs, Typography, Stack } from '@mui/material';
-
-import { RequestBody } from '@/features/RequestBody';
-import { RequestHeaders } from '@/features/RequestHeaders/ui/RequestHeaders';
-import { RequestCode } from '@/features/RequestCode';
-import { CustomTabPanel } from '@/shared/ui/CustomPanel/CustomPanel';
-import { a11yProps } from '../model/a11yProps';
+import { useTabs } from '@/shared/hooks/useTabs';
+import { useUrlParams } from '../model/useUrlParams';
 import {
   isValidHttpMethod,
   type HttpMethod,
-} from '../../../shared/config/httpSettings';
-import { ClientFormControl } from '@/features/ClientFormControl';
-import { useUrlParams } from '../model/useUrlParams';
-import { useTabs } from '../model/useTabs';
+} from '@/shared/config/httpSettings';
+import { Box, Paper, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { a11yProps } from '../model/a11yProps';
+import { CustomTabPanel } from '@/shared/ui/CustomPanel/CustomPanel';
+import { RequestBody } from '@/widgets/RequestBody';
+import { RequestHeaders } from '@/widgets/RequestHeaders/ui/RequestHeaders';
+import { RequestCode } from '@/widgets/RequestCode';
+import { ClientFormControl } from '@/widgets/ClientFormControl';
 
-const Client = () => {
+const RestClientPage = () => {
   const { tab, handleTabChange } = useTabs();
 
   const { method, endpoint, setMethod, setEndpoint } = useUrlParams();
@@ -84,4 +82,4 @@ const Client = () => {
   );
 };
 
-export default Client;
+export default RestClientPage;
