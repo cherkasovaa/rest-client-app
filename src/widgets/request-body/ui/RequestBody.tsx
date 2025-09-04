@@ -1,20 +1,20 @@
 import { Box, Button, FormControl, Stack } from '@mui/material';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import { CodeEditor } from '@/features/code-editor';
+import type * as monaco from 'monaco-editor';
 import { ContentTypeSelector } from '@/features/content-type-selector';
 import { CONTENT_TYPES } from '@/shared/types/content-types';
 import {
   parsePathParams,
   updatePathParams,
 } from '@/shared/libs/utils/pathMethods';
+import { Editor } from '@monaco-editor/react';
+import { prettify } from '../model/prettify';
 
 export const RequestBody = ({ disabled }: { disabled: boolean }) => {
   const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);
 
-  const handlePrettify = () => {
-    console.log('prettifying');
-  };
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
   const handleBodyData = (data: string) => {
     const { method, endpoint } = parsePathParams(window.location.pathname);
@@ -23,6 +23,32 @@ export const RequestBody = ({ disabled }: { disabled: boolean }) => {
 
   const handleTypeChange = (language: string) => {
     setLanguage(language);
+  };
+
+  const handlePrettify = () => {
+    if (!editorRef.current) return;
+
+    const currentValue = editorRef.current.getValue();
+    const formatted = prettify(currentValue, language);
+
+    editorRef.current.setValue(formatted);
+
+    const { method, endpoint } = parsePathParams(window.location.pathname);
+    updatePathParams({ method, endpoint, body: formatted });
+  };
+
+  const onMount = (editor: monaco.editor.IStandaloneCodeEditor) => {
+    editorRef.current = editor;
+
+    const { body } = parsePathParams(window.location.pathname);
+    if (body) {
+      editor.setValue(body);
+    }
+
+    editor.onDidBlurEditorText(() => {
+      const currentValue = editor.getValue();
+      handleBodyData(currentValue);
+    });
   };
 
   return (
@@ -42,12 +68,13 @@ export const RequestBody = ({ disabled }: { disabled: boolean }) => {
           minHeight: '200px',
         }}
       >
-        <CodeEditor
+        <Editor
+          onMount={onMount}
+          height="200px"
+          theme="light"
           language={language}
-          onUnfocus={handleBodyData}
-          readOnly={disabled}
-          // value={}
-          // onChange={}
+          loading={<div>...Loading</div>}
+          options={{ readOnly: disabled, fontSize: 17 }}
         />
       </Box>
     </Stack>
