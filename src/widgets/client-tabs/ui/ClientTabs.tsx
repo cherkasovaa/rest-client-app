@@ -1,8 +1,8 @@
 import { a11yProps } from '@/widgets/client-tabs/model/a11yProps';
 import { Box, Tab, Tabs } from '@mui/material';
 import { useTabs } from '../model/useTabs';
-import { CustomTabPanel } from '@/shared/ui/CustomPanel/CustomPanel';
 import type { JSX } from 'react';
+import { CustomTabPanel } from '@/shared/ui/custom-panel/CustomPanel';
 
 export const ClientTabs = ({
   body,

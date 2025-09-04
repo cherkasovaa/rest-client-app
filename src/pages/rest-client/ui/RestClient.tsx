@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 import { RequestBody } from '@/widgets/request-body';
 import { RequestCode } from '@/widgets/request-code';
-import { ClientTabs } from '@/widgets/client-tabs';
 import { ResponseField } from '@/widgets/response-field';
 import { ClientFormControl } from '@/widgets/client-form-control';
 import { RequestHeaders } from '@/widgets/request-headers';
+import { ClientTabs } from '@/widgets/client-tabs';
 
 import type { ApiResponse } from '@/shared/types/api';
 import {
