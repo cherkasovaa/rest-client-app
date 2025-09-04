@@ -1,10 +1,5 @@
-import { Box } from '@mui/material';
+import { Container } from '@mui/material';
 
 export const HomePage = () => {
-  return (
-    <>
-      <Box sx={{ height: '660px' }}>Screen 1</Box>
-      <Box sx={{ height: '660px' }}>Screen 2</Box>
-    </>
-  );
+  return <Container maxWidth="lg">Screen 1</Container>;
 };

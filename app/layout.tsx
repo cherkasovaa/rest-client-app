@@ -1,4 +1,5 @@
 import theme from '@/shared/config/theme';
+import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
@@ -20,10 +21,25 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '100vh',
+              }}
+            >
               <Header />
 
-              <main role="main">{children}</main>
+              <Box
+                component="main"
+                sx={{
+                  flexGrow: 1,
+                }}
+              >
+                {children}
+              </Box>
+
+              <Footer />
             </Box>
           </ThemeProvider>
         </AppRouterCacheProvider>
