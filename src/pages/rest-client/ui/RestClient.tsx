@@ -1,83 +1,61 @@
-import { useTabs } from '@/shared/hooks/useTabs';
-import { useUrlParams } from '../model/useUrlParams';
+import { Stack } from '@mui/material';
+import { useState } from 'react';
+
+import { RequestBody } from '@/widgets/request-body';
+import { RequestCode } from '@/widgets/request-code';
+import { ClientTabs } from '@/widgets/client-tabs';
+import { ResponseField } from '@/widgets/response-field';
+import { ClientFormControl } from '@/widgets/client-form-control';
+import { RequestHeaders } from '@/widgets/request-headers';
+
+import type { ApiResponse } from '@/shared/types/api';
 import {
-  isValidHttpMethod,
-  type HttpMethod,
-} from '@/shared/config/httpSettings';
-import { Box, Paper, Stack, Tab, Tabs, Typography } from '@mui/material';
-import { a11yProps } from '../model/a11yProps';
-import { CustomTabPanel } from '@/shared/ui/CustomPanel/CustomPanel';
-import { RequestBody } from '@/widgets/RequestBody';
-import { RequestHeaders } from '@/widgets/RequestHeaders/ui/RequestHeaders';
-import { RequestCode } from '@/widgets/RequestCode';
-import { ClientFormControl } from '@/widgets/ClientFormControl';
+  parsePathParams,
+  parsePathSearchParams,
+} from '@/shared/libs/utils/pathMethods';
 
 const RestClientPage = () => {
-  const { tab, handleTabChange } = useTabs();
-
-  const { method, endpoint, setMethod, setEndpoint } = useUrlParams();
+  const [fetchError, setFetchError] = useState<null | string>(null);
+  const [response, setResponse] = useState<ApiResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRequest = async () => {
-    console.log('will fetch data');
-  };
+    setFetchError(null);
+    setResponse(null);
+    setIsLoading(true);
 
-  const handleMethodChange = (value: string) => {
-    if (isValidHttpMethod(value.toUpperCase())) {
-      setMethod(value.toUpperCase() as HttpMethod);
+    try {
+      const { pathname, search } = window.location;
+      const { method, endpoint, body } = parsePathParams(pathname);
+      const headers = parsePathSearchParams(search);
+
+      console.log('method:', method);
+      console.log('endpoint:', endpoint);
+      console.log('body:', body);
+      console.log('headers:', headers);
+    } catch (err) {
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const handleEndpointChange = (value: string) => {
-    setEndpoint(value);
   };
 
   return (
     <Stack spacing={3} p={3}>
-      <Box>
-        <ClientFormControl
-          method={method}
-          handleMethodChange={handleMethodChange}
-          endpoint={endpoint}
-          handleEndpointChange={handleEndpointChange}
-          handleRequest={handleRequest}
-        />
-      </Box>
-      <Box>
-        <Tabs
-          value={tab}
-          onChange={handleTabChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="BODY" {...a11yProps(0)} />
-          <Tab label="HEADERS" {...a11yProps(1)} />
-          <Tab label="GENERATE CODE" {...a11yProps(2)} />
-        </Tabs>
-
-        <CustomTabPanel value={tab} index={0}>
-          <RequestBody />
-        </CustomTabPanel>
-        <CustomTabPanel value={tab} index={1}>
-          <RequestHeaders />
-        </CustomTabPanel>
-        <CustomTabPanel value={tab} index={2}>
-          <RequestCode />
-        </CustomTabPanel>
-      </Box>
-      <Box>
-        <Typography>Response</Typography>
-        <Paper
-          sx={{
-            p: 2,
-            mt: 1,
-            minHeight: 150,
-            backgroundColor: 'grey',
-            whiteSpace: 'pre-wrap',
-            fontFamily: 'monospace',
-          }}
-        >
-          {'the response will be here soon'}
-        </Paper>
-      </Box>
+      <ClientFormControl
+        error={fetchError}
+        isLoading={isLoading}
+        handleRequest={handleRequest}
+      />
+      <ClientTabs
+        body={<RequestBody />}
+        headers={<RequestHeaders />}
+        code={<RequestCode />}
+      />
+      <ResponseField
+        error={fetchError}
+        loading={isLoading}
+        response={response}
+      />
     </Stack>
   );
 };

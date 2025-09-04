@@ -145,7 +145,6 @@ export default function FullFeaturedCrudGrid({
             />,
           ];
         }
-        console.log(columnsGrid);
 
         return [
           <GridActionsCellItem
