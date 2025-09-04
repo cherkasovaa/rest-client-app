@@ -29,6 +29,7 @@ export const Header = () => {
         p: scrollPosition > 50 ? '0.3rem' : '0.5rem',
         backgroundColor: scrollPosition > 50 ? 'primary.main' : 'primary.dark',
         transition: '0.5s',
+        zIndex: '999',
       }}
     >
       <Container
