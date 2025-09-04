@@ -9,7 +9,6 @@ import {
   Stack,
 } from '@mui/material';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '../../../../app/firebase/config.ts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema } from '../model/signInSchema.ts';
@@ -17,6 +16,7 @@ import { z } from 'zod';
 import { useEffect } from 'react';
 import { generateFirebaseAuthErrorMessage } from '@/shared/utils/generateFirebaseAuthErrorMessage.ts';
 import { useToast } from '@/shared/hooks/useToast.tsx';
+import { auth } from '../../../../firebase.ts';
 
 type SignUpFormModel = z.infer<typeof signInSchema>;
 
@@ -42,6 +42,7 @@ export function SignInForm() {
     try {
       await signInWithEmailAndPassword(data.email, data.password);
     } catch (err) {
+      console.error(err);
       toastError('Some error has occured');
     }
   }
