@@ -19,7 +19,7 @@ export const DEVELOPERS: AppDeveloper[] = [
     photo: tatuanaPhoto,
     github: 'https://github.com/dem-tv',
     nickname: 'dem-tv',
-    responsibilities: ['Authorization via Firebase'],
+    responsibilities: ['authorization via Firebase'],
   },
   {
     name: 'Alina',
@@ -27,6 +27,6 @@ export const DEVELOPERS: AppDeveloper[] = [
     photo: alinaPhoto,
     github: 'https://github.com/cherkasovaa/',
     nickname: 'cherkasovaa',
-    responsibilities: ['Project setup', 'Main page implementation'],
+    responsibilities: ['project setup', 'main page implementation'],
   },
 ] as const;
