@@ -26,6 +26,8 @@ export default function RootLayout({
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: '100vh',
+                backgroundColor: 'primary.dark',
+                color: 'primary.contrastText',
               }}
             >
               <Header />
@@ -34,6 +36,7 @@ export default function RootLayout({
                 component="main"
                 sx={{
                   flexGrow: 1,
+                  display: 'flex',
                 }}
               >
                 {children}
