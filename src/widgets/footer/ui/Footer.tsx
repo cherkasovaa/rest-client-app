@@ -9,6 +9,7 @@ export const Footer = () => {
       component="footer"
       sx={{
         p: '1rem',
+        color: 'primary.contrastText',
       }}
     >
       <Container
@@ -46,6 +47,7 @@ export const Footer = () => {
               underline="none"
               sx={{
                 transition: 'all 0.3s',
+                color: 'primary.contrastText',
 
                 '&:hover': {
                   color: 'secondary.dark',
