@@ -36,7 +36,7 @@ export const ClientFormControl = ({
     const {
       method: m,
       endpoint: ep,
-      body: b,
+      body,
     } = parsePathParams(window.location.pathname);
 
     setMethod(m as HttpMethod);
@@ -45,14 +45,16 @@ export const ClientFormControl = ({
     const parts = window.location.pathname.split('/').filter(Boolean);
 
     if (parts[1] !== m) {
-      updatePathParams({ method: m, endpoint: ep, body: b });
+      updatePathParams({ method: m, endpoint: ep, body });
     }
   }, []);
 
   const handleEndpointChange = useCallback(
     (value: string) => {
+      const { body } = parsePathParams(window.location.pathname);
+
       setEndpoint(value);
-      updatePathParams({ method, endpoint: value });
+      updatePathParams({ method, endpoint: value, body });
     },
     [method]
   );
@@ -60,8 +62,9 @@ export const ClientFormControl = ({
   const handleMethodChange = useCallback(
     (value: string) => {
       if (isValidHttpMethod(value.toUpperCase())) {
+        const { body } = parsePathParams(window.location.pathname);
         setMethod(value.toUpperCase() as HttpMethod);
-        updatePathParams({ method: value.toUpperCase(), endpoint });
+        updatePathParams({ method: value.toUpperCase(), endpoint, body });
       }
     },
     [endpoint]

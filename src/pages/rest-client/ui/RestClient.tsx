@@ -47,7 +47,7 @@ const RestClientPage = () => {
         handleRequest={handleRequest}
       />
       <ClientTabs
-        body={<RequestBody />}
+        body={<RequestBody disabled={false} />}
         headers={<RequestHeaders />}
         code={<RequestCode />}
       />

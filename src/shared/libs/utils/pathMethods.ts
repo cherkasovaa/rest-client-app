@@ -12,10 +12,15 @@ export type ClientPathSearchparams = Record<string, string>;
 export function updatePathParams({ method, endpoint, body }: ClientPathParams) {
   let path = `/rest-client/${method}`;
 
-  if (endpoint) path += `/${encodeBase64(endpoint)}`;
-  else if (body) path += `/`;
+  if (endpoint) {
+    path += `/${encodeBase64(endpoint)}`;
+  } else if (body) {
+    path += `/_`;
+  }
 
-  if (body) path += `/${encodeURIComponent(body)}`;
+  if (body) {
+    path += `/${encodeBase64(body)}`;
+  }
 
   const search = window.location.search;
   const newUrl = path + search;
@@ -52,7 +57,7 @@ export function parsePathParams(pathname: string): ClientPathParams {
   let body: string | undefined;
 
   if (parts[2]) endpoint = decodeBase64(parts[2]);
-  if (parts[3]) body = decodeURIComponent(parts[3]);
+  if (parts[3]) body = decodeBase64(parts[3]);
 
   return { method, endpoint, body };
 }
