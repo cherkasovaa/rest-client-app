@@ -6,6 +6,7 @@ import {
   MenuItem,
   Paper,
   Select,
+  Stack,
 } from '@mui/material';
 import { useState } from 'react';
 import CodeIcon from '@mui/icons-material/Code';
@@ -28,7 +29,7 @@ export const RequestCode = () => {
   };
 
   return (
-    <Box>
+    <Stack gap={5}>
       <FormControl
         style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: 10 }}
         fullWidth
@@ -67,6 +68,6 @@ export const RequestCode = () => {
           the generated code will be here
         </Paper>
       </Box>
-    </Box>
+    </Stack>
   );
 };

@@ -1,64 +1,40 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-} from '@mui/material';
+import { Box, Button, FormControl, Paper, Stack } from '@mui/material';
 import { useState } from 'react';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-
-const CONTENT_TYPES = ['json', 'xml', 'plaintext'];
+import { CodeEditor } from '@/features/code-editor';
+import { ContentTypeSelector } from '@/features/content-type-selector';
+import { CONTENT_TYPES } from '@/shared/types/content-types';
 
 export const RequestBody = () => {
-  const [type, setType] = useState(CONTENT_TYPES[0]);
+  const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);
+
+  const handleTypeChange = (language: string) => {
+    setLanguage(language);
+  };
 
   const handlePrettify = () => {
     console.log('prettifying');
   };
 
   return (
-    <Box>
+    <Stack gap={5}>
       <FormControl
         fullWidth
         style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: 10 }}
       >
-        <InputLabel>Content-type</InputLabel>
-        <Select
-          value={type ?? CONTENT_TYPES[0]}
-          id="content-type"
-          label="Content-type"
-          onChange={(e) => setType(e.target.value)}
-        >
-          {CONTENT_TYPES.map((m) => {
-            return (
-              <MenuItem key={m} value={m}>
-                {m}
-              </MenuItem>
-            );
-          })}
-        </Select>
+        <ContentTypeSelector onChange={handleTypeChange} />
         <Button onClick={handlePrettify}>
           <AutoAwesomeIcon />
           Prettify
         </Button>
       </FormControl>
-      <Box>
-        <Paper
-          sx={{
-            p: 2,
-            mt: 1,
-            minHeight: 150,
-            backgroundColor: 'grey',
-            whiteSpace: 'pre-wrap',
-            fontFamily: 'monospace',
-          }}
-        >
-          the request code will be here
-        </Paper>
+      <Box
+        sx={{
+          minHeight: '200px',
+        }}
+      >
+        <CodeEditor language={language} />
       </Box>
-    </Box>
+    </Stack>
   );
 };
