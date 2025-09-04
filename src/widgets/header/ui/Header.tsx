@@ -1,8 +1,9 @@
 'use client';
 
 import { LanguageSwitcher } from '@/entities/language-switcher/ui/LanguageSwitcher';
+import { AuthButtons } from '@/features/auth-buttons';
 import { Logo } from '@/shared/ui/logo/Logo';
-import { Box, Button, Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 export const Header = () => {
@@ -43,31 +44,7 @@ export const Header = () => {
 
         <LanguageSwitcher />
 
-        <Box
-          sx={{
-            display: 'flex',
-            gap: '0.5rem',
-          }}
-        >
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              backgroundColor: 'secondary.main',
-            }}
-          >
-            Sign In
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              backgroundColor: 'secondary.main',
-            }}
-          >
-            Sign up
-          </Button>
-        </Box>
+        <AuthButtons />
       </Container>
     </Box>
   );
