@@ -23,6 +23,7 @@ import {
 } from '@mui/x-data-grid';
 
 import { v4 as uuidv4 } from 'uuid';
+import { Alert, Snackbar } from '@mui/material';
 
 declare module '@mui/x-data-grid' {
   interface ToolbarPropsOverrides {
@@ -68,6 +69,23 @@ export default function FullFeaturedCrudGrid({
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
+  const [error, setError] = React.useState<string | null>(null);
+
+  const handleCloseError = () => {
+    setError(null);
+  };
+
+  const isKeyDuplicate = (key: string, currentId?: string): boolean => {
+    if (!key || key.trim() === '') return false;
+
+    const normalized = key.toLowerCase().trim();
+    return rows.some((row) => {
+      return (
+        row.id !== currentId &&
+        row.key?.toString().toLowerCase().trim() === normalized
+      );
+    });
+  };
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (
     params,
@@ -103,6 +121,24 @@ export default function FullFeaturedCrudGrid({
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
+    const key = newRow.key?.toString().trim();
+    const value = newRow.value?.toString().trim();
+
+    if (!key || key === '') {
+      setError('Key cannot be empty!');
+      return rows.find((row) => row.id === newRow.id) || newRow;
+    }
+
+    if (!value || value === '') {
+      setError('Value cannot be empty!');
+      return rows.find((row) => row.id === newRow.id) || newRow;
+    }
+
+    if (isKeyDuplicate(key, newRow.id)) {
+      setError(`Key "${key}" already exists`);
+      return rows.find((row) => row.id === newRow.id) || newRow;
+    }
+
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
@@ -128,11 +164,6 @@ export default function FullFeaturedCrudGrid({
               key={uuidv4()}
               icon={<SaveIcon />}
               label="Save"
-              material={{
-                sx: {
-                  color: 'primary.main',
-                },
-              }}
               onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
@@ -195,6 +226,20 @@ export default function FullFeaturedCrudGrid({
         showToolbar
         hideFooter
       />
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleCloseError}
+          severity="error"
+          sx={{ width: '100%' }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
