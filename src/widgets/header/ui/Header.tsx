@@ -2,7 +2,7 @@
 
 import { LanguageSwitcher } from '@/entities/language-switcher/ui/LanguageSwitcher';
 import { AuthButtons } from '@/features/auth-buttons';
-import { Logo } from '@/shared/ui/logo/Logo';
+import { Logo } from '@/shared/ui';
 import { Box, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 
