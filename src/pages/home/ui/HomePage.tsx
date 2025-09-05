@@ -2,11 +2,12 @@
 
 import { TeamSection } from '@/widgets/team-section';
 import { WelcomeCard } from '@/widgets/welcome-card';
+import { WorkspaceNavigator } from '@/widgets/workspace-navigator';
 import { Box, Container } from '@mui/material';
 import { useState } from 'react';
 
 export const HomePage = () => {
-  const [auth, setAuth] = useState<boolean>(false);
+  const [auth, setAuth] = useState<boolean>(true);
 
   return (
     <Box width="100%">
@@ -21,23 +22,21 @@ export const HomePage = () => {
         }}
       >
         {/* <button onClick={() => setAuth(!auth)}>Toggle</button> */}
-        {auth ? (
-          <Box>Is Auth</Box>
-        ) : (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 6,
-              height: '100%',
-            }}
-          >
-            <WelcomeCard />
-            <TeamSection />
-          </Box>
-        )}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: 3,
+            height: '100%',
+          }}
+        >
+          <WelcomeCard userName={auth ? 'User' : null} />
+
+          {auth && <WorkspaceNavigator />}
+          <TeamSection />
+        </Box>
       </Container>
     </Box>
   );
