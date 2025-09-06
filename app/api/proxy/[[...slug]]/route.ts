@@ -1,3 +1,4 @@
+import { decodeBase64 } from '@/shared/libs/utils/base64';
 import { NextResponse, type NextRequest } from 'next/server';
 
 async function handleProxyRequest(
@@ -5,17 +6,48 @@ async function handleProxyRequest(
   params: { slug?: string[] }
 ) {
   const slug = params.slug ?? [];
-  const [method, encodedEndpoint, body] = slug;
+  const [method, endpoint, body] = slug;
 
-  if (!method || !encodedEndpoint) {
+  if (!method || !endpoint) {
     return NextResponse.json(
       { error: 'Missing method or endpoint' },
       { status: 400 }
     );
   }
 
+  const decodedEndpoint = decodeBase64(endpoint);
+  const decodedBody = decodeBase64(body);
+
   try {
-    return NextResponse.json({});
+    const searchParams = request.nextUrl.searchParams;
+    const headers: Record<string, string> = {};
+
+    searchParams.forEach((value, key) => {
+      headers[key] = value;
+    });
+
+    const res = await fetch(decodedEndpoint, {
+      method,
+      headers: Object.keys(headers).length ? headers : undefined,
+      body: body && method !== 'GET' ? decodedBody : undefined,
+    });
+
+    console.log(res);
+
+    const text = await res.text();
+
+    return NextResponse.json(
+      {
+        status: res.status,
+        statuxText: res.statusText,
+        body: text,
+        headers: Object.fromEntries(res.headers.entries()),
+        pl: res.ok,
+      },
+      {
+        status: res.status,
+      }
+    );
   } catch (err) {
     return NextResponse.json(
       {

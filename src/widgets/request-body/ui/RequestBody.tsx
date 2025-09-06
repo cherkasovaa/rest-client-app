@@ -11,7 +11,7 @@ import {
 import { Editor } from '@monaco-editor/react';
 import { prettify } from '../model/prettify';
 
-export const RequestBody = ({ disabled }: { disabled: boolean }) => {
+export const RequestBody = () => {
   const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -58,7 +58,7 @@ export const RequestBody = ({ disabled }: { disabled: boolean }) => {
         style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: 10 }}
       >
         <ContentTypeSelector onChange={handleTypeChange} />
-        <Button onClick={handlePrettify} disabled={disabled}>
+        <Button onClick={handlePrettify} disabled={false}>
           <AutoAwesomeIcon />
           Prettify
         </Button>
@@ -74,7 +74,7 @@ export const RequestBody = ({ disabled }: { disabled: boolean }) => {
           theme="light"
           language={language}
           loading={<div>...Loading</div>}
-          options={{ readOnly: disabled, fontSize: 17 }}
+          options={{ readOnly: false, fontSize: 17 }}
         />
       </Box>
     </Stack>

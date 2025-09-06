@@ -8,6 +8,6 @@ export interface ApiResponse {
   statusText: string;
   body: string;
   headers?: Record<string, string>;
-  error?: string;
   message?: string;
+  ok: boolean;
 }

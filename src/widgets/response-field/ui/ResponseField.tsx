@@ -1,5 +1,6 @@
 import type { ApiResponse } from '@/shared/types/api';
-import { Box, Paper, Typography } from '@mui/material';
+import { Editor } from '@monaco-editor/react';
+import { Box, Typography } from '@mui/material';
 
 export const ResponseField = ({
   response,
@@ -13,27 +14,16 @@ export const ResponseField = ({
   return (
     <Box>
       <Typography>
-        Status response:{' '}
-        {response ? response.status + ' ' + response.statusText : 'none'}
+        Status response: {response ? response.status : error}
       </Typography>
-      <Paper
-        sx={{
-          p: 2,
-          mt: 1,
-          minHeight: 150,
-          backgroundColor: 'grey',
-          whiteSpace: 'pre-wrap',
-          fontFamily: 'monospace',
-        }}
-      >
-        {loading
-          ? 'Loading...'
-          : error
-            ? `Error: ${error}`
-            : response
-              ? `${response.body}`
-              : 'The response will be here soon'}
-      </Paper>
+
+      <Editor
+        height="200px"
+        theme="light"
+        value={response?.body}
+        loading={loading && <div>...Loading</div>}
+        options={{ readOnly: true }}
+      ></Editor>
     </Box>
   );
 };

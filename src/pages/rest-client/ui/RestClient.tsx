@@ -13,6 +13,7 @@ import {
   parsePathParams,
   parsePathSearchParams,
 } from '@/shared/libs/utils/pathMethods';
+import { encodeBase64 } from '@/shared/libs/utils/base64';
 
 const RestClientPage = () => {
   const [fetchError, setFetchError] = useState<null | string>(null);
@@ -33,6 +34,25 @@ const RestClientPage = () => {
       console.log('endpoint:', endpoint);
       console.log('body:', body);
       console.log('headers:', headers);
+
+      if (!endpoint) {
+        return;
+      }
+
+      const base = `/api/proxy/${method}/${encodeBase64(endpoint)}`;
+
+      const url = body
+        ? `${base}/${encodeBase64(body)}${search}`
+        : `${base}${search}`;
+
+      const res = await fetch(url, { method: 'GET' });
+
+      if (!res.ok) {
+        setFetchError(res.statusText);
+      }
+
+      const data = await res.json();
+      setResponse(data);
     } catch (err) {
     } finally {
       setIsLoading(false);
@@ -47,7 +67,7 @@ const RestClientPage = () => {
         handleRequest={handleRequest}
       />
       <ClientTabs
-        body={<RequestBody disabled={false} />}
+        body={<RequestBody />}
         headers={<RequestHeaders />}
         code={<RequestCode />}
       />
