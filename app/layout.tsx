@@ -1,7 +1,7 @@
 import theme from '@/shared/config/theme';
 import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';
-import { Box, CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
 
@@ -39,7 +39,7 @@ export default function RootLayout({
                   display: 'flex',
                 }}
               >
-                {children}
+                <Container maxWidth="lg">{children}</Container>
               </Box>
 
               <Footer />
