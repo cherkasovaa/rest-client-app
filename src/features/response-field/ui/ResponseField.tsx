@@ -23,7 +23,7 @@ export const ResponseField = ({
         value={response?.body}
         loading={loading && <div>...Loading</div>}
         options={{ readOnly: true }}
-      ></Editor>
+      />
     </Box>
   );
 };
