@@ -50,7 +50,7 @@ export const Footer = () => {
                 color: 'primary.contrastText',
 
                 '&:hover': {
-                  color: 'secondary.dark',
+                  color: 'secondary.main',
                 },
               }}
             >

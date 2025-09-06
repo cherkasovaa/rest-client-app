@@ -57,16 +57,12 @@ const sharedTypography = {
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#33513e',
-      main: '#01260E',
-      dark: '#001a09',
-      contrastText: '#fff',
+      main: '#0D1830',
+      contrastText: '#EBF1FF',
     },
     secondary: {
-      light: '#4de036',
-      main: '#21D904',
-      dark: '#179702',
-      contrastText: '#011604',
+      main: '#3EF6F3',
+      contrastText: '#0D1830',
     },
   },
   typography: sharedTypography,
