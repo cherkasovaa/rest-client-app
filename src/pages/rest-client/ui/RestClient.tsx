@@ -9,10 +9,7 @@ import { RequestHeaders } from '@/widgets/request-headers';
 import { ClientTabs } from '@/widgets/client-tabs';
 
 import type { ApiResponse } from '@/shared/types/api';
-import {
-  parsePathParams,
-  parsePathSearchParams,
-} from '@/shared/libs/utils/pathMethods';
+import { parsePathParams } from '@/shared/libs/utils/pathMethods';
 import { encodeBase64 } from '@/shared/libs/utils/base64';
 
 const RestClientPage = () => {
@@ -28,12 +25,6 @@ const RestClientPage = () => {
     try {
       const { pathname, search } = window.location;
       const { method, endpoint, body } = parsePathParams(pathname);
-      const headers = parsePathSearchParams(search);
-
-      console.log('method:', method);
-      console.log('endpoint:', endpoint);
-      console.log('body:', body);
-      console.log('headers:', headers);
 
       if (!endpoint) {
         return;
@@ -61,11 +52,7 @@ const RestClientPage = () => {
 
   return (
     <Stack spacing={3} p={3}>
-      <ClientFormControl
-        error={fetchError}
-        isLoading={isLoading}
-        handleRequest={handleRequest}
-      />
+      <ClientFormControl isLoading={isLoading} handleRequest={handleRequest} />
       <ClientTabs
         body={<RequestBody />}
         headers={<RequestHeaders />}

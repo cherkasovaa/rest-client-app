@@ -11,10 +11,9 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import {
   parsePathParams,
   updatePathParams,
@@ -22,11 +21,9 @@ import {
 
 export const ClientFormControl = ({
   handleRequest,
-  error,
   isLoading,
 }: {
   handleRequest: () => Promise<void>;
-  error: string | null;
   isLoading: boolean;
 }) => {
   const [method, setMethod] = useState<HttpMethod>(HTTP_CONFIG.DEFAULT_METHOD);
@@ -70,51 +67,59 @@ export const ClientFormControl = ({
     [endpoint]
   );
 
+  const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    void handleRequest();
+  };
+
   return (
     <Box>
-      <FormControl
-        fullWidth
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 4fr 1fr',
-          gap: 10,
-        }}
-      >
-        <InputLabel>Method</InputLabel>
-        <Select
-          value={method ?? HTTP_CONFIG.DEFAULT_METHOD}
-          id="method"
-          label="Method"
-          onChange={(e) => handleMethodChange(String(e.target.value))}
-        >
-          {HTTP_CONFIG.METHODS.map((m) => {
-            return (
-              <MenuItem key={m} value={m}>
-                {m}
-              </MenuItem>
-            );
-          })}
-        </Select>
-        <TextField
+      <form onSubmit={handleOnSubmit}>
+        <FormControl
           fullWidth
-          label="Request URL"
-          value={endpoint}
-          placeholder={'https://jsonplaceholder.typicode.com/posts/14'}
-          onChange={(e) => handleEndpointChange(e.target.value)}
-        ></TextField>
-        <Button variant="contained" onClick={handleRequest}>
-          {isLoading && <>..Loading</>}
-          {!isLoading && (
-            <>
-              <SendIcon />
-              Send
-            </>
-          )}
-        </Button>
-      </FormControl>
-      <Box>
-        <Typography>{error || ''}</Typography>
-      </Box>
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 4fr 1fr',
+            gap: 10,
+          }}
+        >
+          <InputLabel>Method</InputLabel>
+          <Select
+            value={method ?? HTTP_CONFIG.DEFAULT_METHOD}
+            id="method"
+            label="Method"
+            onChange={(e) => handleMethodChange(String(e.target.value))}
+          >
+            {HTTP_CONFIG.METHODS.map((m) => {
+              return (
+                <MenuItem key={m} value={m}>
+                  {m}
+                </MenuItem>
+              );
+            })}
+          </Select>
+          <TextField
+            fullWidth
+            label="Request URL"
+            value={endpoint}
+            placeholder={'https://jsonplaceholder.typicode.com/posts/14'}
+            onChange={(e) => handleEndpointChange(e.target.value)}
+          ></TextField>
+          <Button
+            variant="contained"
+            disabled={endpoint.length === 0}
+            type="submit"
+          >
+            {isLoading && <>..Loading</>}
+            {!isLoading && (
+              <>
+                <SendIcon />
+                Send
+              </>
+            )}
+          </Button>
+        </FormControl>
+      </form>
     </Box>
   );
 };
