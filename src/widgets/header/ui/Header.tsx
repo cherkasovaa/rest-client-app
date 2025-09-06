@@ -2,23 +2,12 @@
 
 import { LanguageSwitcher } from '@/entities/language-switcher/ui/LanguageSwitcher';
 import { AuthButtons } from '@/features/auth-buttons';
+import { useScrollPosition } from '@/shared/lib/hooks/useScrollPosition';
 import { Logo } from '@/shared/ui';
 import { Box, Container } from '@mui/material';
-import { useEffect, useState } from 'react';
 
 export const Header = () => {
-  const [scrollPosition, setScrollPosition] = useState<number>(0);
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const { scrollPosition } = useScrollPosition();
 
   return (
     <Box
