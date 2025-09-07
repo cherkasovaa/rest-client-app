@@ -1,11 +1,13 @@
+import react from '@vitejs/plugin-react';
+import path from 'path';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  plugins: [],
+  plugins: [react()],
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
+    setupFiles: './src/shared/config/tests/setup.ts',
     coverage: {
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -13,8 +15,10 @@ export default defineConfig({
         'src/**/*.test.{js,jsx,ts,tsx}',
         'src/**/*.spec.{js,jsx,ts,tsx}',
         'src/main.{js,jsx,ts,tsx}',
-        'src/setupTests.{js,ts}',
+        'src/shared/config/tests/setup.ts.{js,ts}',
         'src/**/*.d.ts',
+        'src/**/index.ts',
+        'src/**/theme.ts',
       ],
       thresholds: {
         global: {
@@ -24,6 +28,11 @@ export default defineConfig({
           lines: 50,
         },
       },
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
     },
   },
 });
