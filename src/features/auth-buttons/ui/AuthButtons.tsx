@@ -1,4 +1,6 @@
+import { ROUTES } from '@/shared/config/routes';
 import { Box, Button } from '@mui/material';
+import Link from 'next/link';
 
 export const AuthButtons = () => {
   return (
@@ -9,6 +11,8 @@ export const AuthButtons = () => {
       }}
     >
       <Button
+        component={Link}
+        href={ROUTES.SIGNIN}
         variant="outlined"
         size="small"
         sx={{
@@ -18,6 +22,8 @@ export const AuthButtons = () => {
         Sign In
       </Button>
       <Button
+        component={Link}
+        href={ROUTES.SIGNUP}
         variant="outlined"
         size="small"
         sx={{
