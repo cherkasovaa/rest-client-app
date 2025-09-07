@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, Stack } from '@mui/material';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import type * as monaco from 'monaco-editor';
 import { ContentTypeSelector } from '@/features/content-type-selector';
@@ -10,11 +10,27 @@ import {
 } from '@/shared/libs/utils/pathMethods';
 import { Editor } from '@monaco-editor/react';
 import { prettify } from '../model/prettify';
+import { isFieldReadonly } from '../model/isReadOnly';
 
 export const RequestBody = () => {
   const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);
-
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const [isReadonly, setIsReadonly] = useState<boolean>(
+    isFieldReadonly(window.location.pathname)
+  );
+
+  useEffect(() => {
+    const update = () =>
+      setIsReadonly(isFieldReadonly(window.location.pathname));
+
+    window.addEventListener('popstate', update);
+    window.addEventListener('rest-client:paramschange', update);
+
+    return () => {
+      window.removeEventListener('popstate', update);
+      window.removeEventListener('rest-client:paramschange', update);
+    };
+  }, []);
 
   const handleBodyData = (data: string) => {
     const { method, endpoint } = parsePathParams(window.location.pathname);
@@ -74,7 +90,10 @@ export const RequestBody = () => {
           theme="light"
           language={language}
           loading={<div>...Loading</div>}
-          options={{ readOnly: false, fontSize: 17 }}
+          options={{
+            readOnly: isReadonly,
+            fontSize: 17,
+          }}
         />
       </Box>
     </Stack>

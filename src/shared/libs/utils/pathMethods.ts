@@ -27,6 +27,7 @@ export function updatePathParams({ method, endpoint, body }: ClientPathParams) {
 
   if (window.location.pathname + window.location.search !== newUrl) {
     window.history.replaceState(null, '', newUrl);
+    window.dispatchEvent(new Event('rest-client:paramschange'));
   }
 }
 
@@ -41,6 +42,7 @@ export function updatePathSearchParams(headers: Record<string, string>) {
 
   if (window.location.pathname + window.location.search !== newUrl) {
     window.history.replaceState(null, '', newUrl);
+    window.dispatchEvent(new Event('rest-client:searchparamschange'));
   }
 }
 
