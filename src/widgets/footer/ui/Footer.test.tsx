@@ -1,0 +1,39 @@
+import { DEVELOPERS } from '@/shared/config/developers';
+import { LINK } from '@/widgets/footer/model/links';
+import { Footer } from '@/widgets/footer/ui/Footer';
+import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, test } from 'vitest';
+
+describe('Footer', () => {
+  beforeEach(() => render(<Footer />));
+
+  test('renders RSSchool logo', () => {
+    expect(screen.getByAltText(/rsschool logo/i)).toBeInTheDocument();
+  });
+
+  test('has link to the course', () => {
+    const rsslink = screen.getByRole('link', { name: /rsschool logo/i });
+
+    expect(rsslink).toBeInTheDocument();
+    expect(rsslink).toHaveAttribute('href', LINK.RSS);
+    expect(rsslink).toHaveAttribute('target', '_blank');
+    expect(rsslink).toHaveAttribute('rel', 'noopener');
+  });
+
+  test('renders the year the application was created and copyright', () => {
+    expect(screen.getByText(/© 2025/i)).toBeInTheDocument();
+  });
+
+  describe('developer links', () => {
+    test.each(DEVELOPERS)(
+      'renders a github link for developer $name',
+      ({ name, github }) => {
+        const link = screen.getByRole('link', { name });
+
+        expect(link).toBeInTheDocument();
+        expect(link).toHaveAttribute('href', github);
+        expect(link).toHaveAttribute('rel', 'noopener');
+      }
+    );
+  });
+});
