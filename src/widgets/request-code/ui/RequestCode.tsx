@@ -1,31 +1,39 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Stack,
-} from '@mui/material';
+import { Button, FormControl, Stack } from '@mui/material';
 import { useState } from 'react';
 import CodeIcon from '@mui/icons-material/Code';
+import { CodeLanguageSelector } from '@/features/code-language-selector';
+import {
+  CODE_LANGUAGES,
+  type CodeLanguage,
+} from '@/shared/types/code-languages';
+import { Editor } from '@monaco-editor/react';
+import { generateCode } from '../model/generateCode';
 
-const CODE_TYPE = [
-  'curl',
-  'JavaScript (Fetch api)',
-  'JavaScript (XHR)',
-  'NodeJS',
-  'Python',
-  'Java',
-  'C#',
-  'Go',
-];
 export const RequestCode = () => {
-  const [type, setType] = useState(CODE_TYPE[0]);
+  const [language, setLanguage] = useState<CodeLanguage>(CODE_LANGUAGES[0]);
+  const [generatedCode, setGeneratedCode] = useState<string>(
+    '// Select a way to generate code and click the button'
+  );
+
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   const handleCodeGenerator = () => {
-    console.log('generating');
+    setIsGenerating(true);
+
+    try {
+      const code = generateCode(language);
+
+      if (code && code.trim().length > 0) {
+        setGeneratedCode(code);
+      } else {
+        setGeneratedCode('// Not enough details to generate code');
+      }
+    } catch (err) {
+      console.error(err);
+      setGeneratedCode('// Error occurred while generating code');
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -34,40 +42,30 @@ export const RequestCode = () => {
         style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: 10 }}
         fullWidth
       >
-        <InputLabel>Type</InputLabel>
-        <Select
-          value={type ?? CODE_TYPE[0]}
-          id="type"
-          label="Type"
-          onChange={(e) => setType(e.target.value)}
+        <CodeLanguageSelector value={language} onChange={setLanguage} />
+        <Button
+          onClick={handleCodeGenerator}
+          startIcon={<CodeIcon />}
+          disabled={isGenerating}
+          variant="contained"
         >
-          {CODE_TYPE.map((m) => {
-            return (
-              <MenuItem key={m} value={m}>
-                {m}
-              </MenuItem>
-            );
-          })}
-        </Select>
-        <Button onClick={handleCodeGenerator}>
-          <CodeIcon />
-          Generate
+          {isGenerating ? 'Generating...' : 'Generate Code'}
         </Button>
       </FormControl>
-      <Box>
-        <Paper
-          sx={{
-            p: 2,
-            mt: 1,
-            minHeight: 150,
-            backgroundColor: 'grey',
-            whiteSpace: 'pre-wrap',
-            fontFamily: 'monospace',
-          }}
-        >
-          the generated code will be here
-        </Paper>
-      </Box>
+
+      <Editor
+        value={generatedCode}
+        height="200px"
+        theme="vs-light"
+        language={language.editorLanguage}
+        loading={isGenerating && <div>Loading editor...</div>}
+        options={{
+          readOnly: true,
+          fontSize: 17,
+          minimap: { enabled: false },
+          wordWrap: 'on',
+        }}
+      />
     </Stack>
   );
 };
