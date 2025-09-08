@@ -1,4 +1,5 @@
 import theme from '@/shared/config/theme';
+import { ToastProvider } from '@/shared/ui/toast';
 import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';
 import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material';
@@ -20,30 +21,32 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '100vh',
-                backgroundColor: 'primary.dark',
-                color: 'primary.contrastText',
-              }}
-            >
-              <Header />
-
+            <ToastProvider>
+              <CssBaseline />
               <Box
-                component="main"
                 sx={{
-                  flexGrow: 1,
                   display: 'flex',
+                  flexDirection: 'column',
+                  minHeight: '100vh',
+                  backgroundColor: 'primary.dark',
+                  color: 'primary.contrastText',
                 }}
               >
-                <Container maxWidth="lg">{children}</Container>
-              </Box>
+                <Header />
 
-              <Footer />
-            </Box>
+                <Box
+                  component="main"
+                  sx={{
+                    flexGrow: 1,
+                    display: 'flex',
+                  }}
+                >
+                  <Container maxWidth="lg">{children}</Container>
+                </Box>
+
+                <Footer />
+              </Box>
+            </ToastProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
