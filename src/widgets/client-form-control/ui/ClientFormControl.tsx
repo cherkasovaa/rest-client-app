@@ -104,7 +104,7 @@ export const ClientFormControl = ({
             value={endpoint}
             placeholder={'https://jsonplaceholder.typicode.com/posts/14'}
             onChange={(e) => handleEndpointChange(e.target.value)}
-          ></TextField>
+          />
           <Button
             variant="contained"
             disabled={endpoint.length === 0}

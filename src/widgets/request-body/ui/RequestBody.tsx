@@ -9,8 +9,8 @@ import {
   updatePathParams,
 } from '@/shared/libs/utils/pathMethods';
 import { Editor } from '@monaco-editor/react';
-import { prettify } from '../model/prettify';
-import { isFieldReadonly } from '../model/isReadOnly';
+import { isFieldReadonly } from '@/shared/libs/utils/isReadOnly';
+import { prettify } from '@/shared/libs/utils/prettify';
 
 export const RequestBody = () => {
   const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);
