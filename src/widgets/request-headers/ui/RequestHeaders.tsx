@@ -3,7 +3,7 @@ import type { Header } from '@/shared/types/api';
 import { useEffect, useState } from 'react';
 import { columns } from '../model/constant';
 import { updatePathSearchParams } from '@/shared/libs/utils/pathMethods';
-import FullFeaturedCrudGrid from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
+import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
 
 export const RequestHeaders = () => {
   const [headers, setHeaders] = useState<Header[]>([]);
