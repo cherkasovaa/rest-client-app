@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
-import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
@@ -17,13 +15,12 @@ import {
   type GridRowId,
   type GridRowModel,
   GridRowEditStopReasons,
-  type GridSlotProps,
-  Toolbar,
-  ToolbarButton,
 } from '@mui/x-data-grid';
 
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, Snackbar } from '@mui/material';
+import { useState } from 'react';
+import { EditToolbar } from './EditToolbar';
 
 declare module '@mui/x-data-grid' {
   interface ToolbarPropsOverrides {
@@ -34,30 +31,7 @@ declare module '@mui/x-data-grid' {
   }
 }
 
-function EditToolbar(props: GridSlotProps['toolbar']) {
-  const { setRows, setRowModesModel } = props;
-
-  const handleClick = () => {
-    const id = uuidv4();
-    setRows((oldRows) => [...oldRows, { id, key: '', value: '', isNew: true }]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'key' },
-    }));
-  };
-
-  return (
-    <Toolbar>
-      <Tooltip title="Add record">
-        <ToolbarButton onClick={handleClick}>
-          <AddIcon fontSize="large" />
-        </ToolbarButton>
-      </Tooltip>
-    </Toolbar>
-  );
-}
-
-export default function FullFeaturedCrudGrid({
+export const FullFeaturedCrudGrid = ({
   rows,
   setRows,
   columns,
@@ -65,11 +39,9 @@ export default function FullFeaturedCrudGrid({
   rows: GridRowsProp;
   setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
   columns: GridColDef[];
-}) {
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
-    {}
-  );
-  const [error, setError] = React.useState<string | null>(null);
+}) => {
+  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+  const [error, setError] = useState<string | null>(null);
 
   const handleCloseError = () => {
     setError(null);
@@ -242,4 +214,4 @@ export default function FullFeaturedCrudGrid({
       </Snackbar>
     </Box>
   );
-}
+};
