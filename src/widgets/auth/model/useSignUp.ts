@@ -33,6 +33,7 @@ export function useSignUp() {
       await login(idToken);
 
       router.replace('/');
+      router.refresh();
     }
   }
 

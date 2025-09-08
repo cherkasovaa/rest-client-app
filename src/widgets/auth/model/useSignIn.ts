@@ -30,6 +30,7 @@ export function useSignIn() {
       await login(idToken);
 
       router.replace('/');
+      router.refresh();
     }
   }
 
