@@ -1,3 +1,41 @@
+'use client';
+
+import { LanguageSwitcher } from '@/entities/language-switcher/ui/LanguageSwitcher';
+import { AuthButtons } from '@/features/auth-buttons';
+import { useScrollPosition } from '@/shared/lib/hooks/useScrollPosition';
+import { Logo } from '@/shared/ui';
+import { Box, Container } from '@mui/material';
+
 export const Header = () => {
-  return <div>Hi! I&apos;m Header</div>;
+  const { scrollPosition } = useScrollPosition();
+
+  return (
+    <Box
+      component="header"
+      sx={{
+        position: 'sticky',
+        top: 0,
+        p: scrollPosition > 50 ? '0.3rem' : '0.5rem',
+        backgroundColor: scrollPosition > 50 ? 'primary.main' : 'primary.dark',
+        transition: '0.5s',
+        zIndex: '999',
+      }}
+    >
+      <Container
+        maxWidth="lg"
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          gap: '1.5rem',
+        }}
+      >
+        <Logo />
+
+        <LanguageSwitcher />
+
+        <AuthButtons />
+      </Container>
+    </Box>
+  );
 };
