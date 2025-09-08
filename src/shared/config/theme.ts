@@ -55,6 +55,34 @@ const sharedTypography = {
 };
 
 const theme = createTheme({
+  components: {
+    // TODO: remove. By default color is secondary contrast
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: '#fff',
+          '&.Mui-focused': {
+            color: '#fff',
+          },
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        input: {
+          color: '#fff',
+          '::placeholder': '#fff',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: '#fff',
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: '#0D1830',
