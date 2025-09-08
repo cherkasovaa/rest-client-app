@@ -6,7 +6,6 @@ import { updatePathSearchParams } from '@/shared/libs/utils/pathMethods';
 import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
 
 export const RequestHeaders = () => {
-  const [headers, setHeaders] = useState<Header[]>([]);
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const newHeaders: Header[] = [];
@@ -15,7 +14,6 @@ export const RequestHeaders = () => {
       newHeaders.push({ key, value });
     });
 
-    setHeaders(newHeaders);
     setGridRows(headersToRows(newHeaders));
   }, []);
 
@@ -47,7 +45,6 @@ export const RequestHeaders = () => {
     setGridRows(updatedRows);
 
     const updatedHeaders = rowsToHeaders(updatedRows);
-    setHeaders(updatedHeaders);
 
     const searchParams: Record<string, string> = {};
     updatedHeaders.forEach((h) => {
