@@ -1,0 +1,177 @@
+import { beforeEach, afterEach, describe, expect, test, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+vi.mock('@/shared/libs/utils/pathMethods', () => ({
+  parsePathParams: vi.fn(),
+  updatePathParams: vi.fn(),
+}));
+
+import {
+  parsePathParams,
+  updatePathParams,
+} from '@/shared/libs/utils/pathMethods';
+
+vi.mock('@/features/content-type-selector', () => ({
+  ContentTypeSelector: (props: { onChange: (lang: string) => void }) => {
+    return (
+      <div data-testid="content-type-selector">
+        <button
+          data-testid="ctype-json"
+          onClick={() => {
+            props.onChange('json');
+          }}
+        >
+          json
+        </button>
+      </div>
+    );
+  },
+}));
+
+interface MockEditor {
+  getValue(): string;
+  setValue(value: string): void;
+  onDidBlurEditorText(cb: () => void): { dispose(): void };
+  triggerBlur(): void;
+}
+
+declare global {
+  interface Window {
+    __mockEditor?: MockEditor | undefined;
+  }
+}
+
+vi.mock('@monaco-editor/react', () => {
+  type EditorProps = {
+    onMount?: (editor: MockEditor) => void;
+    value?: string;
+    language?: string;
+  };
+
+  const EditorMock = (props: EditorProps) => {
+    let _value = props.value ?? '';
+
+    let blurCb: (() => void) | null = null;
+
+    const editor: MockEditor = {
+      getValue: () => _value,
+      setValue: (val: string) => {
+        _value = val;
+      },
+      onDidBlurEditorText: (cb: () => void) => {
+        blurCb = cb;
+        return {
+          dispose() {
+            blurCb = null;
+          },
+        };
+      },
+      triggerBlur: () => {
+        if (blurCb) blurCb();
+      },
+    };
+
+    window.__mockEditor = editor;
+
+    if (props.onMount) {
+      props.onMount(editor);
+    }
+
+    return (
+      <pre data-testid="editor-mock" data-lang={props.language ?? 'unknown'}>
+        {_value}
+      </pre>
+    );
+  };
+
+  return {
+    __esModule: true,
+    default: EditorMock,
+    Editor: EditorMock,
+  };
+});
+
+import { RequestBody } from './RequestBody';
+import { prettify } from '@/shared/libs/utils/prettify';
+
+describe('RequestBody', () => {
+  const mockedParse = vi.mocked(parsePathParams);
+  const mockedUpdate = vi.mocked(updatePathParams);
+  const user = userEvent.setup();
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    window.__mockEditor = undefined;
+  });
+
+  afterEach(() => {
+    window.__mockEditor = undefined;
+  });
+
+  test('should set editor value from parsePathParams body onMount', () => {
+    mockedParse.mockReturnValue({
+      method: 'POST',
+      endpoint: 'test',
+      body: '{"x":1}',
+    });
+
+    render(<RequestBody />);
+
+    const editor = window.__mockEditor;
+    expect(editor).toBeDefined();
+    expect(editor!.getValue()).toBe('{"x":1}');
+  });
+
+  test('should format value with prettify and call updatePathParams', async () => {
+    mockedParse.mockReturnValue({
+      method: 'POST',
+      endpoint: 'test',
+      body: '{"a":1,"b":2}',
+    });
+
+    render(<RequestBody />);
+
+    const editor = window.__mockEditor;
+    expect(editor).toBeDefined();
+    expect(editor!.getValue()).toBe('{"a":1,"b":2}');
+
+    const prettifyBtn = screen.getByRole('button', { name: /prettify/i });
+    await user.click(prettifyBtn);
+
+    const expected = prettify('{"a":1,"b":2}', 'json');
+    expect(editor!.getValue()).toBe(expected);
+
+    expect(mockedUpdate).toHaveBeenCalled();
+    const lastArg = mockedUpdate.mock.calls.at(-1)?.[0];
+    expect(lastArg).toMatchObject({
+      method: 'POST',
+      endpoint: 'test',
+      body: expected,
+    });
+  });
+
+  test('should triggers updatePathParams with current editor value on blur', async () => {
+    mockedParse.mockReturnValue({
+      method: 'POST',
+      endpoint: 'test',
+      body: 'init',
+    });
+
+    render(<RequestBody />);
+
+    const editor = window.__mockEditor!;
+    expect(editor).toBeDefined();
+
+    editor.setValue('user-changed');
+    editor.triggerBlur();
+
+    expect(mockedUpdate).toHaveBeenCalled();
+    const lastArg = mockedUpdate.mock.calls.at(-1)?.[0];
+    expect(lastArg).toMatchObject({
+      method: 'POST',
+      endpoint: 'test',
+      body: 'user-changed',
+    });
+  });
+});
