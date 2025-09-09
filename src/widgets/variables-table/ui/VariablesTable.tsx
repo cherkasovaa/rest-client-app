@@ -10,8 +10,13 @@ export const VariablesTable = () => {
   const [gridRows, setGridRows] = useState<GridRowsProp>([]);
 
   useEffect(() => {
-    const newVariables: Variable[] = [];
-    setGridRows(variablesToRow(newVariables));
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed: Variable[] = JSON.parse(saved);
+      setGridRows(variablesToRow(parsed));
+    } else {
+      setGridRows(variablesToRow([]));
+    }
   }, []);
 
   const handleSetRows = (
