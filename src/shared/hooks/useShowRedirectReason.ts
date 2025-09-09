@@ -3,8 +3,7 @@
 import { useEffect } from 'react';
 import { useToast } from '@/shared/ui/toast';
 import { useSearchParams, useRouter } from 'next/navigation';
-
-let isErrorShown = false;
+import { ROUTES } from '@/shared/config/routes.ts';
 
 export function useShowRedirectReason() {
   const params = useSearchParams();
@@ -14,13 +13,11 @@ export function useShowRedirectReason() {
   const redirect = params?.get('redirect');
 
   useEffect(() => {
-    if (redirect && !isErrorShown) {
+    if (redirect) {
       toastError(
         'Your session was ended, log in if you want to continue working'
       );
-      router.replace('/signin');
-
-      isErrorShown = true;
+      router.replace(ROUTES.HOME);
     }
   }, [redirect, router, toastError]);
 }

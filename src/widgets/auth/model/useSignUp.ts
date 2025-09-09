@@ -32,7 +32,6 @@ export function useSignUp() {
       const idToken = await user.user.getIdToken();
       await login(idToken);
 
-      router.replace('/');
       router.refresh();
     }
   }

@@ -4,8 +4,11 @@ import { TeamSection } from '@/widgets/team-section';
 import { WelcomeCard } from '@/widgets/welcome-card';
 import { WorkspaceNavigator } from '@/widgets/workspace-navigator';
 import { Box } from '@mui/material';
+import { useShowRedirectReason } from '@/shared/hooks/useShowRedirectReason.ts';
 
 export const HomePage = () => {
+  useShowRedirectReason();
+
   const auth = true;
 
   return (

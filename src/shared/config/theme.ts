@@ -60,25 +60,9 @@ const theme = createTheme({
     MuiFormLabel: {
       styleOverrides: {
         root: {
-          color: '#fff',
           '&.Mui-focused': {
-            color: '#fff',
+            color: '#EBF1FF',
           },
-        },
-      },
-    },
-    MuiInput: {
-      styleOverrides: {
-        input: {
-          color: '#fff',
-          '::placeholder': '#fff',
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          color: '#fff',
         },
       },
     },
@@ -92,6 +76,7 @@ const theme = createTheme({
       main: '#3EF6F3',
       contrastText: '#0D1830',
     },
+    mode: 'dark',
   },
   typography: sharedTypography,
 });

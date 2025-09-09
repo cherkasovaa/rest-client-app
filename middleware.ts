@@ -4,9 +4,12 @@ import {
   redirectToHome,
   redirectToLogin,
 } from 'next-firebase-auth-edge';
-import { clientConfig, serverConfig } from './config';
+import { clientConfig, serverConfig } from '@/shared/config/firebaseConfig.ts';
+import { ROUTES } from '@/shared/config/routes.ts';
 
-const PUBLIC_PATHS = ['/signin', '/signup'];
+const PUBLIC_PATHS = [ROUTES.SIGNIN, ROUTES.SIGNUP, ROUTES.HOME] as string[];
+
+const AUTH_PATHS = [ROUTES.SIGNIN, ROUTES.SIGNUP] as string[];
 
 export async function middleware(request: NextRequest) {
   return authMiddleware(request, {
@@ -18,7 +21,7 @@ export async function middleware(request: NextRequest) {
     cookieSerializeOptions: serverConfig.cookieSerializeOptions,
     serviceAccount: serverConfig.serviceAccount,
     handleValidToken: async (_: unknown, headers?: Headers) => {
-      if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
+      if (AUTH_PATHS.includes(request.nextUrl.pathname)) {
         return redirectToHome(request);
       }
 
@@ -32,7 +35,7 @@ export async function middleware(request: NextRequest) {
       console.info('Missing or malformed credentials', { reason });
 
       const res = redirectToLogin(request, {
-        path: '/signin',
+        path: ROUTES.HOME,
         publicPaths: PUBLIC_PATHS,
       });
 
@@ -42,7 +45,7 @@ export async function middleware(request: NextRequest) {
       console.error('Unhandled authentication error', { error });
 
       const res = redirectToLogin(request, {
-        path: '/signin',
+        path: ROUTES.HOME,
         publicPaths: PUBLIC_PATHS,
       });
 

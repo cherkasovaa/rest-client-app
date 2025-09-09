@@ -7,7 +7,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
 import { getTokens } from 'next-firebase-auth-edge';
 import { cookies } from 'next/headers';
-import { authConfig } from '../config.ts';
+import { authConfig } from '@/shared/config/firebaseConfig.ts';
 import { AuthProvider } from '@/widgets/auth';
 import { tokensToUser } from '@/shared/utils/tokensToUser.ts';
 

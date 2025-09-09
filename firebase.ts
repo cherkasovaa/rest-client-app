@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { clientConfig } from './config.ts';
+import { clientConfig } from '@/shared/config/firebaseConfig.ts';
 import { getAuth, inMemoryPersistence, setPersistence } from '@firebase/auth';
 
 export const getFirebaseApp = () => {

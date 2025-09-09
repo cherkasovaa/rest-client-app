@@ -8,6 +8,7 @@ import {
   FormLabel,
   Input,
   Stack,
+  Typography,
 } from '@mui/material';
 
 import { useForm } from 'react-hook-form';
@@ -15,11 +16,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignIn } from '@/widgets/auth/model/useSignIn.ts';
 import Link from 'next/link';
 import { signInSchema } from '@/widgets/auth/model/schemas.ts';
-import { useShowRedirectReason } from '@/shared/hooks/useShowRedirectReason.ts';
+import { ROUTES } from '@/shared/config/routes.ts';
 
 export function SignInForm() {
-  useShowRedirectReason();
-
   const {
     register,
     handleSubmit,
@@ -54,12 +53,37 @@ export function SignInForm() {
             />
             <FormHelperText error>{errors.password?.message}</FormHelperText>
           </FormControl>
-          <Button loading={isPendingSignIn} type="submit">
+          <Button
+            sx={{
+              color: 'primary.main',
+              backgroundColor: 'secondary.main',
+
+              '&:hover': {
+                color: 'secondary.contrastText',
+                backgroundColor: 'secondary.main',
+              },
+            }}
+            loading={isPendingSignIn}
+            type="submit"
+          >
             Sign in!
           </Button>
-          <p>
-            Do not have an account? <Link href="/signup">Sign up!</Link>
-          </p>
+          <Typography>
+            Do not have an account?{' '}
+            <Typography
+              component={Link}
+              href={ROUTES.SIGNUP}
+              sx={{
+                color: 'primary.contrastText',
+
+                '&:hover': {
+                  color: 'secondary.main',
+                },
+              }}
+            >
+              Sign up!
+            </Typography>
+          </Typography>
         </Stack>
       </form>
     </Container>

@@ -8,6 +8,7 @@ import {
   FormLabel,
   Input,
   Stack,
+  Typography,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
@@ -15,6 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '@/widgets/auth/model/useSignUp.ts';
 import Link from 'next/link';
 import { signUpSchema } from '@/widgets/auth/model/schemas.ts';
+import { ROUTES } from '@/shared/config/routes.ts';
 
 export function SignUpForm() {
   const {
@@ -63,12 +65,37 @@ export function SignUpForm() {
               {errors.confirmPassword?.message}
             </FormHelperText>
           </FormControl>
-          <Button loading={isPendingSignUp} type="submit">
+          <Button
+            sx={{
+              color: 'primary.main',
+              backgroundColor: 'secondary.main',
+
+              '&:hover': {
+                color: 'secondary.contrastText',
+                backgroundColor: 'secondary.main',
+              },
+            }}
+            loading={isPendingSignUp}
+            type="submit"
+          >
             Sign up!
           </Button>
-          <p>
-            Already have an account? <Link href="/signin">Sign in!</Link>
-          </p>
+          <Typography>
+            Already have an account?{' '}
+            <Typography
+              component={Link}
+              href={ROUTES.SIGNIN}
+              sx={{
+                color: 'primary.contrastText',
+
+                '&:hover': {
+                  color: 'secondary.main',
+                },
+              }}
+            >
+              Sign in!
+            </Typography>
+          </Typography>
         </Stack>
       </form>
     </Container>
