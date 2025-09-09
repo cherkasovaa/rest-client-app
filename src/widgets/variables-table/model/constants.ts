@@ -5,9 +5,6 @@ export const columns: GridColDef[] = [
   { field: 'value', headerName: 'Value', flex: 1, editable: true },
 ];
 
-export interface Variable {
-  key: string;
-  value: string;
-}
+export type Variables = Record<string, string>;
 
 export const STORAGE_KEY = 'variables';

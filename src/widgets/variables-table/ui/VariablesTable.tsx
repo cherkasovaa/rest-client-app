@@ -1,7 +1,7 @@
 'use client';
 
 import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
-import { columns, STORAGE_KEY, type Variable } from '../model/constants';
+import { columns, STORAGE_KEY, type Variables } from '../model/constants';
 import { useEffect, useState } from 'react';
 import type { GridRowsProp } from '@mui/x-data-grid';
 import { rowsToVariables, variablesToRow } from '../utils/rowMethods';
@@ -12,10 +12,10 @@ export const VariablesTable = () => {
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      const parsed: Variable[] = JSON.parse(saved);
+      const parsed: Variables = JSON.parse(saved);
       setGridRows(variablesToRow(parsed));
     } else {
-      setGridRows(variablesToRow([]));
+      setGridRows(variablesToRow({}));
     }
   }, []);
 

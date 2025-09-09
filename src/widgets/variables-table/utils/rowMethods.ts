@@ -1,19 +1,24 @@
 import type { GridRowsProp } from '@mui/x-data-grid';
-import type { Variable } from '../model/constants';
+import type { Variables } from '../model/constants';
 
-export const variablesToRow = (variables: Variable[]): GridRowsProp => {
-  return variables.map((variable, index) => ({
+export const variablesToRow = (variables: Variables): GridRowsProp => {
+  return Object.entries(variables).map(([key, value], index) => ({
     id: index,
-    key: variable.key,
-    value: variable.value,
+    key,
+    value,
   }));
 };
 
-export const rowsToVariables = (rows: GridRowsProp): Variable[] => {
-  return rows
-    .filter((row) => row.key || row.value)
-    .map((row) => ({
-      key: row.key?.toString() || '',
-      value: row.value?.toString() || '',
-    }));
+export const rowsToVariables = (rows: GridRowsProp): Variables => {
+  const result: Record<string, string> = {};
+
+  rows.forEach((row) => {
+    const key = row.key?.toString();
+    const value = row.value?.toString();
+
+    if (key && value) {
+      result[key] = value;
+    }
+  });
+  return result;
 };
