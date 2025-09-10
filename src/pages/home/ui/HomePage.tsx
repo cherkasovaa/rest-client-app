@@ -5,11 +5,11 @@ import { WelcomeCard } from '@/widgets/welcome-card';
 import { WorkspaceNavigator } from '@/widgets/workspace-navigator';
 import { Box } from '@mui/material';
 import { useShowRedirectReason } from '@/shared/hooks/useShowRedirectReason.ts';
+import { useAuth } from '@/widgets/auth';
 
 export const HomePage = () => {
   useShowRedirectReason();
-
-  const auth = true;
+  const { user } = useAuth();
 
   return (
     <Box
@@ -32,9 +32,9 @@ export const HomePage = () => {
           height: '100%',
         }}
       >
-        <WelcomeCard userName={auth ? 'User' : null} />
+        <WelcomeCard userName={user ? 'User' : null} />
 
-        {auth && <WorkspaceNavigator />}
+        {user && <WorkspaceNavigator />}
         <TeamSection />
       </Box>
     </Box>
