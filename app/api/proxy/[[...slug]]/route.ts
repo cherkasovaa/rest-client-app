@@ -32,8 +32,6 @@ async function handleProxyRequest(
       body: body && method !== 'GET' ? decodedBody : undefined,
     });
 
-    console.log(res);
-
     const text = await res.text();
 
     return NextResponse.json(

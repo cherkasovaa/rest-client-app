@@ -1,11 +1,7 @@
 import { VariablesTable } from '@/widgets/variables-table';
 
 const VariablesPage = () => {
-  return (
-    <div>
-      <VariablesTable />
-    </div>
-  );
+  return <VariablesTable />;
 };
 
 export default VariablesPage;

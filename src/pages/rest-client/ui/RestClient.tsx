@@ -10,6 +10,9 @@ import { ClientTabs } from '@/widgets/client-tabs';
 import type { ApiResponse } from '@/shared/types/api';
 import { parsePathParams } from '@/shared/libs/utils/pathMethods';
 import { encodeBase64 } from '@/shared/libs/utils/base64';
+import { LS, LS_VARIABLES } from '@/shared/utils/localStorage';
+import { replaceVariables } from '@/shared/utils/replaceVariables';
+
 import { ResponseField } from '@/features/response-field';
 
 const RestClientPage = () => {
@@ -30,7 +33,15 @@ const RestClientPage = () => {
         return;
       }
 
-      const base = `/api/proxy/${method}/${encodeBase64(endpoint)}`;
+      let parsedEndpoint = endpoint;
+      const ls = LS.get(LS_VARIABLES);
+
+      if (ls) {
+        parsedEndpoint = replaceVariables(endpoint, ls);
+        console.log(parsedEndpoint);
+      }
+
+      const base = `/api/proxy/${method}/${encodeBase64(parsedEndpoint)}`;
 
       const url = body
         ? `${base}/${encodeBase64(body)}${search}`

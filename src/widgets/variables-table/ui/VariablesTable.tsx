@@ -1,19 +1,19 @@
 'use client';
 
 import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
-import { columns, STORAGE_KEY, type Variables } from '../model/constants';
+import { columns } from '../model/constants';
 import { useEffect, useState } from 'react';
 import type { GridRowsProp } from '@mui/x-data-grid';
 import { rowsToVariables, variablesToRow } from '../utils/rowMethods';
+import { LS, LS_VARIABLES } from '@/shared/utils/localStorage';
 
 export const VariablesTable = () => {
   const [gridRows, setGridRows] = useState<GridRowsProp>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = LS.get(LS_VARIABLES);
     if (saved) {
-      const parsed: Variables = JSON.parse(saved);
-      setGridRows(variablesToRow(parsed));
+      setGridRows(variablesToRow(saved));
     } else {
       setGridRows(variablesToRow({}));
     }
@@ -28,7 +28,7 @@ export const VariablesTable = () => {
     setGridRows(updatedRows);
 
     const updatedVariables = rowsToVariables(updatedRows);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedVariables));
+    LS.set(LS_VARIABLES, updatedVariables);
   };
 
   return (
