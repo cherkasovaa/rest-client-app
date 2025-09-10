@@ -4,10 +4,9 @@ import { TeamSection } from '@/widgets/team-section';
 import { WelcomeCard } from '@/widgets/welcome-card';
 import { WorkspaceNavigator } from '@/widgets/workspace-navigator';
 import { Box } from '@mui/material';
-import { useState } from 'react';
 
 export const HomePage = () => {
-  const [auth, setAuth] = useState<boolean>(true);
+  const auth = true;
 
   return (
     <Box
@@ -20,7 +19,6 @@ export const HomePage = () => {
         p: 2,
       }}
     >
-      {/* <button onClick={() => setAuth(!auth)}>Toggle</button> */}
       <Box
         sx={{
           display: 'flex',
