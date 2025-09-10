@@ -101,8 +101,13 @@ export const FullFeaturedCrudGrid = ({
       return rows.find((row) => row.id === newRow.id) || newRow;
     }
 
+    if (/\s/.test(key)) {
+      setError(`Key "${key}" cannot contain spaces`);
+      return rows.find((row) => row.id === newRow.id) || newRow;
+    }
+
     if (!value || value === '') {
-      setError('Value cannot be empty!');
+      setError(`Value of "${key}" cannot be empty!`);
       return rows.find((row) => row.id === newRow.id) || newRow;
     }
 
