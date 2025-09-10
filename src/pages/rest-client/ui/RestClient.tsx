@@ -38,7 +38,6 @@ const RestClientPage = () => {
 
       if (ls) {
         parsedEndpoint = replaceVariables(endpoint, ls);
-        console.log(parsedEndpoint);
       }
 
       const base = `/api/proxy/${method}/${encodeBase64(parsedEndpoint)}`;
