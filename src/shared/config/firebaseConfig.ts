@@ -19,6 +19,12 @@ export const serverConfig = {
   },
 };
 
+export const authConfig = {
+  cookieName: serverConfig.cookieName,
+  cookieSignatureKeys: serverConfig.cookieSignatureKeys,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
+};
+
 export const clientConfig = {
   projectId: process.env.FIREBASE_PROJECT_ID,
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,

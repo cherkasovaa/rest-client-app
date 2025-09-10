@@ -1,12 +1,19 @@
-import { useCallback, useMemo, useState } from 'react';
+'use client';
+
+import { type ReactNode, useCallback, useState } from 'react';
+import { toastContext } from './toastContext.ts';
 import { Alert, Snackbar, type SnackbarCloseReason } from '@mui/material';
+
+type Props = {
+  children: ReactNode;
+};
 
 type ToastData = {
   message: string;
   type: 'error' | 'info' | 'success';
 };
 
-export function useToast() {
+export const ToastProvider = (props: Props) => {
   const [opened, setOpened] = useState(false);
   const [toastData, setToastData] = useState<ToastData>({
     message: '',
@@ -36,8 +43,9 @@ export function useToast() {
     setOpened(false);
   }
 
-  const ToastElement = useMemo(() => {
-    return (
+  return (
+    <toastContext.Provider value={{ toastError, hideToast }}>
+      {props.children}
       <Snackbar open={opened}>
         <Alert
           onClose={handleClose}
@@ -48,8 +56,6 @@ export function useToast() {
           {toastData.message}
         </Alert>
       </Snackbar>
-    );
-  }, [toastData, opened]);
-
-  return { toastError, ToastElement, hideToast };
-}
+    </toastContext.Provider>
+  );
+};
