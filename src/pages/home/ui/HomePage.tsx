@@ -32,7 +32,7 @@ export const HomePage = () => {
           height: '100%',
         }}
       >
-        <WelcomeCard userName={user ? 'User' : null} />
+        <WelcomeCard userName={user ? user.email : null} />
 
         {user && <WorkspaceNavigator />}
         <TeamSection />
