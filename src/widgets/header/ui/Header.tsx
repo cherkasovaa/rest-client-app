@@ -5,9 +5,12 @@ import { AuthButtons } from '@/features/auth-buttons';
 import { useScrollPosition } from '@/shared/lib/hooks/useScrollPosition';
 import { Logo } from '@/shared/ui';
 import { Box, Container } from '@mui/material';
+import { useAuth } from '@/widgets/auth';
+import { SignOutButton } from '@/features/sign-out-button';
 
 export const Header = () => {
   const { scrollPosition } = useScrollPosition();
+  const { user } = useAuth();
 
   return (
     <Box
@@ -34,7 +37,7 @@ export const Header = () => {
 
         <LanguageSwitcher />
 
-        <AuthButtons />
+        {user ? <SignOutButton /> : <AuthButtons />}
       </Container>
     </Box>
   );
