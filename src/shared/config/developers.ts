@@ -11,7 +11,11 @@ export const DEVELOPERS: AppDeveloper[] = [
     photo: akseeePhoto,
     github: 'https://github.com/akseee',
     nickname: 'akseee',
-    responsibilities: ['RESTful client'],
+    responsibilities: [
+      'RESTful client page',
+      'variables',
+      'unit & integration testing',
+    ],
   },
   {
     name: 'Tatuana',
@@ -19,7 +23,10 @@ export const DEVELOPERS: AppDeveloper[] = [
     photo: tatuanaPhoto,
     github: 'https://github.com/dem-tv',
     nickname: 'dem-tv',
-    responsibilities: ['authorization via Firebase'],
+    responsibilities: [
+      'authorization via Firebase',
+      'unit & integration testing',
+    ],
   },
   {
     name: 'Alina',
@@ -27,6 +34,11 @@ export const DEVELOPERS: AppDeveloper[] = [
     photo: alinaPhoto,
     github: 'https://github.com/cherkasovaa/',
     nickname: 'cherkasovaa',
-    responsibilities: ['project setup', 'main page implementation'],
+    responsibilities: [
+      'project setup',
+      'main page implementation',
+      'history page',
+      'unit & integration testing',
+    ],
   },
 ] as const;
