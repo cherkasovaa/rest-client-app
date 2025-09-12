@@ -6,5 +6,3 @@ export const columns: GridColDef[] = [
 ];
 
 export type Variables = Record<string, string>;
-
-export const STORAGE_KEY = 'variables';
