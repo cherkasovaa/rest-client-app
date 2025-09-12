@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, test } from 'vitest';
-import { ClientTabs } from './ClientTabs';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, test } from 'vitest';
+import { ClientTabs } from './ClientTabs';
 
 describe('ClientTabs', () => {
   test('shoudl render all tabs and switch correctly', async () => {
