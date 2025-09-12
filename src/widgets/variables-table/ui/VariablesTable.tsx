@@ -12,11 +12,7 @@ export const VariablesTable = () => {
 
   useEffect(() => {
     const saved = LS.get(LS_VARIABLES);
-    if (saved) {
-      setGridRows(variablesToRow(saved));
-    } else {
-      setGridRows(variablesToRow({}));
-    }
+    setGridRows(variablesToRow(saved ?? {}));
   }, []);
 
   const handleSetRows = (
