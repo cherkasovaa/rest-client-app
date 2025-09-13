@@ -7,16 +7,13 @@ import { RequestBody } from '@/widgets/request-body';
 import { RequestCode } from '@/widgets/request-code';
 import { RequestHeaders } from '@/widgets/request-headers';
 
-import type { ApiResponse } from '@/shared/types/api';
-import { parsePathParams } from '@/shared/libs/utils/pathMethods';
 import { encodeBase64 } from '@/shared/libs/utils/base64';
+import { parsePathParams } from '@/shared/libs/utils/pathMethods';
+import type { ApiResponse } from '@/shared/types/api';
 import { LS, LS_VARIABLES } from '@/shared/utils/localStorage';
 import { replaceVariables } from '@/shared/utils/replaceVariables';
 
 import { ResponseField } from '@/features/response-field';
-import { encodeBase64 } from '@/shared/libs/utils/base64';
-import { parsePathParams } from '@/shared/libs/utils/pathMethods';
-import type { ApiResponse } from '@/shared/types/api';
 
 const RestClientPage = () => {
   const [fetchError, setFetchError] = useState<null | string>(null);
