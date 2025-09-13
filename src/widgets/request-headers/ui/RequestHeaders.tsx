@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { columns } from '../model/constant';
 import { updatePathSearchParams } from '@/shared/libs/utils/pathMethods';
 import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
+import { headersToRows, rowsToHeaders } from '../utils.ts/rowMethods';
 
 export const RequestHeaders = () => {
   useEffect(() => {
@@ -16,23 +17,6 @@ export const RequestHeaders = () => {
 
     setGridRows(headersToRows(newHeaders));
   }, []);
-
-  const headersToRows = (headers: Header[]): GridRowsProp => {
-    return headers.map((header, index) => ({
-      id: index,
-      key: header.key,
-      value: header.value,
-    }));
-  };
-
-  const rowsToHeaders = (rows: GridRowsProp): Header[] => {
-    return rows
-      .filter((row) => row.key || row.value)
-      .map((row) => ({
-        key: row.key?.toString() || '',
-        value: row.value?.toString() || '',
-      }));
-  };
 
   const [gridRows, setGridRows] = useState<GridRowsProp>([]);
 
