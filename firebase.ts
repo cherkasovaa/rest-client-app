@@ -1,6 +1,7 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
 import { clientConfig } from '@/shared/config/firebaseConfig.ts';
 import { getAuth, inMemoryPersistence, setPersistence } from '@firebase/auth';
+import { getApp, getApps, initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 export const getFirebaseApp = () => {
   if (getApps().length) {
@@ -17,3 +18,5 @@ export function getFirebaseAuth() {
 
   return auth;
 }
+
+export const db = getFirestore(getFirebaseApp());
