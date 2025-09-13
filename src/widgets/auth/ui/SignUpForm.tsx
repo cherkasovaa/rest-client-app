@@ -35,6 +35,15 @@ export function SignUpForm() {
       <form onSubmit={handleSubmit(onSignUp)}>
         <Stack direction={'column'} spacing={2}>
           <FormControl>
+            <FormLabel htmlFor={'userName'}>Name</FormLabel>
+            <Input
+              id={'userName'}
+              placeholder="Name"
+              {...register('userName')}
+            />
+            <FormHelperText error>{errors.email?.message}</FormHelperText>
+          </FormControl>
+          <FormControl>
             <FormLabel htmlFor={'email'}>Email address</FormLabel>
             <Input
               id={'email'}
