@@ -1,4 +1,5 @@
 import { methodColors } from '@/features/request-list/model/methodColors';
+import { REQUEST_ID_QUERY_KEY } from '@/shared/config/queryParam';
 import { ROUTES } from '@/shared/config/routes';
 import type { RequestData } from '@/shared/types/request-data-firebase';
 import { Box, ListItem, Paper, Typography } from '@mui/material';
@@ -18,7 +19,7 @@ export const RequestItem = ({ request }: { request: RequestData }) => {
     >
       <Paper
         component={Link}
-        href={ROUTES.REST_CLIENT}
+        href={`${ROUTES.REST_CLIENT}/?${REQUEST_ID_QUERY_KEY}=${request.id}`}
         elevation={3}
         sx={{
           padding: { xs: '1rem 1.5rem', md: '1rem 3rem' },
