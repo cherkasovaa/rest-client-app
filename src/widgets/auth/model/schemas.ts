@@ -27,6 +27,9 @@ export const signUpSchema = z
     email: emailSchema,
     password: passwordSchema,
     confirmPassword: z.string(),
+    userName: z.string().regex(/^[A-ZА-ЯЁ]/, {
+      error: 'Name must start with uppercase letter',
+    }),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
     message: 'The passwords did not match',
