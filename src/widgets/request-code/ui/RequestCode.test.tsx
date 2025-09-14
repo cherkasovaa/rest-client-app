@@ -1,4 +1,4 @@
-import type { CodeLanguage } from '@/shared/types/code-languages';
+import type { CodeLanguage } from '@/shared/model/types/code-languages';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('../model/generateCode', () => {
@@ -49,11 +49,11 @@ vi.mock('@monaco-editor/react', () => {
   };
 });
 
+import { CODE_LANGUAGES } from '@/shared/model/types/code-languages';
 import { generateCode } from '@/widgets/request-code/model/generateCode';
-import { CODE_LANGUAGES } from '@/shared/types/code-languages';
-import { RequestCode } from './RequestCode';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { RequestCode } from './RequestCode';
 
 describe('RequestCode component', () => {
   const mockedGenerateCode = vi.mocked(generateCode);

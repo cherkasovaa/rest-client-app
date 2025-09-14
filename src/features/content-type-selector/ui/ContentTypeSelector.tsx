@@ -1,4 +1,4 @@
-import { CONTENT_TYPES } from '@/shared/types/content-types';
+import { CONTENT_TYPES } from '@/shared/model/types/content-types';
 import {
   InputLabel,
   MenuItem,

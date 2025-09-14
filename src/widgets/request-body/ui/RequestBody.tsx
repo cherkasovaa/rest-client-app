@@ -1,16 +1,16 @@
-import { Box, Button, FormControl, Stack } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import type * as monaco from 'monaco-editor';
 import { ContentTypeSelector } from '@/features/content-type-selector';
-import { CONTENT_TYPES } from '@/shared/types/content-types';
+import { isFieldReadonly } from '@/shared/lib/utils/isReadOnly';
 import {
   parsePathParams,
   updatePathParams,
-} from '@/shared/libs/utils/pathMethods';
+} from '@/shared/lib/utils/pathMethods';
+import { prettify } from '@/shared/lib/utils/prettify';
+import { CONTENT_TYPES } from '@/shared/model/types/content-types';
 import { Editor } from '@monaco-editor/react';
-import { isFieldReadonly } from '@/shared/libs/utils/isReadOnly';
-import { prettify } from '@/shared/libs/utils/prettify';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { Box, Button, FormControl, Stack } from '@mui/material';
+import type * as monaco from 'monaco-editor';
+import { useEffect, useRef, useState } from 'react';
 
 export const RequestBody = () => {
   const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);

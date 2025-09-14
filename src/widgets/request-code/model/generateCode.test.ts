@@ -1,7 +1,7 @@
+import type { CodeLanguage } from '@/shared/model/types/code-languages';
 import { afterEach } from 'node:test';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { generateCode } from './generateCode';
-import type { CodeLanguage } from '@/shared/types/code-languages';
 
 vi.mock('@readme/httpsnippet', async () => {
   const actual = await vi.importActual<typeof import('@readme/httpsnippet')>(

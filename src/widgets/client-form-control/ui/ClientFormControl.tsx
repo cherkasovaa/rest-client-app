@@ -4,6 +4,11 @@ import {
   type HttpMethod,
 } from '@/shared/config/httpSettings';
 import {
+  parsePathParams,
+  updatePathParams,
+} from '@/shared/lib/utils/pathMethods';
+import SendIcon from '@mui/icons-material/Send';
+import {
   Box,
   Button,
   FormControl,
@@ -12,12 +17,7 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
-import {
-  parsePathParams,
-  updatePathParams,
-} from '@/shared/libs/utils/pathMethods';
 
 export const ClientFormControl = ({
   handleRequest,

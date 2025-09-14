@@ -1,6 +1,6 @@
 import { methodColors } from '@/features/request-list/model/methodColors';
 import { ROUTES } from '@/shared/config/routes';
-import type { RequestData } from '@/shared/types/request-data-firebase';
+import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import { Box, ListItem, Paper, Typography } from '@mui/material';
 import Link from 'next/link';
 

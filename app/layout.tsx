@@ -1,5 +1,8 @@
+import { authConfig } from '@/shared/config/firebaseConfig.ts';
 import theme from '@/shared/config/theme';
+import { tokensToUser } from '@/shared/lib/utils/tokensToUser';
 import { ToastProvider } from '@/shared/ui/toast';
+import { AuthProvider } from '@/widgets/auth';
 import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';
 import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material';
@@ -7,9 +10,6 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
 import { getTokens } from 'next-firebase-auth-edge';
 import { cookies } from 'next/headers';
-import { authConfig } from '@/shared/config/firebaseConfig.ts';
-import { AuthProvider } from '@/widgets/auth';
-import { tokensToUser } from '@/shared/utils/tokensToUser.ts';
 
 export const metadata: Metadata = {
   title: 'REST Client App',

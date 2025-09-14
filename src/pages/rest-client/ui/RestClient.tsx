@@ -7,11 +7,11 @@ import { RequestBody } from '@/widgets/request-body';
 import { RequestCode } from '@/widgets/request-code';
 import { RequestHeaders } from '@/widgets/request-headers';
 
-import { encodeBase64 } from '@/shared/libs/utils/base64';
-import { parsePathParams } from '@/shared/libs/utils/pathMethods';
-import type { ApiResponse } from '@/shared/types/api';
-import { LS, LS_VARIABLES } from '@/shared/utils/localStorage';
-import { replaceVariables } from '@/shared/utils/replaceVariables';
+import { encodeBase64 } from '@/shared/lib/utils/base64';
+import { LS, LS_VARIABLES } from '@/shared/lib/utils/localStorage';
+import { parsePathParams } from '@/shared/lib/utils/pathMethods';
+import { replaceVariables } from '@/shared/lib/utils/replaceVariables';
+import type { ApiResponse } from '@/shared/model/types/api';
 
 import { ResponseField } from '@/features/response-field';
 

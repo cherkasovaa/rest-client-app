@@ -1,8 +1,8 @@
 import { saveRequestToDb } from '@/shared/api/saveRequestToDb';
 import { authConfig } from '@/shared/config/firebaseConfig';
 import type { HttpMethod } from '@/shared/config/httpSettings';
-import { decodeBase64 } from '@/shared/libs/utils/base64';
-import type { RequestData } from '@/shared/types/request-data-firebase';
+import { decodeBase64 } from '@/shared/lib/utils/base64';
+import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import { getTokens } from 'next-firebase-auth-edge';
 import { cookies } from 'next/headers';
 import { NextResponse, type NextRequest } from 'next/server';

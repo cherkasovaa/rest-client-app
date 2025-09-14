@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest';
-import { encodeBase64, decodeBase64 } from './base64';
+import { describe, expect, test } from 'vitest';
+import { decodeBase64, encodeBase64 } from '../base64';
 
 describe('base64 utils', () => {
   test('encodeBase64 and decodeBase64 roundtrip for ASCII', () => {
