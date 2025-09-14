@@ -10,6 +10,6 @@ export interface RequestData {
   responseSize: number;
   errorDetails: string | null;
   endpoint: string;
-  requestBody?: unknown;
+  requestBody?: string;
   requestHeaders?: Record<string, string>;
 }

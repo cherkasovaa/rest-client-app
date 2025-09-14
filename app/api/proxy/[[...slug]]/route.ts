@@ -36,7 +36,7 @@ async function handleProxyRequest(
     responseSize: 0,
     errorDetails: null,
     endpoint: decodedEndpoint,
-    requestBody: decodedBody,
+    requestBody: decodedBody ?? '',
     requestHeaders: {},
   };
 
@@ -48,23 +48,24 @@ async function handleProxyRequest(
       headers[key] = value;
     });
 
-    const requestSize = decodedBody ? new Blob([decodedBody]).size : 0;
-    requestData.requestSize = requestSize;
-    requestData.requestHeaders = headers;
-
     const res = await fetch(decodedEndpoint, {
       method,
       headers: Object.keys(headers).length ? headers : undefined,
       body: body && method !== 'GET' ? decodedBody : undefined,
     });
 
-    const text = await res.text();
     const duration = Date.now() - startTime;
-
     requestData.duration = duration;
+
     requestData.statusCode = res.status;
-    requestData.responseSize = new Blob([text]).size;
+    requestData.requestSize = decodedBody
+      ? Buffer.byteLength(decodedBody, 'utf8')
+      : 0;
+
+    const text = await res.text();
+    requestData.responseSize = Buffer.byteLength(text, 'utf8');
     requestData.errorDetails = res.ok ? null : res.statusText;
+    requestData.requestHeaders = headers;
 
     return NextResponse.json(
       {
@@ -80,15 +81,16 @@ async function handleProxyRequest(
     );
   } catch (err) {
     const duration = Date.now() - startTime;
-    const errorMessage = (err as Error).message;
+    const { name, message } = err as Error;
 
     requestData.duration = duration;
-    requestData.errorDetails = errorMessage;
+    requestData.errorDetails = message;
+    requestData.statusCode = 500;
 
     return NextResponse.json(
       {
-        error: 'FETCH ERROR',
-        message: errorMessage,
+        status: 500,
+        body: JSON.stringify({ error: name, message }),
       },
       { status: 500 }
     );
