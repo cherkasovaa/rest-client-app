@@ -80,7 +80,7 @@ const RestClientPage = () => {
         handleRequest={handleRequest}
       />
       <ClientTabs
-        body={<RequestBody />}
+        body={<RequestBody body={requestData?.requestBody} />}
         headers={<RequestHeaders />}
         code={<RequestCode />}
       />
