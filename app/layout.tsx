@@ -1,5 +1,9 @@
+import ErrorBoundary from '@/app/providers/ErrorBoundary';
+import { authConfig } from '@/shared/config/firebaseConfig.ts';
 import theme from '@/shared/config/theme';
 import { ToastProvider } from '@/shared/ui/toast';
+import { tokensToUser } from '@/shared/utils/tokensToUser.ts';
+import { AuthProvider } from '@/widgets/auth';
 import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';
 import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material';
@@ -7,9 +11,6 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
 import { getTokens } from 'next-firebase-auth-edge';
 import { cookies } from 'next/headers';
-import { authConfig } from '@/shared/config/firebaseConfig.ts';
-import { AuthProvider } from '@/widgets/auth';
-import { tokensToUser } from '@/shared/utils/tokensToUser.ts';
 
 export const metadata: Metadata = {
   title: 'REST Client App',
@@ -31,30 +32,32 @@ export default async function RootLayout({
           <ThemeProvider theme={theme}>
             <AuthProvider user={user}>
               <ToastProvider>
-                <CssBaseline />
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    minHeight: '100vh',
-                    backgroundColor: 'primary.dark',
-                    color: 'primary.contrastText',
-                  }}
-                >
-                  <Header />
-
+                <ErrorBoundary>
+                  <CssBaseline />
                   <Box
-                    component="main"
                     sx={{
-                      flexGrow: 1,
                       display: 'flex',
+                      flexDirection: 'column',
+                      minHeight: '100vh',
+                      backgroundColor: 'primary.dark',
+                      color: 'primary.contrastText',
                     }}
                   >
-                    <Container maxWidth="lg">{children}</Container>
-                  </Box>
+                    <Header />
 
-                  <Footer />
-                </Box>
+                    <Box
+                      component="main"
+                      sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                      }}
+                    >
+                      <Container maxWidth="lg">{children}</Container>
+                    </Box>
+
+                    <Footer />
+                  </Box>
+                </ErrorBoundary>
               </ToastProvider>
             </AuthProvider>
           </ThemeProvider>
