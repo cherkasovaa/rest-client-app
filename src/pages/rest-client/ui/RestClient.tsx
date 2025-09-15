@@ -7,13 +7,10 @@ import { RequestBody } from '@/widgets/request-body';
 import { RequestCode } from '@/widgets/request-code';
 import { RequestHeaders } from '@/widgets/request-headers';
 
-import { encodeBase64 } from '@/shared/libs/utils/base64';
-import { parsePathParams } from '@/shared/libs/utils/pathMethods';
 import type { ApiResponse } from '@/shared/types/api';
-import { LS, LS_VARIABLES } from '@/shared/utils/localStorage';
-import { replaceVariables } from '@/shared/utils/replaceVariables';
 
 import { ResponseField } from '@/features/response-field';
+import { buildRequestUrl } from '@/shared/libs/utils/buildRequestUrl';
 
 const RestClientPage = () => {
   const [fetchError, setFetchError] = useState<null | string>(null);
@@ -26,27 +23,10 @@ const RestClientPage = () => {
     setIsLoading(true);
 
     try {
-      const { pathname, search } = window.location;
-      const { method, endpoint, body } = parsePathParams(pathname);
+      const builtUrl = buildRequestUrl(window.location);
+      if (!builtUrl) return;
 
-      if (!endpoint) {
-        return;
-      }
-
-      let parsedEndpoint = endpoint;
-      const ls = LS.get(LS_VARIABLES);
-
-      if (ls) {
-        parsedEndpoint = replaceVariables(endpoint, ls);
-      }
-
-      const base = `/api/proxy/${method}/${encodeBase64(parsedEndpoint)}`;
-
-      const url = body
-        ? `${base}/${encodeBase64(body)}${search}`
-        : `${base}${search}`;
-
-      const res = await fetch(url, { method: 'GET' });
+      const res = await fetch(builtUrl.url, { method: 'GET' });
 
       if (!res.ok) {
         setFetchError(res.statusText);
