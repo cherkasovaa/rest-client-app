@@ -22,7 +22,11 @@ export const ResponseField = ({
         theme="light"
         value={response?.body}
         loading={loading && <div>...Loading</div>}
-        options={{ readOnly: true }}
+        options={{
+          readOnly: true,
+          minimap: { enabled: false },
+          wordWrap: 'on',
+        }}
       />
     </Box>
   );
