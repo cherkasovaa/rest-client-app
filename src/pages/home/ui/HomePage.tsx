@@ -10,6 +10,7 @@ import { Box } from '@mui/material';
 export const HomePage = () => {
   useShowRedirectReason();
   const { user } = useAuth();
+  const displayName = user ? user.displayName || user.email : null;
 
   return (
     <Box
@@ -32,7 +33,7 @@ export const HomePage = () => {
           height: '100%',
         }}
       >
-        <WelcomeCard userName={user ? user.displayName : null} />
+        <WelcomeCard userName={displayName} />
 
         {user && <WorkspaceNavigator />}
         <TeamSection />

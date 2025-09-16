@@ -2,6 +2,8 @@ import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -17,7 +19,21 @@ export const requestService = {
         createdAt: serverTimestamp(),
       });
     } catch (error) {
-      console.error('Failed to save data: ', error);
+      throw error;
+    }
+  },
+
+  getResponse: async (userId: string, requestId: string) => {
+    try {
+      const docRef = doc(db, 'users', userId, 'requests', requestId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() } as RequestData;
+      }
+
+      return null;
+    } catch (error) {
       throw error;
     }
   },
@@ -35,8 +51,7 @@ export const requestService = {
         (doc) => ({ id: doc.id, ...doc.data() }) as RequestData
       );
     } catch (error) {
-      console.error('Failed to get response from DB: ', error);
-      return [];
+      throw error;
     }
   },
 };
