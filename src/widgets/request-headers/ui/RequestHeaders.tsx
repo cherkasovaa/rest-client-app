@@ -4,7 +4,7 @@ import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeature
 import type { GridRowsProp } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { columns } from '../model/constant';
-import { headersToRows, rowsToHeaders } from '../utils.ts/rowMethods';
+import { headersToRows, rowsToHeaders } from '../utils/rowMethods';
 
 export const RequestHeaders = () => {
   useEffect(() => {
