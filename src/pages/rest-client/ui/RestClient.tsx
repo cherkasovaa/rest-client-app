@@ -10,17 +10,20 @@ import { RequestHeaders } from '@/widgets/request-headers';
 import type { ApiResponse } from '@/shared/types/api';
 
 import { ResponseField } from '@/features/response-field';
+import { useRequestData } from '@/pages/rest-client/model/hooks/useRequestData';
 import { buildRequestUrl } from '@/shared/libs/utils/buildRequestUrl';
 
 const RestClientPage = () => {
   const [fetchError, setFetchError] = useState<null | string>(null);
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { requestData, clearRequestData } = useRequestData();
 
   const handleRequest = async () => {
     setFetchError(null);
     setResponse(null);
     setIsLoading(true);
+    clearRequestData();
 
     try {
       const builtUrl = buildRequestUrl(window.location);
@@ -30,6 +33,12 @@ const RestClientPage = () => {
 
       if (!res.ok) {
         setFetchError(res.statusText);
+
+        setResponse((prev) =>
+          prev
+            ? { ...prev, status: res.status, statusText: res.statusText }
+            : null
+        );
       }
 
       const data = await res.json();
@@ -45,9 +54,13 @@ const RestClientPage = () => {
 
   return (
     <Stack spacing={3} p={3}>
-      <ClientFormControl isLoading={isLoading} handleRequest={handleRequest} />
+      <ClientFormControl
+        request={requestData}
+        isLoading={isLoading}
+        handleRequest={handleRequest}
+      />
       <ClientTabs
-        body={<RequestBody />}
+        body={<RequestBody body={requestData?.requestBody} />}
         headers={<RequestHeaders />}
         code={<RequestCode />}
       />

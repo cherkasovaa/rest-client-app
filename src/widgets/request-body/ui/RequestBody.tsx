@@ -1,23 +1,29 @@
-import { Box, Button, FormControl, Stack } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import type * as monaco from 'monaco-editor';
 import { ContentTypeSelector } from '@/features/content-type-selector';
-import { CONTENT_TYPES } from '@/shared/types/content-types';
+import { isFieldReadonly } from '@/shared/libs/utils/isReadOnly';
 import {
   parsePathParams,
   updatePathParams,
 } from '@/shared/libs/utils/pathMethods';
-import { Editor } from '@monaco-editor/react';
-import { isFieldReadonly } from '@/shared/libs/utils/isReadOnly';
 import { prettify } from '@/shared/libs/utils/prettify';
+import { CONTENT_TYPES } from '@/shared/types/content-types';
+import { Editor } from '@monaco-editor/react';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { Box, Button, FormControl, Stack } from '@mui/material';
+import type * as monaco from 'monaco-editor';
+import { useEffect, useRef, useState } from 'react';
 
-export const RequestBody = () => {
+export const RequestBody = ({ body }: { body?: string }) => {
   const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const [isReadonly, setIsReadonly] = useState<boolean>(
     isFieldReadonly(window.location.pathname)
   );
+
+  useEffect(() => {
+    if (body && editorRef.current) {
+      editorRef.current.setValue(body);
+    }
+  }, [body]);
 
   useEffect(() => {
     const update = () =>
