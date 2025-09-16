@@ -1,3 +1,4 @@
+import ErrorBoundary from '@/app/providers/ErrorBoundary';
 import { authConfig } from '@/shared/config/firebaseConfig.ts';
 import theme from '@/shared/config/theme';
 import { tokensToUser } from '@/shared/lib/utils/tokensToUser';
@@ -31,30 +32,32 @@ export default async function RootLayout({
           <ThemeProvider theme={theme}>
             <AuthProvider user={user}>
               <ToastProvider>
-                <CssBaseline />
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    minHeight: '100vh',
-                    backgroundColor: 'primary.dark',
-                    color: 'primary.contrastText',
-                  }}
-                >
-                  <Header />
-
+                <ErrorBoundary>
+                  <CssBaseline />
                   <Box
-                    component="main"
                     sx={{
-                      flexGrow: 1,
                       display: 'flex',
+                      flexDirection: 'column',
+                      minHeight: '100vh',
+                      backgroundColor: 'primary.dark',
+                      color: 'primary.contrastText',
                     }}
                   >
-                    <Container maxWidth="lg">{children}</Container>
-                  </Box>
+                    <Header />
 
-                  <Footer />
-                </Box>
+                    <Box
+                      component="main"
+                      sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                      }}
+                    >
+                      <Container maxWidth="lg">{children}</Container>
+                    </Box>
+
+                    <Footer />
+                  </Box>
+                </ErrorBoundary>
               </ToastProvider>
             </AuthProvider>
           </ThemeProvider>
