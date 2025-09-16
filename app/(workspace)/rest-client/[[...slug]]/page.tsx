@@ -1,9 +1,10 @@
 'use client';
+import { PageLoader } from '@/shared/ui/page-loader/PageLoader';
 import dynamic from 'next/dynamic';
 
-const RestClient = dynamic(() => import('../../../../src/pages/rest-client'), {
+const RestClient = dynamic(() => import('@/pages/rest-client'), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <PageLoader />,
 });
 
 export default function Page() {
