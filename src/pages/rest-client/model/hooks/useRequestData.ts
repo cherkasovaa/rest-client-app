@@ -1,6 +1,6 @@
 import { requestService } from '@/shared/api/services/requestService';
 import { REQUEST_ID_QUERY_KEY } from '@/shared/config/queryParam';
-import type { RequestData } from '@/shared/types/request-data-firebase';
+import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import { useAuth } from '@/widgets/auth';
 import { useEffect, useRef, useState } from 'react';
 

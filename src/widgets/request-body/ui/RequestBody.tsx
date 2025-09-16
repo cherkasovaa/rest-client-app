@@ -1,11 +1,12 @@
 import { ContentTypeSelector } from '@/features/content-type-selector';
-import { isFieldReadonly } from '@/shared/libs/utils/isReadOnly';
+
+import { isFieldReadonly } from '@/shared/lib/utils/isReadOnly';
 import {
   parsePathParams,
   updatePathParams,
-} from '@/shared/libs/utils/pathMethods';
-import { prettify } from '@/shared/libs/utils/prettify';
-import { CONTENT_TYPES } from '@/shared/types/content-types';
+} from '@/shared/lib/utils/pathMethods';
+import { prettify } from '@/shared/lib/utils/prettify';
+import { CONTENT_TYPES } from '@/shared/model/types/content-types';
 import { Editor } from '@monaco-editor/react';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { Box, Button, FormControl, Stack } from '@mui/material';

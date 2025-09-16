@@ -1,9 +1,9 @@
+import { updatePathSearchParams } from '@/shared/lib/utils/pathMethods';
+import type { Header } from '@/shared/model/types/api';
+import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
 import type { GridRowsProp } from '@mui/x-data-grid';
-import type { Header } from '@/shared/types/api';
 import { useEffect, useState } from 'react';
 import { columns } from '../model/constant';
-import { updatePathSearchParams } from '@/shared/libs/utils/pathMethods';
-import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
 import { headersToRows, rowsToHeaders } from '../utils.ts/rowMethods';
 
 export const RequestHeaders = () => {

@@ -1,5 +1,5 @@
 import { HTTP_CONFIG } from '@/shared/config/httpSettings';
-import type { RequestData } from '@/shared/types/request-data-firebase';
+import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import { useRequestParams } from '@/widgets/client-form-control/model/hooks/useRequestParams';
 import SendIcon from '@mui/icons-material/Send';
 import {
@@ -11,6 +11,7 @@ import {
   Select,
   TextField,
 } from '@mui/material';
+
 import { type FormEvent } from 'react';
 
 export const ClientFormControl = ({

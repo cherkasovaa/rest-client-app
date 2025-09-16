@@ -1,5 +1,5 @@
 import { requestService } from '@/shared/api/services/requestService';
-import type { RequestData } from '@/shared/types/request-data-firebase';
+import type { RequestData } from '@/shared/model/types/request-data-firebase';
 
 export const saveRequestToDb = async (
   userId: string,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useShowRedirectReason } from '@/shared/hooks/useShowRedirectReason.ts';
+import { useShowRedirectReason } from '@/shared/lib/hooks/useShowRedirectReason';
 import { useAuth } from '@/widgets/auth';
 import { TeamSection } from '@/widgets/team-section';
 import { WelcomeCard } from '@/widgets/welcome-card';

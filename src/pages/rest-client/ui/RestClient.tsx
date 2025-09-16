@@ -7,11 +7,10 @@ import { RequestBody } from '@/widgets/request-body';
 import { RequestCode } from '@/widgets/request-code';
 import { RequestHeaders } from '@/widgets/request-headers';
 
-import type { ApiResponse } from '@/shared/types/api';
-
 import { ResponseField } from '@/features/response-field';
 import { useRequestData } from '@/pages/rest-client/model/hooks/useRequestData';
-import { buildRequestUrl } from '@/shared/libs/utils/buildRequestUrl';
+import { buildRequestUrl } from '@/shared/lib/utils/buildRequestUrl';
+import type { ApiResponse } from '@/shared/model/types/api';
 
 const RestClientPage = () => {
   const [fetchError, setFetchError] = useState<null | string>(null);

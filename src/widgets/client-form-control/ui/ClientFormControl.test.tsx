@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
+import * as pathMethods from '@/shared/lib/utils/pathMethods';
 import { render, screen } from '@testing-library/react';
-import * as pathMethods from '@/shared/libs/utils/pathMethods';
 import { ClientFormControl } from './ClientFormControl';
 
 vi.mock('@/shared/libs/utils/pathMethods');

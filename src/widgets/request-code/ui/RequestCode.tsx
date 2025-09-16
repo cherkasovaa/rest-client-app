@@ -1,12 +1,12 @@
-import { Button, FormControl, Stack } from '@mui/material';
-import { useState } from 'react';
-import CodeIcon from '@mui/icons-material/Code';
 import { CodeLanguageSelector } from '@/features/code-language-selector';
 import {
   CODE_LANGUAGES,
   type CodeLanguage,
-} from '@/shared/types/code-languages';
+} from '@/shared/model/types/code-languages';
 import { Editor } from '@monaco-editor/react';
+import CodeIcon from '@mui/icons-material/Code';
+import { Button, FormControl, Stack } from '@mui/material';
+import { useState } from 'react';
 import { generateCode } from '../model/generateCode';
 
 export const RequestCode = () => {

@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@/shared/types/api';
+import type { ApiResponse } from '@/shared/model/types/api';
 import { Editor } from '@monaco-editor/react';
 import { Box, Typography } from '@mui/material';
 

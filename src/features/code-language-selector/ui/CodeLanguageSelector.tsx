@@ -1,7 +1,7 @@
 import {
   CODE_LANGUAGES,
   type CodeLanguage,
-} from '@/shared/types/code-languages';
+} from '@/shared/model/types/code-languages';
 import {
   FormControl,
   InputLabel,

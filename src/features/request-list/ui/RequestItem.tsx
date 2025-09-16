@@ -4,7 +4,7 @@ import { methodColors } from '@/features/request-list/model/methodColors';
 import { statusColors } from '@/features/request-list/model/statusColors';
 import { REQUEST_ID_QUERY_KEY } from '@/shared/config/queryParam';
 import { ROUTES } from '@/shared/config/routes';
-import type { RequestData } from '@/shared/types/request-data-firebase';
+import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import { Box, ListItem, Paper, Typography } from '@mui/material';
 import Link from 'next/link';
 

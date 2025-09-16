@@ -6,8 +6,8 @@ import {
 import {
   parsePathParams,
   updatePathParams,
-} from '@/shared/libs/utils/pathMethods';
-import type { RequestData } from '@/shared/types/request-data-firebase';
+} from '@/shared/lib/utils/pathMethods';
+import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useRequestParams = (request: RequestData | null) => {

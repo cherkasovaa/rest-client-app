@@ -1,7 +1,7 @@
+import { LS, LS_VARIABLES } from '@/shared/lib/utils/localStorage';
+import { replaceVariables } from '@/shared/lib/utils/replaceVariables';
 import { encodeBase64 } from './base64';
 import { parsePathParams } from './pathMethods';
-import { LS, LS_VARIABLES } from '../../utils/localStorage';
-import { replaceVariables } from '../../utils/replaceVariables';
 
 export const buildRequestUrl = (location: Location) => {
   const { pathname, search } = location;

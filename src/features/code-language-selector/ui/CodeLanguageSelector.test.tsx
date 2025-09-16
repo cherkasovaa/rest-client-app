@@ -1,9 +1,9 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { CODE_LANGUAGES } from '@/shared/types/code-languages';
-import { CodeLanguageSelector } from './CodeLanguageSelector';
+import { CODE_LANGUAGES } from '@/shared/model/types/code-languages';
 import { render, screen } from '@testing-library/react';
+import { CodeLanguageSelector } from './CodeLanguageSelector';
 
 describe('CodeLanguageSelector', () => {
   let onChange: ReturnType<typeof vi.fn>;

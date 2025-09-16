@@ -1,4 +1,4 @@
-import type { RequestData } from '@/shared/types/request-data-firebase';
+import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import {
   addDoc,
   collection,

@@ -1,13 +1,13 @@
-import { useRouter } from 'next/navigation';
+import { useLoadingCallback } from '@/shared/lib/hooks/useLoadingCallback.ts';
+import { generateFirebaseAuthErrorMessage } from '@/shared/lib/utils/generateFirebaseAuthErrorMessage.ts';
 import { useToast } from '@/shared/ui/toast/useToast.tsx';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { getFirebaseAuth } from '../../../../firebase.ts';
-import { useEffect } from 'react';
-import { generateFirebaseAuthErrorMessage } from '@/shared/utils/generateFirebaseAuthErrorMessage.ts';
-import { login } from '../../../../api';
 import type { SignUpFormModel } from '@/widgets/auth/model/schemas.ts';
-import { useLoadingCallback } from '@/shared/hooks/useLoadingCallback.ts';
 import { updateProfile } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { login } from '../../../../api';
+import { getFirebaseAuth } from '../../../../firebase.ts';
 
 export function useSignUp() {
   const router = useRouter();
