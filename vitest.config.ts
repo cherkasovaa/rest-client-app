@@ -8,6 +8,18 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/shared/config/tests/setup.ts',
+    deps: {
+      optimizer: {
+        web: {
+          include: ['@mui/x-data-grid'],
+        },
+      },
+    },
+    server: {
+      deps: {
+        inline: ['@mui/x-data-grid'],
+      },
+    },
     coverage: {
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*.{js,jsx,ts,tsx}'],
