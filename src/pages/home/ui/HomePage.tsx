@@ -1,15 +1,14 @@
 'use client';
 
+import { useAuth } from '@/widgets/auth';
 import { TeamSection } from '@/widgets/team-section';
 import { WelcomeCard } from '@/widgets/welcome-card';
 import { WorkspaceNavigator } from '@/widgets/workspace-navigator';
 import { Box } from '@mui/material';
-import { useShowRedirectReason } from '@/shared/hooks/useShowRedirectReason.ts';
-import { useAuth } from '@/widgets/auth';
 
 export const HomePage = () => {
-  useShowRedirectReason();
   const { user } = useAuth();
+  const displayName = user ? user.displayName || user.email : null;
 
   return (
     <Box
@@ -32,7 +31,7 @@ export const HomePage = () => {
           height: '100%',
         }}
       >
-        <WelcomeCard userName={user ? user.displayName : null} />
+        <WelcomeCard userName={displayName} />
 
         {user && <WorkspaceNavigator />}
         <TeamSection />

@@ -1,8 +1,8 @@
 import ErrorBoundary from '@/app/providers/ErrorBoundary';
 import { authConfig } from '@/shared/config/firebaseConfig.ts';
 import theme from '@/shared/config/theme';
+import { tokensToUser } from '@/shared/lib/utils/tokensToUser';
 import { ToastProvider } from '@/shared/ui/toast';
-import { tokensToUser } from '@/shared/utils/tokensToUser.ts';
 import { AuthProvider } from '@/widgets/auth';
 import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';

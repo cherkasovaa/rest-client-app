@@ -1,4 +1,4 @@
-import type { Header } from '@/shared/types/api';
+import type { Header } from '@/shared/model/types/api';
 import type { GridRowsProp } from '@mui/x-data-grid';
 
 export const headersToRows = (headers: Header[]): GridRowsProp => {

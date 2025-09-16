@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest';
-import { prettify } from './prettify';
+import { describe, expect, test } from 'vitest';
+import { prettify } from '../prettify';
 
 describe('prettify', () => {
   test('formats json string with indentation', () => {

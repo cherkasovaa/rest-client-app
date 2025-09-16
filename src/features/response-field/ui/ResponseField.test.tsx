@@ -1,7 +1,7 @@
+import type { ApiResponse } from '@/shared/model/types/api';
 import { render, screen } from '@testing-library/react';
-import { ResponseField } from './ResponseField';
 import { describe, expect, test, vi } from 'vitest';
-import type { ApiResponse } from '@/shared/types/api';
+import { ResponseField } from './ResponseField';
 
 vi.mock('@monaco-editor/react', () => {
   const EditorMock = (props: { value?: string }) => {

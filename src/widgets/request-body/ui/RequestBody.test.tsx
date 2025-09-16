@@ -1,8 +1,8 @@
-import { beforeEach, afterEach, describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-vi.mock('@/shared/libs/utils/pathMethods', () => ({
+vi.mock('@/shared/lib/utils/pathMethods', () => ({
   parsePathParams: vi.fn(),
   updatePathParams: vi.fn(),
 }));
@@ -10,7 +10,7 @@ vi.mock('@/shared/libs/utils/pathMethods', () => ({
 import {
   parsePathParams,
   updatePathParams,
-} from '@/shared/libs/utils/pathMethods';
+} from '@/shared/lib/utils/pathMethods';
 
 vi.mock('@/features/content-type-selector', () => ({
   ContentTypeSelector: (props: { onChange: (lang: string) => void }) => {
@@ -92,8 +92,8 @@ vi.mock('@monaco-editor/react', () => {
   };
 });
 
+import { prettify } from '@/shared/lib/utils/prettify';
 import { RequestBody } from './RequestBody';
-import { prettify } from '@/shared/libs/utils/prettify';
 
 describe('RequestBody', () => {
   const mockedParse = vi.mocked(parsePathParams);

@@ -1,8 +1,8 @@
+import { useLoadingCallback } from '@/shared/lib/hooks/useLoadingCallback.ts';
 import { signOut } from '@firebase/auth';
-import { getFirebaseAuth } from '../../../../firebase.ts';
-import { logout } from '../../../../api';
-import { useLoadingCallback } from '@/shared/hooks/useLoadingCallback.ts';
 import { useRouter } from 'next/navigation';
+import { logout } from '../../../../api';
+import { getFirebaseAuth } from '../../../../firebase.ts';
 
 export function useSignOut() {
   const router = useRouter();

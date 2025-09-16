@@ -1,23 +1,30 @@
-import { Box, Button, FormControl, Stack } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import type * as monaco from 'monaco-editor';
 import { ContentTypeSelector } from '@/features/content-type-selector';
-import { CONTENT_TYPES } from '@/shared/types/content-types';
+
+import { isFieldReadonly } from '@/shared/lib/utils/isReadOnly';
 import {
   parsePathParams,
   updatePathParams,
-} from '@/shared/libs/utils/pathMethods';
+} from '@/shared/lib/utils/pathMethods';
+import { prettify } from '@/shared/lib/utils/prettify';
+import { CONTENT_TYPES } from '@/shared/model/types/content-types';
 import { Editor } from '@monaco-editor/react';
-import { isFieldReadonly } from '@/shared/libs/utils/isReadOnly';
-import { prettify } from '@/shared/libs/utils/prettify';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { Box, Button, FormControl, Stack } from '@mui/material';
+import type * as monaco from 'monaco-editor';
+import { useEffect, useRef, useState } from 'react';
 
-export const RequestBody = () => {
+export const RequestBody = ({ body }: { body?: string }) => {
   const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const [isReadonly, setIsReadonly] = useState<boolean>(
     isFieldReadonly(window.location.pathname)
   );
+
+  useEffect(() => {
+    if (body && editorRef.current) {
+      editorRef.current.setValue(body);
+    }
+  }, [body]);
 
   useEffect(() => {
     const update = () =>
@@ -74,16 +81,24 @@ export const RequestBody = () => {
         style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: 10 }}
       >
         <ContentTypeSelector onChange={handleTypeChange} />
-        <Button onClick={handlePrettify} disabled={false}>
+        <Button onClick={handlePrettify} disabled={false} variant="contained">
           <AutoAwesomeIcon />
           Prettify
         </Button>
       </FormControl>
-      <Box
-        sx={{
-          minHeight: '200px',
-        }}
-      >
+      <Box sx={{ position: 'relative', minHeight: '200px' }}>
+        {isReadonly && (
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              bgcolor: 'rgba(0, 0, 0, 0.75)',
+              pointerEvents: 'all',
+              cursor: 'default',
+              zIndex: 1000,
+            }}
+          />
+        )}
         <Editor
           onMount={onMount}
           height="200px"

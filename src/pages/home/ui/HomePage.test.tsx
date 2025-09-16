@@ -1,7 +1,11 @@
 import { HomePage } from '@/pages/home/ui/HomePage';
+import { useAuth } from '@/widgets/auth';
 import { render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
+vi.mock('@/widgets/auth', () => ({
+  useAuth: vi.fn(),
+}));
 vi.mock('@/widgets/welcome-card', () => ({
   WelcomeCard: ({ userName }: { userName: string }) => (
     <div data-testid="welcome-card">{userName || 'Guest'}</div>
@@ -14,29 +18,28 @@ vi.mock('@/widgets/team-section', () => ({
   TeamSection: () => <div>TeamSection</div>,
 }));
 
+const mockUseAuth = vi.mocked(useAuth);
+
 describe('HomePage', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
 
   test('renders default welcome message when user is a guest', () => {
+    const mockUser = null;
+
+    mockUseAuth.mockReturnValue({ user: mockUser });
     render(<HomePage />);
 
-    const greetingText = screen.getByText(/user/i);
+    const greetingText = screen.getByText(/guest/i);
     expect(greetingText).toBeInTheDocument();
   });
 
   test('does not renders WorkspaceNavigator when user is a guest', async () => {
-    vi.doMock('react', async () => {
-      const actual = await vi.importActual<typeof import('react')>('react');
-      return {
-        ...actual,
-        useState: () => [false, vi.fn()],
-      };
-    });
-    vi.resetModules();
+    const mockUser = null;
 
-    const { HomePage } = await import('@/pages/home/ui/HomePage');
+    mockUseAuth.mockReturnValue({ user: mockUser });
+
     render(<HomePage />);
 
     const workspaceNavigator = screen.queryByText(/workspaceNavigator/i);
@@ -47,6 +50,16 @@ describe('HomePage', () => {
   });
 
   test('renders WorkspaceNavigator when user is authorized', () => {
+    const mockUser = {
+      uid: '123',
+      displayName: 'Alina',
+      email: 'admin@gmail.com',
+      phoneNumber: null,
+      photoURL: null,
+      providerId: '',
+    };
+
+    mockUseAuth.mockReturnValue({ user: mockUser });
     render(<HomePage />);
 
     const workspaceNavigator = screen.queryByText(/workspaceNavigator/i);

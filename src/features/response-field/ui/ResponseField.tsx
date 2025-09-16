@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@/shared/types/api';
+import type { ApiResponse } from '@/shared/model/types/api';
 import { Editor } from '@monaco-editor/react';
 import { Box, Typography } from '@mui/material';
 
@@ -22,7 +22,11 @@ export const ResponseField = ({
         theme="light"
         value={response?.body}
         loading={loading && <div>...Loading</div>}
-        options={{ readOnly: true }}
+        options={{
+          readOnly: true,
+          minimap: { enabled: false },
+          wordWrap: 'on',
+        }}
       />
     </Box>
   );

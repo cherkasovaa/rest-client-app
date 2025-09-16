@@ -1,8 +1,8 @@
 import {
   parsePathParams,
   parsePathSearchParams,
-} from '@/shared/libs/utils/pathMethods';
-import type { CodeLanguage } from '@/shared/types/code-languages';
+} from '@/shared/lib/utils/pathMethods';
+import type { CodeLanguage } from '@/shared/model/types/code-languages';
 import { HTTPSnippet, type HarRequest } from '@readme/httpsnippet';
 
 export function generateCode(language: CodeLanguage): string {

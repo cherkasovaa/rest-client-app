@@ -1,11 +1,11 @@
 'use client';
 
+import { LS, LS_VARIABLES } from '@/shared/lib/utils/localStorage';
 import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
-import { columns } from '../model/constants';
-import { useEffect, useState } from 'react';
 import type { GridRowsProp } from '@mui/x-data-grid';
+import { useEffect, useState } from 'react';
+import { columns } from '../model/constants';
 import { rowsToVariables, variablesToRow } from '../utils/rowMethods';
-import { LS, LS_VARIABLES } from '@/shared/utils/localStorage';
 
 export const VariablesTable = () => {
   const [gridRows, setGridRows] = useState<GridRowsProp>([]);

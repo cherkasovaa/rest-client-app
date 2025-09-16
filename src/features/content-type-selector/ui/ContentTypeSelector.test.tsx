@@ -1,7 +1,7 @@
 import { ContentTypeSelector } from '@/features/content-type-selector';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { CONTENT_TYPES } from '@/shared/model/types/content-types';
 import userEvent from '@testing-library/user-event';
-import { CONTENT_TYPES } from '@/shared/types/content-types';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { render, screen } from '@testing-library/react';
 
