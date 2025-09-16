@@ -21,6 +21,8 @@ export const ClientTabs = ({
         value={tab}
         onChange={handleTabChange}
         aria-label="basic tabs example"
+        indicatorColor="secondary"
+        textColor="secondary"
       >
         <Tab label="BODY" {...a11yProps(0)} />
         <Tab label="HEADERS" {...a11yProps(1)} />
