@@ -1,11 +1,13 @@
 import type { Variables } from '@/widgets/variables-table/model/constants';
 
 export const LS_VARIABLES = 'variables';
+export const LS_TEST = 'test';
 
-type LocalStorageKeys = 'variables';
+type LocalStorageKeys = 'variables' | 'test';
 
 type LocalStorageData = {
   variables: Variables;
+  test: string;
 };
 
 export const LS = {
