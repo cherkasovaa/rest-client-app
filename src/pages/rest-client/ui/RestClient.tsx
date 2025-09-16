@@ -7,49 +7,37 @@ import { RequestBody } from '@/widgets/request-body';
 import { RequestCode } from '@/widgets/request-code';
 import { RequestHeaders } from '@/widgets/request-headers';
 
-import { encodeBase64 } from '@/shared/lib/utils/base64';
-import { LS, LS_VARIABLES } from '@/shared/lib/utils/localStorage';
-import { parsePathParams } from '@/shared/lib/utils/pathMethods';
-import { replaceVariables } from '@/shared/lib/utils/replaceVariables';
-import type { ApiResponse } from '@/shared/model/types/api';
-
 import { ResponseField } from '@/features/response-field';
+import { useRequestData } from '@/pages/rest-client/model/hooks/useRequestData';
+import { buildRequestUrl } from '@/shared/lib/utils/buildRequestUrl';
+import type { ApiResponse } from '@/shared/model/types/api';
 
 const RestClientPage = () => {
   const [fetchError, setFetchError] = useState<null | string>(null);
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { requestData, clearRequestData } = useRequestData();
 
   const handleRequest = async () => {
     setFetchError(null);
     setResponse(null);
     setIsLoading(true);
+    clearRequestData();
 
     try {
-      const { pathname, search } = window.location;
-      const { method, endpoint, body } = parsePathParams(pathname);
+      const builtUrl = buildRequestUrl(window.location);
+      if (!builtUrl) return;
 
-      if (!endpoint) {
-        return;
-      }
-
-      let parsedEndpoint = endpoint;
-      const ls = LS.get(LS_VARIABLES);
-
-      if (ls) {
-        parsedEndpoint = replaceVariables(endpoint, ls);
-      }
-
-      const base = `/api/proxy/${method}/${encodeBase64(parsedEndpoint)}`;
-
-      const url = body
-        ? `${base}/${encodeBase64(body)}${search}`
-        : `${base}${search}`;
-
-      const res = await fetch(url, { method: 'GET' });
+      const res = await fetch(builtUrl.url, { method: 'GET' });
 
       if (!res.ok) {
         setFetchError(res.statusText);
+
+        setResponse((prev) =>
+          prev
+            ? { ...prev, status: res.status, statusText: res.statusText }
+            : null
+        );
       }
 
       const data = await res.json();
@@ -65,9 +53,13 @@ const RestClientPage = () => {
 
   return (
     <Stack spacing={3} p={3}>
-      <ClientFormControl isLoading={isLoading} handleRequest={handleRequest} />
+      <ClientFormControl
+        request={requestData}
+        isLoading={isLoading}
+        handleRequest={handleRequest}
+      />
       <ClientTabs
-        body={<RequestBody />}
+        body={<RequestBody body={requestData?.requestBody} />}
         headers={<RequestHeaders />}
         code={<RequestCode />}
       />
