@@ -65,7 +65,7 @@ export const ClientFormControl = ({
           />
           <Button
             variant="contained"
-            disabled={endpoint.length === 0}
+            disabled={endpoint.length === 0 || isLoading}
             type="submit"
           >
             {isLoading && <>..Loading</>}

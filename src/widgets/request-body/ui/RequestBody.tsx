@@ -80,16 +80,24 @@ export const RequestBody = ({ body }: { body?: string }) => {
         style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: 10 }}
       >
         <ContentTypeSelector onChange={handleTypeChange} />
-        <Button onClick={handlePrettify} disabled={false}>
+        <Button onClick={handlePrettify} disabled={false} variant="contained">
           <AutoAwesomeIcon />
           Prettify
         </Button>
       </FormControl>
-      <Box
-        sx={{
-          minHeight: '200px',
-        }}
-      >
+      <Box sx={{ position: 'relative', minHeight: '200px' }}>
+        {isReadonly && (
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              bgcolor: 'rgba(0, 0, 0, 0.75)',
+              pointerEvents: 'all',
+              cursor: 'default',
+              zIndex: 1000,
+            }}
+          />
+        )}
         <Editor
           onMount={onMount}
           height="200px"

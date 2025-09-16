@@ -5,8 +5,9 @@ import { getFirebaseAuth } from '../../../../firebase.ts';
 import { useEffect } from 'react';
 import { generateFirebaseAuthErrorMessage } from '@/shared/utils/generateFirebaseAuthErrorMessage.ts';
 import { login } from '../../../../api';
-import type { SignInFormModel } from '@/widgets/auth/model/schemas.ts';
+import type { SignUpFormModel } from '@/widgets/auth/model/schemas.ts';
 import { useLoadingCallback } from '@/shared/hooks/useLoadingCallback.ts';
+import { updateProfile } from 'firebase/auth';
 
 export function useSignUp() {
   const router = useRouter();
@@ -22,13 +23,16 @@ export function useSignUp() {
     },
   });
 
-  async function handleSignUp(data: SignInFormModel) {
+  async function handleSignUp(data: SignUpFormModel) {
     const user = await createUserWithEmailAndPassword(
       data.email,
       data.password
     );
 
     if (user) {
+      await updateProfile(user.user, {
+        displayName: data.userName,
+      });
       const idToken = await user.user.getIdToken();
       await login(idToken);
 
