@@ -1,3 +1,4 @@
+import { getFirebaseAuth } from '@/shared/config/firebase';
 import { useLoadingCallback } from '@/shared/lib/hooks/useLoadingCallback.ts';
 import { generateFirebaseAuthErrorMessage } from '@/shared/lib/utils/generateFirebaseAuthErrorMessage.ts';
 import { useToast } from '@/shared/ui/toast/useToast.tsx';
@@ -5,8 +6,7 @@ import type { SignInFormModel } from '@/widgets/auth/model/schemas.ts';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { login } from '../../../../api';
-import { getFirebaseAuth } from '../../../../firebase.ts';
+import { login } from '../../../../_api';
 
 export function useSignIn() {
   const router = useRouter();

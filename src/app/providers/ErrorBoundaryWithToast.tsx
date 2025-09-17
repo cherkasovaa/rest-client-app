@@ -1,3 +1,5 @@
+'use client';
+
 import { useToast } from '@/shared/ui/toast';
 import { Typography } from '@mui/material';
 import { useEffect } from 'react';
@@ -7,7 +9,7 @@ export const ErrorBoundaryWithToast = ({ error }: { error: Error }) => {
 
   useEffect(() => {
     toastError(`An unexpected error occurred: ${error.message}`);
-  }, [error]);
+  }, [error, toastError]);
 
   return (
     <Typography

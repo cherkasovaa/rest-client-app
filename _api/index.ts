@@ -3,7 +3,7 @@ export async function login(token: string) {
     Authorization: `Bearer ${token}`,
   };
 
-  await fetch('/api/login', {
+  await fetch('/_api/login', {
     method: 'GET',
     headers,
   });
@@ -12,7 +12,7 @@ export async function login(token: string) {
 export async function logout() {
   const headers: Record<string, string> = {};
 
-  await fetch('/api/logout', {
+  await fetch('/_api/logout', {
     method: 'GET',
     headers,
   });

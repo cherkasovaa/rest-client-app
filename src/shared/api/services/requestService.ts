@@ -1,3 +1,4 @@
+import { db } from '@/shared/config/firebase';
 import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import {
   addDoc,
@@ -9,7 +10,6 @@ import {
   query,
   serverTimestamp,
 } from 'firebase/firestore';
-import { db } from '../../../../firebase';
 
 export const requestService = {
   saveRequest: async (userId: string, requestData: RequestData) => {
