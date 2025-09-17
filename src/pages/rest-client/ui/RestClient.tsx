@@ -31,17 +31,38 @@ const RestClientPage = () => {
       const res = await fetch(builtUrl.url, { method: 'GET' });
 
       if (!res.ok) {
-        setFetchError(res.statusText);
+        const errorText = await res.text();
+
+        setFetchError(
+          `Request failed with status ${res.status}: ${errorText.substring(0, 100)}...`
+        );
 
         setResponse((prev) =>
           prev
             ? { ...prev, status: res.status, statusText: res.statusText }
             : null
         );
+
+        return;
       }
 
-      const data = await res.json();
-      setResponse(data);
+      const contentType = res.headers.get('content-type');
+
+      if (contentType && contentType.indexOf('application/json') !== -1) {
+        const data = await res.json();
+
+        setResponse(data);
+      } else {
+        const textData = await res.text();
+
+        setResponse({
+          status: res.status,
+          statusText: res.statusText,
+          body: textData,
+          headers: Object.fromEntries(res.headers.entries()),
+          ok: res.ok,
+        });
+      }
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : 'An unknown error occurred.';
