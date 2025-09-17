@@ -41,7 +41,7 @@ export function SignUpForm() {
               placeholder="Name"
               {...register('userName')}
             />
-            <FormHelperText error>{errors.email?.message}</FormHelperText>
+            <FormHelperText error>{errors.userName?.message}</FormHelperText>
           </FormControl>
           <FormControl>
             <FormLabel htmlFor={'email'}>Email address</FormLabel>
