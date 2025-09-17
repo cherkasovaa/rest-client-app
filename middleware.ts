@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { clientConfig, serverConfig } from '@/shared/config/firebaseConfig.ts';
+import { ROUTES } from '@/shared/config/routes.ts';
 import {
   authMiddleware,
   redirectToHome,
   redirectToLogin,
 } from 'next-firebase-auth-edge';
-import { clientConfig, serverConfig } from '@/shared/config/firebaseConfig.ts';
-import { ROUTES } from '@/shared/config/routes.ts';
+import { NextRequest, NextResponse } from 'next/server';
 
 const PUBLIC_PATHS = [ROUTES.SIGNIN, ROUTES.SIGNUP, ROUTES.HOME] as string[];
 
@@ -55,5 +55,11 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/((?!_next|api|.*\\.).*)', '/api/login', '/api/logout'],
+  matcher: [
+    '/',
+    '/api/proxy/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/api/login',
+    '/api/logout',
+  ],
 };
