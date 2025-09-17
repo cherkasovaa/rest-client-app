@@ -1,3 +1,4 @@
+import { getFirebaseAuth } from '@/shared/config/firebase';
 import { useLoadingCallback } from '@/shared/lib/hooks/useLoadingCallback.ts';
 import { generateFirebaseAuthErrorMessage } from '@/shared/lib/utils/generateFirebaseAuthErrorMessage.ts';
 import { useToast } from '@/shared/ui/toast/useToast.tsx';
@@ -6,8 +7,7 @@ import { updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { login } from '../../../../api';
-import { getFirebaseAuth } from '../../../../firebase.ts';
+import { login } from '../../../../_api';
 
 export function useSignUp() {
   const router = useRouter();

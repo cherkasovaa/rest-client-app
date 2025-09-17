@@ -13,8 +13,8 @@ const AUTH_PATHS = [ROUTES.SIGNIN, ROUTES.SIGNUP] as string[];
 
 export async function middleware(request: NextRequest) {
   return authMiddleware(request, {
-    loginPath: '/api/login',
-    logoutPath: '/api/logout',
+    loginPath: '/_api/login',
+    logoutPath: '/_api/logout',
     apiKey: clientConfig.apiKey,
     cookieName: serverConfig.cookieName,
     cookieSignatureKeys: serverConfig.cookieSignatureKeys,
@@ -58,8 +58,8 @@ export const config = {
   matcher: [
     '/',
     '/api/proxy/:path*',
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
-    '/api/login',
-    '/api/logout',
+    '/((?!_next/static|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/_api/login',
+    '/_api/logout',
   ],
 };
