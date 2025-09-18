@@ -31,19 +31,13 @@ const RestClientPage = () => {
       const res = await fetch(builtUrl.url, { method: 'GET' });
 
       if (!res.ok) {
-        const errorText = await res.text();
-
-        setFetchError(
-          `Request failed with status ${res.status}: ${errorText.substring(0, 100)}...`
-        );
+        setFetchError(res.statusText);
 
         setResponse((prev) =>
           prev
             ? { ...prev, status: res.status, statusText: res.statusText }
             : null
         );
-
-        return;
       }
 
       const contentType = res.headers.get('content-type');
