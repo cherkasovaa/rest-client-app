@@ -7,7 +7,9 @@ export const Team = () => {
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
         gap: 3,
       }}
     >

@@ -2,11 +2,11 @@
 
 import { LanguageSwitcher } from '@/entities/language-switcher/ui/LanguageSwitcher';
 import { AuthButtons } from '@/features/auth-buttons';
+import { SignOutButton } from '@/features/sign-out-button';
 import { useScrollPosition } from '@/shared/lib/hooks/useScrollPosition';
 import { Logo } from '@/shared/ui';
-import { Box, Container } from '@mui/material';
 import { useAuth } from '@/widgets/auth';
-import { SignOutButton } from '@/features/sign-out-button';
+import { Box, Container } from '@mui/material';
 
 export const Header = () => {
   const { scrollPosition } = useScrollPosition();
@@ -30,7 +30,7 @@ export const Header = () => {
           display: 'flex',
           justifyContent: 'flex-end',
           alignItems: 'center',
-          gap: '1.5rem',
+          gap: { xs: '1rem', sm: '1.5rem' },
         }}
       >
         <Logo />

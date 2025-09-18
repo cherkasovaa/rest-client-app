@@ -10,7 +10,7 @@ export const Logo = () => {
       variant="body1"
       sx={{
         marginRight: 'auto',
-        fontSize: '1.5rem',
+        fontSize: { xs: '1.1rem', sm: '1.5rem' },
         color: 'secondary.main',
         cursor: 'pointer',
         textDecoration: 'none',
