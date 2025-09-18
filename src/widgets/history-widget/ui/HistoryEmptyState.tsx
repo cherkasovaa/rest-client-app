@@ -1,8 +1,11 @@
 import { ROUTES } from '@/shared/config/routes';
 import { Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export const HistoryEmptyState = () => {
+  const t = useTranslations();
+
   return (
     <Box
       sx={{
@@ -14,7 +17,7 @@ export const HistoryEmptyState = () => {
       }}
     >
       <Typography variant="h5" sx={{ mb: 3 }}>
-        You haven&apos;t executed any requests
+        {t('noExecutedRequests')}
       </Typography>
       <Button
         component={Link}
@@ -25,7 +28,7 @@ export const HistoryEmptyState = () => {
           backgroundColor: 'secondary.main',
         }}
       >
-        REST Client
+        {t('restClient')}
       </Button>
     </Box>
   );

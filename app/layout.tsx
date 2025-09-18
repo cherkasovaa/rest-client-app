@@ -11,6 +11,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
 import { getTokens } from 'next-firebase-auth-edge';
 import { cookies } from 'next/headers';
+import { NextIntlClientProvider } from 'next-intl';
 
 export const metadata: Metadata = {
   title: 'REST Client App',
@@ -26,42 +27,43 @@ export default async function RootLayout({
   const user = userTokens ? tokensToUser(userTokens) : null;
 
   return (
-    <html lang="en">
+    <html>
       <body suppressHydrationWarning={true}>
-        <AppRouterCacheProvider>
+        <NextIntlClientProvider>
           <ThemeProvider theme={theme}>
             <AuthProvider user={user}>
-              <ToastProvider>
-                <ErrorBoundary>
-                  <CssBaseline />
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      minHeight: '100vh',
-                      backgroundColor: 'primary.dark',
-                      color: 'primary.contrastText',
-                    }}
-                  >
-                    <Header />
-
+              <AppRouterCacheProvider>
+                <ToastProvider>
+                  <ErrorBoundary>
+                    <CssBaseline />
                     <Box
-                      component="main"
                       sx={{
-                        flexGrow: 1,
                         display: 'flex',
+                        flexDirection: 'column',
+                        minHeight: '100vh',
+                        backgroundColor: 'primary.dark',
+                        color: 'primary.contrastText',
                       }}
                     >
-                      <Container maxWidth="lg">{children}</Container>
-                    </Box>
+                      <Header />
 
-                    <Footer />
-                  </Box>
-                </ErrorBoundary>
-              </ToastProvider>
+                      <Box
+                        component="main"
+                        sx={{
+                          flexGrow: 1,
+                          display: 'flex',
+                        }}
+                      >
+                        <Container maxWidth="lg">{children}</Container>
+                      </Box>
+                      <Footer />
+                    </Box>
+                  </ErrorBoundary>
+                </ToastProvider>
+              </AppRouterCacheProvider>
             </AuthProvider>
           </ThemeProvider>
-        </AppRouterCacheProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

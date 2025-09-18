@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 
 import { type FormEvent } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const ClientFormControl = ({
   request,
@@ -23,6 +24,8 @@ export const ClientFormControl = ({
   handleRequest: () => Promise<void>;
   isLoading: boolean;
 }) => {
+  const t = useTranslations();
+
   const { method, endpoint, setEndpointSafe, setMethodSafe } =
     useRequestParams(request);
 
@@ -42,11 +45,11 @@ export const ClientFormControl = ({
             gap: 10,
           }}
         >
-          <InputLabel>Method</InputLabel>
+          <InputLabel>{t('method')}</InputLabel>
           <Select
             value={method ?? HTTP_CONFIG.DEFAULT_METHOD}
             id="method"
-            label="Method"
+            label={t('method')}
             onChange={(e) => setMethodSafe(String(e.target.value))}
           >
             {HTTP_CONFIG.METHODS.map((m) => {
@@ -59,7 +62,7 @@ export const ClientFormControl = ({
           </Select>
           <TextField
             fullWidth
-            label="Request URL"
+            label={t('requestUrl')}
             value={endpoint}
             placeholder={'https://jsonplaceholder.typicode.com/posts/14'}
             onChange={(e) => setEndpointSafe(e.target.value)}
@@ -69,11 +72,11 @@ export const ClientFormControl = ({
             disabled={endpoint.length === 0 || isLoading}
             type="submit"
           >
-            {isLoading && <>..Loading</>}
+            {isLoading && <>...{t('loading')}</>}
             {!isLoading && (
               <>
                 <SendIcon />
-                Send
+                {t('send')}
               </>
             )}
           </Button>

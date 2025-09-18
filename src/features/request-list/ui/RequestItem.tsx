@@ -7,9 +7,12 @@ import { ROUTES } from '@/shared/config/routes';
 import type { RequestData } from '@/shared/model/types/request-data-firebase';
 import { Box, ListItem, Paper, Typography } from '@mui/material';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export const RequestItem = ({ request }: { request: RequestData }) => {
   const d = new Date(request.requestTimestamp);
+
+  const t = useTranslations();
 
   const time = d.toLocaleTimeString();
   const date = d.toLocaleDateString();
@@ -74,7 +77,7 @@ export const RequestItem = ({ request }: { request: RequestData }) => {
                 'text.secondary'
               }
             >
-              Error: {request.errorDetails}
+              {t('error')}: {request.errorDetails}
             </Typography>
           )}
         </Box>
@@ -83,13 +86,13 @@ export const RequestItem = ({ request }: { request: RequestData }) => {
             {date} | {time}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Duration: {formatDuration(request.duration)}
+            {t('duration')}: {formatDuration(request.duration)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Request size: {formatBytes(request.requestSize)}
+            {t('requestSize')}: {formatBytes(request.requestSize)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Response size: {formatBytes(request.responseSize)}
+            {t('responseSize')}: {formatBytes(request.responseSize)}
           </Typography>
         </Box>
       </Paper>

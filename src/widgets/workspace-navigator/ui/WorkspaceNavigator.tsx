@@ -3,12 +3,14 @@ import { WORKSPACE_LINKS } from '@/widgets/workspace-navigator/config/workspace-
 import type { WidgetVariant } from '@/widgets/workspace-navigator/model/types';
 import { Button, Paper } from '@mui/material';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export const WorkspaceNavigator = ({
   variant = 'home',
 }: {
   variant?: WidgetVariant;
 }) => {
+  const t = useTranslations();
   const padding = wrapperStyles[variant];
 
   return (
@@ -34,7 +36,7 @@ export const WorkspaceNavigator = ({
             backgroundColor: 'secondary.main',
           }}
         >
-          {name}
+          {t(name)}
         </Button>
       ))}
     </Paper>

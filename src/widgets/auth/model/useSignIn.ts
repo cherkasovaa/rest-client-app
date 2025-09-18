@@ -7,8 +7,10 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { login } from '../../../../_api';
+import { useTranslations } from 'next-intl';
 
 export function useSignIn() {
+  const t = useTranslations();
   const router = useRouter();
   const { toastError } = useToast();
 
@@ -18,7 +20,7 @@ export function useSignIn() {
   const [onSignIn, isPendingSignIn] = useLoadingCallback(handleSignIn, {
     onError: (err) => {
       console.error(err);
-      toastError('Some error has occured');
+      toastError(t('somethingWentWrong'));
     },
   });
 

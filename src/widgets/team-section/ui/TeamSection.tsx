@@ -1,8 +1,9 @@
 import { Team } from '@/features/team';
-import { AboutText } from '@/widgets/team-section/model/text';
 import { Box, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 export const TeamSection = () => {
+  const t = useTranslations();
   return (
     <Box
       sx={{
@@ -13,7 +14,7 @@ export const TeamSection = () => {
       }}
     >
       <Typography component="div" variant="body1">
-        {AboutText}
+        {t('welcomeDescription')}
       </Typography>
 
       <Team />

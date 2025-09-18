@@ -8,8 +8,11 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { login } from '../../../../_api';
+import { useTranslations } from 'next-intl';
 
 export function useSignUp() {
+  const t = useTranslations();
+
   const router = useRouter();
   const { toastError } = useToast();
 
@@ -19,7 +22,7 @@ export function useSignUp() {
   const [onSignUp, isPendingSignUp] = useLoadingCallback(handleSignUp, {
     onError: (err) => {
       console.error(err);
-      toastError('Some error has occured');
+      toastError(t('somethingWentWrong'));
     },
   });
 

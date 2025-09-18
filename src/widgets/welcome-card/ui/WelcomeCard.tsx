@@ -1,11 +1,14 @@
 import { AuthButtons } from '@/features/auth-buttons';
 import { Paper, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 export const WelcomeCard = ({
   userName = null,
 }: {
   userName?: string | null;
 }) => {
+  const t = useTranslations();
+
   return (
     <Paper
       elevation={12}
@@ -21,17 +24,14 @@ export const WelcomeCard = ({
     >
       {userName ? (
         <Typography component="div" variant="h1" textAlign="center">
-          Welcome back, {userName}!
+          {t('welcomeAuthorizedTitle', { userName })}
         </Typography>
       ) : (
         <>
           <Typography component="div" variant="h1" textAlign="center">
-            Welcome!
+            {t('welcomeTitle')}
           </Typography>
-          <Typography>
-            Please sign in to your account or register to continue
-          </Typography>
-
+          <Typography>{t('welcomeMessage')}</Typography>
           <AuthButtons />
         </>
       )}
