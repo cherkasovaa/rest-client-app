@@ -30,6 +30,12 @@ export const RequestItem = ({ request }: { request: RequestData }) => {
           textDecoration: 'none',
           overflowX: 'auto',
           width: '100%',
+          transition: '0.3s',
+
+          '&:hover': {
+            boxShadow: 6,
+            transform: 'translateY(-4px)',
+          },
         }}
       >
         <Box mb={0.25}>
