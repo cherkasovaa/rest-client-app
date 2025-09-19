@@ -24,7 +24,7 @@ export const ResponseField = ({
         height="200px"
         theme="light"
         value={response?.body}
-        loading={loading && <div>...Loading</div>}
+        loading={loading && <div>...{t('loading')}</div>}
         options={{
           readOnly: true,
           minimap: { enabled: false },

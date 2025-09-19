@@ -72,5 +72,14 @@
     "nameStartsUppercaseLetter": "Имя должно начинаться с заглавной буквы",
     "passwordNotMatched": "Пароли не совпадают",
     "passwordMinLength": "Пароль должен содержать >=6 символов"
-  }
+  },
+  "selectWayToGenerate": "Выберите способ генерации кода и нажмите на кнопку",
+  "notEnoughDetails": "Недостаточно данных для генерации кода",
+  "ErrorOccurred": "Возникла ошибка при генерации кода",
+  "generatingCode": "Генерация...",
+  "generateCode": "Сгенерировать код",
+  "loadingEditor": "Загрузка редактора...",
+  "BODY": "ТЕЛО ЗАПРОСА",
+  "HEADERS": "ЗАГОЛОВКИ ЗАПРОСА",
+  "GENERATE_CODE": "ГЕНЕРАЦИЯ КОДА"
 }

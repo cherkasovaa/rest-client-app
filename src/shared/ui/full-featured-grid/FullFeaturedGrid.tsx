@@ -16,12 +16,14 @@ import {
   type GridRowModel,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
+import { ruRU, enUS } from '@mui/x-data-grid/locales';
 
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, Snackbar } from '@mui/material';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { EditToolbar } from './EditToolbar';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { LANG } from '@/shared/config/langs.ts';
 
 declare module '@mui/x-data-grid' {
   interface ToolbarPropsOverrides {
@@ -42,6 +44,13 @@ export const FullFeaturedCrudGrid = ({
   columns: GridColDef[];
 }) => {
   const t = useTranslations();
+  const locale = useLocale();
+
+  const localeText = useMemo(() => {
+    return locale === LANG.RU
+      ? ruRU.components.MuiDataGrid.defaultProps.localeText
+      : enUS.components.MuiDataGrid.defaultProps.localeText;
+  }, [locale]);
 
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [error, setError] = useState<string | null>(null);
@@ -195,6 +204,7 @@ export const FullFeaturedCrudGrid = ({
       }}
     >
       <DataGrid
+        localeText={localeText}
         rows={rows}
         columns={columnsGrid}
         editMode="row"

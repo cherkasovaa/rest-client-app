@@ -72,5 +72,14 @@
     "nameStartsUppercaseLetter": "Name must start with uppercase letter",
     "passwordNotMatched": "The passwords did not match",
     "passwordMinLength": "Too small: expected string to have >=6 characters"
-  }
+  },
+  "selectWayToGenerate": "Select a way to generate code and click the button",
+  "notEnoughDetails": "Not enough details to generate code",
+  "ErrorOccurred": "Error occurred while generating code",
+  "generatingCode": "Generating...",
+  "generateCode": "Generate code",
+  "loadingEditor": "Loading editor...",
+  "BODY": "BODY",
+  "HEADERS": "HEADERS",
+  "GENERATE_CODE": "GENERATE CODE"
 }

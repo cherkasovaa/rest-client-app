@@ -3,6 +3,7 @@ import { Box, Tab, Tabs } from '@mui/material';
 import { useTabs } from '../model/useTabs';
 import type { JSX } from 'react';
 import { CustomTabPanel } from '@/shared/ui/custom-panel/CustomPanel';
+import { useTranslations } from 'next-intl';
 
 export const ClientTabs = ({
   body,
@@ -15,6 +16,8 @@ export const ClientTabs = ({
 }) => {
   const { tab, handleTabChange } = useTabs();
 
+  const t = useTranslations();
+
   return (
     <Box>
       <Tabs
@@ -24,9 +27,9 @@ export const ClientTabs = ({
         indicatorColor="secondary"
         textColor="secondary"
       >
-        <Tab label="BODY" {...a11yProps(0)} />
-        <Tab label="HEADERS" {...a11yProps(1)} />
-        <Tab label="GENERATE CODE" {...a11yProps(2)} />
+        <Tab label={t('BODY')} {...a11yProps(0)} />
+        <Tab label={t('HEADERS')} {...a11yProps(1)} />
+        <Tab label={t('GENERATE_CODE')} {...a11yProps(2)} />
       </Tabs>
 
       <CustomTabPanel value={tab} index={0}>

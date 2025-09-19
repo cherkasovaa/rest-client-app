@@ -113,7 +113,7 @@ export const RequestBody = ({ body }: { body?: string }) => {
           height="200px"
           theme="light"
           language={language}
-          loading={<div>...Loading</div>}
+          loading={<div>...{t('loading')}</div>}
           options={{
             readOnly: isReadonly,
             fontSize: 17,

@@ -1,7 +1,8 @@
 import { defineRouting } from 'next-intl/routing';
+import { LANG } from '@/shared/config/langs.ts';
 
 export const routing = defineRouting({
-  locales: ['en', 'ru'],
+  locales: Object.values(LANG),
 
-  defaultLocale: 'en',
+  defaultLocale: LANG.EN,
 });

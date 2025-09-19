@@ -8,11 +8,14 @@ import CodeIcon from '@mui/icons-material/Code';
 import { Button, FormControl, Stack } from '@mui/material';
 import { useState } from 'react';
 import { generateCode } from '../model/generateCode';
+import { useTranslations } from 'next-intl';
 
 export const RequestCode = () => {
+  const t = useTranslations();
+
   const [language, setLanguage] = useState<CodeLanguage>(CODE_LANGUAGES[0]);
   const [generatedCode, setGeneratedCode] = useState<string>(
-    '// Select a way to generate code and click the button'
+    `// ${t('selectWayToGenerate')}`
   );
 
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
@@ -26,11 +29,11 @@ export const RequestCode = () => {
       if (code && code.trim().length > 0) {
         setGeneratedCode(code);
       } else {
-        setGeneratedCode('// Not enough details to generate code');
+        setGeneratedCode(`// ${t('notEnoughDetails')}`);
       }
     } catch (err) {
       console.error(err);
-      setGeneratedCode('// Error occurred while generating code');
+      setGeneratedCode(`// ${t('ErrorOccurred')}`);
     } finally {
       setIsGenerating(false);
     }
@@ -52,7 +55,7 @@ export const RequestCode = () => {
             backgroundColor: 'secondary.dark',
           }}
         >
-          {isGenerating ? 'Generating...' : 'Generate Code'}
+          {isGenerating ? t('generatingCode') : t('generateCode')}
         </Button>
       </FormControl>
 
@@ -61,7 +64,7 @@ export const RequestCode = () => {
         height="200px"
         theme="vs-light"
         language={language.editorLanguage}
-        loading={isGenerating && <div>Loading editor...</div>}
+        loading={isGenerating && <div>{t('loadingEditor')}</div>}
         options={{
           readOnly: true,
           fontSize: 17,
