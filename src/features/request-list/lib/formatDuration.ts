@@ -3,5 +3,5 @@ export const formatDuration = (ms: number) => {
     return `${ms} ms`;
   }
 
-  return `${(ms / 1000).toFixed()} s`;
+  return `${(ms / 1000).toFixed(2)} s`;
 };
