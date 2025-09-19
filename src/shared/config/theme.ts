@@ -66,7 +66,6 @@ const sharedTypography = {
 
 const theme = createTheme({
   components: {
-    // TODO: remove. By default color is secondary contrast
     MuiFormLabel: {
       styleOverrides: {
         root: {
