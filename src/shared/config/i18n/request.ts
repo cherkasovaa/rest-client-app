@@ -1,3 +1,4 @@
+import { LANG } from '@/shared/config/langs';
 import { getRequestConfig } from 'next-intl/server';
 import { cookies } from 'next/headers';
 
