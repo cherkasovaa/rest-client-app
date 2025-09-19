@@ -3,7 +3,7 @@ import React, {
   type PropsWithChildren,
   type ReactNode,
 } from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test, vi } from 'vitest';
 
@@ -26,6 +26,7 @@ vi.mock('@mui/x-data-grid', () => {
 
 import { EditToolbar } from './EditToolbar';
 import { GridRowModes } from '@mui/x-data-grid';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 describe('EditToolbar', () => {
   const user = userEvent.setup();
@@ -34,7 +35,7 @@ describe('EditToolbar', () => {
     const mockSetRows = vi.fn();
     const mockSetRowModesModel = vi.fn();
 
-    render(
+    renderWithIntlProvider(
       <EditToolbar
         setRows={mockSetRows}
         setRowModesModel={mockSetRowModesModel}

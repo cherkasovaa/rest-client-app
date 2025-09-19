@@ -1,9 +1,10 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { FullFeaturedCrudGrid } from './FullFeaturedGrid';
 import type { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import { useState } from 'react';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 vi.mock('uuid', () => ({ v4: () => 'test-id' }));
 
@@ -34,7 +35,7 @@ describe('FullFeaturedCrudGrid', () => {
 
   describe('should work correctly with adding, edititng, deleting rows', () => {
     test('should add new row via toolbar and save values', async () => {
-      render(<TestWrapper columns={columns} />);
+      renderWithIntlProvider(<TestWrapper columns={columns} />);
 
       const addButton = screen.getByRole('button', { name: /add record/i });
       await user.click(addButton);
@@ -66,7 +67,9 @@ describe('FullFeaturedCrudGrid', () => {
       const initialRows: GridRowsProp = [
         { id: 'row-1', key: 'foo', value: 'bar' },
       ];
-      render(<TestWrapper columns={columns} initialRows={initialRows} />);
+      renderWithIntlProvider(
+        <TestWrapper columns={columns} initialRows={initialRows} />
+      );
 
       const grid = screen.getByRole('grid');
       const rows = within(grid).getAllByRole('row');
@@ -86,7 +89,9 @@ describe('FullFeaturedCrudGrid', () => {
       const initialRows: GridRowsProp = [
         { id: 'row-1', key: 'key1', value: 'value1' },
       ];
-      render(<TestWrapper columns={columns} initialRows={initialRows} />);
+      renderWithIntlProvider(
+        <TestWrapper columns={columns} initialRows={initialRows} />
+      );
 
       const grid = screen.getByRole('grid');
       const rows = within(grid).getAllByRole('row');
@@ -122,7 +127,9 @@ describe('FullFeaturedCrudGrid', () => {
 
   describe('should check if parameters for rows are correct', () => {
     test('should not add row with empty key', async () => {
-      const { container } = render(<TestWrapper columns={columns} />);
+      const { container } = renderWithIntlProvider(
+        <TestWrapper columns={columns} />
+      );
 
       const addButton = screen.getByRole('button', { name: /add record/i });
       await user.click(addButton);
@@ -144,7 +151,9 @@ describe('FullFeaturedCrudGrid', () => {
     });
 
     test('should not add row when key contains spaces', async () => {
-      const { container } = render(<TestWrapper columns={columns} />);
+      const { container } = renderWithIntlProvider(
+        <TestWrapper columns={columns} />
+      );
 
       const addButton = screen.getByRole('button', { name: /add record/i });
       await user.click(addButton);
@@ -171,7 +180,7 @@ describe('FullFeaturedCrudGrid', () => {
     test('should not add row with duplicate key', async () => {
       const initialRows = [{ id: 'row-1', key: 'sameKey', value: 'testValue' }];
 
-      const { container } = render(
+      const { container } = renderWithIntlProvider(
         <TestWrapper columns={columns} initialRows={initialRows} />
       );
 

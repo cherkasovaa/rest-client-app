@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 
-import { ROUTES } from '@/shared/config/routes';
+import { ROUTES } from '@/shared/config/routes.ts';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Box, Button, Typography } from '@mui/material';
+import { NextIntlClientProvider } from 'next-intl';
 import { useTranslations } from 'next-intl';
 
-export default function Page() {
+function ClientPage() {
   const t = useTranslations();
 
   return (
@@ -50,5 +51,15 @@ export default function Page() {
         </Button>
       </Box>
     </Box>
+  );
+}
+
+export default function Page() {
+  const lang = window.location.pathname.includes('ru') ? 'ru' : 'ru';
+
+  return (
+    <NextIntlClientProvider locale={lang}>
+      <ClientPage />
+    </NextIntlClientProvider>
   );
 }

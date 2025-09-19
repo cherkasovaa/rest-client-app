@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/shared/config/tests/setup.ts',
+    setupFiles: './src/shared/config/tests/setup.tsx',
     deps: {
       optimizer: {
         web: {

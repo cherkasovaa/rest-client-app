@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
@@ -94,6 +94,7 @@ vi.mock('@monaco-editor/react', () => {
 
 import { prettify } from '@/shared/lib/utils/prettify';
 import { RequestBody } from './RequestBody';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 describe('RequestBody', () => {
   const mockedParse = vi.mocked(parsePathParams);
@@ -116,7 +117,7 @@ describe('RequestBody', () => {
       body: '{"x":1}',
     });
 
-    render(<RequestBody />);
+    renderWithIntlProvider(<RequestBody />);
 
     const editor = window.__mockEditor;
     expect(editor).toBeDefined();
@@ -130,7 +131,7 @@ describe('RequestBody', () => {
       body: '{"a":1,"b":2}',
     });
 
-    render(<RequestBody />);
+    renderWithIntlProvider(<RequestBody />);
 
     const editor = window.__mockEditor;
     expect(editor).toBeDefined();
@@ -158,7 +159,7 @@ describe('RequestBody', () => {
       body: 'init',
     });
 
-    render(<RequestBody />);
+    renderWithIntlProvider(<RequestBody />);
 
     const editor = window.__mockEditor!;
     expect(editor).toBeDefined();

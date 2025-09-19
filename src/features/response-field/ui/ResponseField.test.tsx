@@ -1,7 +1,8 @@
 import type { ApiResponse } from '@/shared/model/types/api';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 import { ResponseField } from './ResponseField';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 vi.mock('@monaco-editor/react', () => {
   const EditorMock = (props: { value?: string }) => {
@@ -24,7 +25,9 @@ describe('ResponseField', () => {
       ok: true,
     };
 
-    render(<ResponseField response={mockResponse} loading={false} />);
+    renderWithIntlProvider(
+      <ResponseField response={mockResponse} loading={false} />
+    );
 
     expect(screen.getByText('Status response: 200')).toBeInTheDocument();
     expect(screen.getByText('{"message":"ok"}')).toBeInTheDocument();
