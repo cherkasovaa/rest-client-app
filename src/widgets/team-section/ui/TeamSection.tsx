@@ -13,7 +13,7 @@ export const TeamSection = () => {
         gap: 2,
       }}
     >
-      <Typography component="div" variant="body1">
+      <Typography component="div" variant="body1" textAlign="center">
         {t('welcomeDescription')}
       </Typography>
 

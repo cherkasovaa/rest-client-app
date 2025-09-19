@@ -19,6 +19,7 @@ export const WorkspaceNavigator = ({
       sx={{
         p: { padding },
         display: 'flex',
+        flexWrap: 'wrap',
         justifyContent: 'center',
         gap: 3,
         backgroundColor: 'primary.main',
@@ -34,6 +35,9 @@ export const WorkspaceNavigator = ({
           size="small"
           sx={{
             backgroundColor: 'secondary.main',
+            whiteSpace: 'nowrap',
+            flex: { xs: 1, sm: 'unset' },
+            minWidth: { xs: 'max-content', sm: 'auto' },
           }}
         >
           {t(name)}

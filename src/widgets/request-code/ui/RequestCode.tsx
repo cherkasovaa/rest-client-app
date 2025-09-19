@@ -48,6 +48,9 @@ export const RequestCode = () => {
           startIcon={<CodeIcon />}
           disabled={isGenerating}
           variant="contained"
+          sx={{
+            backgroundColor: 'secondary.dark',
+          }}
         >
           {isGenerating ? 'Generating...' : 'Generate Code'}
         </Button>

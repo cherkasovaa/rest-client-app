@@ -41,8 +41,8 @@ export const ClientFormControl = ({
           fullWidth
           sx={{
             display: 'grid',
-            gridTemplateColumns: '1fr 4fr 1fr',
-            gap: 10,
+            gridTemplateColumns: '1fr 8fr 1fr',
+            gap: 2,
           }}
         >
           <InputLabel>{t('method')}</InputLabel>
@@ -71,6 +71,11 @@ export const ClientFormControl = ({
             variant="contained"
             disabled={endpoint.length === 0 || isLoading}
             type="submit"
+            sx={{
+              padding: 1,
+              minWidth: 'max-content',
+              backgroundColor: 'secondary.dark',
+            }}
           >
             {isLoading && <>...{t('loading')}</>}
             {!isLoading && (

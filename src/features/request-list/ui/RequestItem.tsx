@@ -33,6 +33,12 @@ export const RequestItem = ({ request }: { request: RequestData }) => {
           textDecoration: 'none',
           overflowX: 'auto',
           width: '100%',
+          transition: '0.3s',
+
+          '&:hover': {
+            boxShadow: 6,
+            transform: 'translateY(-4px)',
+          },
         }}
       >
         <Box mb={0.25}>
@@ -40,7 +46,7 @@ export const RequestItem = ({ request }: { request: RequestData }) => {
             component="span"
             fontWeight="bold"
             mr={1}
-            color={methodColors[request.requestMethod] || 'secondary.main'}
+            color={methodColors[request.requestMethod]}
           >
             {request.requestMethod}:
           </Typography>
@@ -58,10 +64,7 @@ export const RequestItem = ({ request }: { request: RequestData }) => {
             <Typography
               component="span"
               variant="body2"
-              color={
-                statusColors[Math.floor(request.statusCode / 100)] ||
-                'secondary.main'
-              }
+              color={statusColors[Math.floor(request.statusCode / 100)]}
               mr={1}
               fontWeight="bold"
             >
@@ -72,10 +75,7 @@ export const RequestItem = ({ request }: { request: RequestData }) => {
             <Typography
               component="span"
               variant="body2"
-              color={
-                statusColors[Math.floor(request.statusCode / 100)] ||
-                'text.secondary'
-              }
+              color={statusColors[Math.floor(request.statusCode / 100)]}
             >
               {t('error')}: {request.errorDetails}
             </Typography>
