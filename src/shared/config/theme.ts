@@ -6,7 +6,13 @@ const sharedTypography = {
   fontWeightLight: 400,
   h1: {
     fontFamily: 'Inter, Roboto, sans-serif',
-    fontSize: '3rem',
+    fontSize: '1.5rem',
+    '@media (min-width:600px)': {
+      fontSize: '2rem',
+    },
+    '@media (min-width:900px)': {
+      fontSize: '3rem',
+    },
     fontWeight: 700,
   },
   h2: {
@@ -32,6 +38,10 @@ const sharedTypography = {
   button: {
     fontFamily: 'Inter, Roboto, sans-serif',
     fontWeight: 700,
+    fontSize: '0.7rem',
+    '@media (min-width:600px)': {
+      fontSize: '0.9rem',
+    },
   },
   subtitle1: {
     fontFamily: 'Inter, Roboto, sans-serif',

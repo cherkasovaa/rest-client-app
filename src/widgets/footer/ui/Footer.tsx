@@ -16,8 +16,10 @@ export const Footer = () => {
         maxWidth="lg"
         sx={{
           display: 'flex',
-          justifyContent: 'space-around',
+          flexWrap: 'wrap',
+          justifyContent: { xs: 'center', sm: 'space-around' },
           alignItems: 'center',
+          gap: 1.5,
         }}
       >
         <Link href={LINK.RSS} target="_blank" rel="noopener" underline="none">

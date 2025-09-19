@@ -81,7 +81,14 @@ export const RequestBody = ({ body }: { body?: string }) => {
         style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: 10 }}
       >
         <ContentTypeSelector onChange={handleTypeChange} />
-        <Button onClick={handlePrettify} disabled={false} variant="contained">
+        <Button
+          onClick={handlePrettify}
+          disabled={false}
+          variant="contained"
+          sx={{
+            backgroundColor: 'secondary.dark',
+          }}
+        >
           <AutoAwesomeIcon />
           Prettify
         </Button>
