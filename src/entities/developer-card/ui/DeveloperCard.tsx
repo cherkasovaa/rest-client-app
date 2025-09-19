@@ -15,6 +15,7 @@ export const DeveloperCard = ({ developer }: { developer: AppDeveloper }) => {
         p: 2,
         maxWidth: 345,
         width: '100%',
+        height: '100%',
       }}
     >
       <CardMedia
@@ -48,11 +49,17 @@ export const DeveloperCard = ({ developer }: { developer: AppDeveloper }) => {
           {t(developer.name)}
         </Typography>
 
-        <Typography component="div" variant="body2">
+        <Typography component="div" variant="body2" color="secondary">
           {t(developer.role)}
         </Typography>
 
-        <Box>{t(developer.contribution)}</Box>
+        <Box
+          sx={{
+            fontSize: '0.9rem',
+          }}
+        >
+          {t(developer.contribution)}
+        </Box>
       </CardContent>
     </Card>
   );
