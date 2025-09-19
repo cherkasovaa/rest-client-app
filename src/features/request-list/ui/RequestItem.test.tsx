@@ -1,7 +1,8 @@
 import { RequestItem } from '@/features/request-list/ui/RequestItem';
 import type { RequestData } from '@/shared/model/types/request-data-firebase';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 describe('RequestItem', () => {
   const baseRequest: RequestData = {
@@ -52,7 +53,7 @@ describe('RequestItem', () => {
   test.each(requests)(
     'should correctly render UI for request with id $id',
     (request) => {
-      render(<RequestItem request={request} />);
+      renderWithIntlProvider(<RequestItem request={request} />);
 
       const method = screen.getByText(`${request.requestMethod}:`);
       const endpoint = screen.getByText(request.endpoint);
@@ -70,13 +71,13 @@ describe('RequestItem', () => {
       statusCode: 0,
     };
 
-    render(<RequestItem request={invalidRequest} />);
+    renderWithIntlProvider(<RequestItem request={invalidRequest} />);
 
     expect(screen.queryByText(0)).not.toBeInTheDocument();
   });
 
   test('should not render error details when it is null', () => {
-    render(<RequestItem request={baseRequest} />);
+    renderWithIntlProvider(<RequestItem request={baseRequest} />);
 
     expect(screen.queryByText('Error:')).not.toBeInTheDocument();
   });
@@ -88,7 +89,7 @@ describe('RequestItem', () => {
       errorDetails: 'Failed to parse URL from wrong endpoint',
     };
 
-    render(<RequestItem request={requestWithError} />);
+    renderWithIntlProvider(<RequestItem request={requestWithError} />);
 
     expect(
       screen.queryByText('Error: Failed to parse URL from wrong endpoint')

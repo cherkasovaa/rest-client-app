@@ -1,7 +1,8 @@
 import { SignOutButton } from '@/features/sign-out-button/ui/SignOutButton';
 import { useSignOut } from '@/widgets/auth/model/useSignOut';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 vi.mock('@/widgets/auth/model/useSignOut.ts', () => ({
   useSignOut: vi.fn(),
@@ -22,7 +23,7 @@ describe('SignOutButton', () => {
   });
 
   test('renders sign out button', () => {
-    render(<SignOutButton />);
+    renderWithIntlProvider(<SignOutButton />);
 
     const button = screen.getByRole('button', { name: /sign out/i });
 
@@ -30,7 +31,7 @@ describe('SignOutButton', () => {
   });
 
   test('calls sign out handler on click', () => {
-    render(<SignOutButton />);
+    renderWithIntlProvider(<SignOutButton />);
 
     const button = screen.getByRole('button', { name: /sign out/i });
     fireEvent.click(button);

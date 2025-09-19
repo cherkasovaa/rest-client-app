@@ -1,6 +1,7 @@
 import { HistoryWidget } from '@/widgets/history-widget/ui/HistoryWidget';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 vi.mock('@/widgets/history-widget/', () => ({
   HistoryEmptyState: () => <div data-testid="empty">HistoryEmptyState</div>,
@@ -12,7 +13,7 @@ vi.mock('@/features/request-list', () => ({
 
 describe('HistoryWidget', () => {
   test('should render empty state component when requests prop is empty', () => {
-    render(<HistoryWidget requests={[]} />);
+    renderWithIntlProvider(<HistoryWidget requests={[]} />);
 
     const emptyStateComponent = screen.getByTestId('empty');
     const requestList = screen.queryByTestId('request-list');
@@ -22,7 +23,7 @@ describe('HistoryWidget', () => {
   });
 
   test('should render RequestList component when requests prop is non-empty', () => {
-    render(
+    renderWithIntlProvider(
       <HistoryWidget
         requests={[
           {

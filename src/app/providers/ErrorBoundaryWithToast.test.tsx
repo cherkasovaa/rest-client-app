@@ -1,7 +1,8 @@
 import { ErrorBoundaryWithToast } from '@/app/providers/ErrorBoundaryWithToast';
 import { useToast } from '@/shared/ui/toast';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 vi.mock('@/shared/ui/toast', () => ({
   useToast: vi.fn(),
@@ -26,7 +27,7 @@ describe('ErrorBoundaryWithToast', () => {
   test('renders error message', () => {
     const errorMessage = new Error('Error message');
 
-    render(<ErrorBoundaryWithToast error={errorMessage} />);
+    renderWithIntlProvider(<ErrorBoundaryWithToast error={errorMessage} />);
 
     expect(screen.getByText(/something went wrong!/i)).toBeInTheDocument();
     expect(useToast).toHaveBeenCalled();
