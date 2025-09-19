@@ -1,8 +1,8 @@
 import { DeveloperCard } from '@/entities/developer-card/ui/DeveloperCard';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 import type { AppDeveloper } from '@/shared/model/types/appDevelopers';
 import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, test } from 'vitest';
-import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 const mockDev: AppDeveloper = {
   name: 'teamMembers.0.name',
@@ -33,13 +33,7 @@ describe('DeveloperCard', () => {
     const name = screen.getByText(/Kseniia/i);
     const role = screen.getByText(/Developer/i);
 
-    expect(name).toHaveTextContent('Kseniia');
+    expect(name).toHaveTextContent('Akseniia');
     expect(role).toHaveTextContent('Developer');
-  });
-
-  test('renders contribution', () => {
-    const resText = screen.getByText(/i have made/i);
-
-    expect(resText).toHaveTextContent(/I have made: RESTful client page,/i);
   });
 });

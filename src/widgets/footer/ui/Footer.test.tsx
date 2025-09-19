@@ -1,12 +1,12 @@
 import { DEVELOPERS } from '@/shared/config/developers';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 import { LINK } from '@/widgets/footer/model/links';
 import { Footer } from '@/widgets/footer/ui/Footer';
 import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, test } from 'vitest';
-import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 const texts = {
-  'teamMembers.0.name': 'Kseniia',
+  'teamMembers.0.name': 'Akseniia',
   'teamMembers.1.name': 'Tatyana',
   'teamMembers.2.name': 'Alina',
 };

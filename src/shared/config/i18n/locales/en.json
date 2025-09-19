@@ -13,19 +13,19 @@
   "welcomeDescription": "The lightweight Postman alternative. Created by <GirlScript/> team",
   "teamMembers": [
     {
-      "name": "Kseniia",
+      "name": "Akseniia",
       "role": "Developer",
-      "contribution": "I have made: RESTful client page, variables, unit & integration testing"
+      "contribution": "Developed the core REST client interface, including environment variable management, and ensured its quality through comprehensive testing."
     },
     {
       "name": "Tatyana",
       "role": "Developer",
-      "contribution": "I have made: authorization via Firebase, unit & integration testing"
+      "contribution": "Implemented a complete authentication system using Firebase, integrated internationalization (i18n) support, and validated the functionality with tests."
     },
     {
       "name": "Alina",
       "role": "Team Lead",
-      "contribution": "I have made: project setup, main page implementation, history page, unit & integration testing"
+      "contribution": "Set up the project architecture, developed the Home and History pages, and managed the full development lifecycle to production."
     }
   ],
   "variable": "Variable",
