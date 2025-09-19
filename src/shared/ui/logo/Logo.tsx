@@ -1,6 +1,8 @@
+'use client';
+
 import { ROUTES } from '@/shared/config/routes';
 import { Typography } from '@mui/material';
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
 
 export const Logo = () => {
   return (

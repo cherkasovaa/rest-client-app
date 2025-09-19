@@ -14,7 +14,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignIn } from '@/widgets/auth/model/useSignIn.ts';
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
 import { signInSchema } from '@/widgets/auth/model/schemas.ts';
 import { ROUTES } from '@/shared/config/routes.ts';
 import { useTranslations } from 'next-intl';

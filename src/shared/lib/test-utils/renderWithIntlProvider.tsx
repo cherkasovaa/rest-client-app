@@ -1,6 +1,6 @@
 import { NextIntlClientProvider } from 'next-intl';
 import type { ReactNode } from 'react';
-import messages from '../../../../locales/en.json';
+import messages from '@/shared/config/i18n/locales/en.json';
 import { render } from '@testing-library/react';
 
 export function getElementWithIntlProvider(ui: ReactNode) {

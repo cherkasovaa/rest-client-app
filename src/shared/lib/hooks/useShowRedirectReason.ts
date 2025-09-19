@@ -2,9 +2,10 @@
 
 import { useEffect } from 'react';
 import { useToast } from '@/shared/ui/toast';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from '@/shared/config/i18n/navigation.ts';
 import { ROUTES } from '@/shared/config/routes.ts';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 
 export function useShowRedirectReason() {
   const t = useTranslations();

@@ -1,6 +1,8 @@
+'use client';
+
 import { ROUTES } from '@/shared/config/routes';
 import { Box, Button, Typography } from '@mui/material';
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
 import { useTranslations } from 'next-intl';
 
 export const HistoryEmptyState = () => {

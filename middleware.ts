@@ -5,9 +5,9 @@ import {
   redirectToHome,
   redirectToLogin,
 } from 'next-firebase-auth-edge';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
-import { routing } from '@/i18n/routing.ts';
+import { routing } from '@/shared/config/i18n/routing.ts';
 
 const PUBLIC_PATHS = [ROUTES.SIGNIN, ROUTES.SIGNUP, ROUTES.HOME] as string[];
 
@@ -35,8 +35,22 @@ export async function middleware(request: NextRequest) {
     cookieSerializeOptions: serverConfig.cookieSerializeOptions,
     serviceAccount: serverConfig.serviceAccount,
     handleValidToken: async (_: unknown, headers?: Headers) => {
+      if (normalizedPathname.includes('404-animation.json')) {
+        return NextResponse.next({
+          request,
+        });
+      }
+
       if (AUTH_PATHS.includes(normalizedPathname)) {
         return redirectToHome(request);
+      }
+
+      if (normalizedPathname.includes('api/proxy/')) {
+        return NextResponse.next({
+          request: {
+            headers,
+          },
+        });
       }
 
       return handleI18nRouting(
@@ -77,8 +91,8 @@ export const config = {
   matcher: [
     '/',
     //TODO: вернуть
-    // '/api/proxy/:path*',
-    '/((?!_next/static|api|favicon.ico|sitemap.xml|robots.txt|rss-logo.svg|404-animation.json).*)',
+    '/api/proxy/:path*',
+    '/((?!_next/static|favicon.ico|sitemap.xml|robots.txt|rss-logo.svg|404-animation.json).*)',
     '/_api/login',
     '/_api/logout',
   ],

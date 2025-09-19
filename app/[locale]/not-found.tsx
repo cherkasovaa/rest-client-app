@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
 
 import { ROUTES } from '@/shared/config/routes.ts';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -10,7 +10,6 @@ import { useTranslations } from 'next-intl';
 
 function ClientPage() {
   const t = useTranslations();
-
   return (
     <Box
       component="section"
@@ -30,7 +29,7 @@ function ClientPage() {
           height: 'auto',
         }}
       >
-        <DotLottieReact src="./animations/404-animation.json" loop autoplay />
+        <DotLottieReact src="/animations/404-animation.json" loop autoplay />
       </Box>
 
       <Box sx={{ textAlign: 'left' }}>

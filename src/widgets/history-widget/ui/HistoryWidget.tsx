@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
 export const HistoryWidget = ({ requests }: { requests: RequestData[] }) => {
-  const t = useTranslations('historyRequests');
+  const t = useTranslations();
 
   return requests.length > 0 ? (
     <>

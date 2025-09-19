@@ -25,8 +25,8 @@ describe('FullFeaturedCrudGrid', () => {
   const user = userEvent.setup();
 
   const columns: GridColDef[] = [
-    { field: 'key', headerName: 'Key', width: 150, editable: true },
-    { field: 'value', headerName: 'Value', width: 150, editable: true },
+    { field: 'key', headerName: 'variable', width: 150, editable: true },
+    { field: 'value', headerName: 'value', width: 150, editable: true },
   ];
 
   beforeEach(() => {

@@ -1,8 +1,10 @@
+'use client';
+
 import { wrapperStyles } from '@/widgets/workspace-navigator/config/styles';
 import { WORKSPACE_LINKS } from '@/widgets/workspace-navigator/config/workspace-links';
 import type { WidgetVariant } from '@/widgets/workspace-navigator/model/types';
 import { Button, Paper } from '@mui/material';
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
 import { useTranslations } from 'next-intl';
 
 export const WorkspaceNavigator = ({
