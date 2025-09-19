@@ -29,6 +29,7 @@
     }
   ],
   "variable": "Переменная",
+  "requestheaderkey": "Ключ",
   "value": "Значение",
   "actions": "Действия",
   "cancel": "Отмена",

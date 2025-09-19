@@ -29,6 +29,7 @@
     }
   ],
   "variable": "Variable",
+  "requestheaderkey": "Key",
   "value": "Value",
   "actions": "Actions",
   "cancel": "Cancel",
