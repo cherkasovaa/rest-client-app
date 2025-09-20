@@ -13,9 +13,11 @@ export const LanguageSwitcher = () => {
   const pathname = usePathname();
   const locale = useLocale();
 
-  const handleToggleLang = (_event: MouseEvent, locale: Lang) => {
+  const handleToggleLang = (_event: MouseEvent, lang: Lang) => {
+    if (locale === lang) return;
+
     router.push(pathname, {
-      locale,
+      locale: lang,
     });
   };
 

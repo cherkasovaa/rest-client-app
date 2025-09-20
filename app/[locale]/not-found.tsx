@@ -5,10 +5,9 @@ import { Link } from '@/shared/config/i18n/navigation.ts';
 import { ROUTES } from '@/shared/config/routes.ts';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Box, Button, Typography } from '@mui/material';
-import { NextIntlClientProvider } from 'next-intl';
 import { useTranslations } from 'next-intl';
 
-function ClientPage() {
+export default function Page() {
   const t = useTranslations();
   return (
     <Box
@@ -50,15 +49,5 @@ function ClientPage() {
         </Button>
       </Box>
     </Box>
-  );
-}
-
-export default function Page() {
-  const lang = window.location.pathname.includes('ru') ? 'ru' : 'ru';
-
-  return (
-    <NextIntlClientProvider locale={lang}>
-      <ClientPage />
-    </NextIntlClientProvider>
   );
 }
