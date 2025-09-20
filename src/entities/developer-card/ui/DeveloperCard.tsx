@@ -15,7 +15,6 @@ export const DeveloperCard = ({ developer }: { developer: AppDeveloper }) => {
         p: 2,
         maxWidth: 345,
         width: '100%',
-        height: '100%',
       }}
     >
       <CardMedia

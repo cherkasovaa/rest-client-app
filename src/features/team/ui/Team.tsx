@@ -8,7 +8,6 @@ export const Team = () => {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        alignItems: 'center',
         justifyContent: 'center',
         gap: 3,
       }}
