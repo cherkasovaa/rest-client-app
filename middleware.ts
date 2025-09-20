@@ -90,7 +90,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/',
-    //TODO: вернуть
     '/api/proxy/:path*',
     '/((?!_next/static|favicon.ico|sitemap.xml|robots.txt|rss-logo.svg|404-animation.json).*)',
     '/_api/login',
