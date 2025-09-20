@@ -7,14 +7,16 @@ import { useTranslations } from 'next-intl';
 export const HistoryWidget = ({ requests }: { requests: RequestData[] }) => {
   const t = useTranslations();
 
-  return requests.length > 0 ? (
+  if (!requests.length) {
+    return <HistoryEmptyState />;
+  }
+
+  return (
     <>
       <Typography component="h1" variant="h4" textAlign="center" mb={4}>
         {t('historyRequests')}
       </Typography>
       <RequestList requests={requests} />
     </>
-  ) : (
-    <HistoryEmptyState />
   );
 };

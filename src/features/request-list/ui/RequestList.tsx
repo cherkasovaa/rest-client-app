@@ -15,31 +15,29 @@ export const RequestList = ({ requests }: { requests: RequestData[] }) => {
     return requestDate.toLocaleDateString();
   };
 
-  return (
-    <List>
-      {requests.map((request) => (
-        <ListItem
-          key={request.id}
-          sx={{
-            marginBottom: '0.5rem',
-          }}
-        >
-          <RequestItem
-            id={request.id}
-            duration={request.duration}
-            statusCode={request.statusCode}
-            time={getTime(request.requestTimestamp)}
-            date={getDate(request.requestTimestamp)}
-            requestMethod={request.requestMethod}
-            requestSize={request.requestSize}
-            responseSize={request.responseSize}
-            errorDetails={request.errorDetails}
-            endpoint={request.endpoint}
-            requestBody={request.requestBody}
-            requestHeaders={request.requestHeaders}
-          />
-        </ListItem>
-      ))}
-    </List>
+  const renderRequestItem = (request: RequestData) => (
+    <ListItem
+      key={request.id}
+      sx={{
+        marginBottom: '0.5rem',
+      }}
+    >
+      <RequestItem
+        id={request.id}
+        duration={request.duration}
+        statusCode={request.statusCode}
+        time={getTime(request.requestTimestamp)}
+        date={getDate(request.requestTimestamp)}
+        requestMethod={request.requestMethod}
+        requestSize={request.requestSize}
+        responseSize={request.responseSize}
+        errorDetails={request.errorDetails}
+        endpoint={request.endpoint}
+        requestBody={request.requestBody}
+        requestHeaders={request.requestHeaders}
+      />
+    </ListItem>
   );
+
+  return <List>{requests.map(renderRequestItem)}</List>;
 };
