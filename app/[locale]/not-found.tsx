@@ -1,12 +1,14 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
 
-import { ROUTES } from '@/shared/config/routes';
+import { ROUTES } from '@/shared/config/routes.ts';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Box, Button, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 export default function Page() {
+  const t = useTranslations();
   return (
     <Box
       component="section"
@@ -26,12 +28,12 @@ export default function Page() {
           height: 'auto',
         }}
       >
-        <DotLottieReact src="./animations/404-animation.json" loop autoplay />
+        <DotLottieReact src="/animations/404-animation.json" loop autoplay />
       </Box>
 
       <Box sx={{ textAlign: 'left' }}>
         <Typography variant="h1" mb={3}>
-          Page Not Found
+          {t('pageNotFound')}
         </Typography>
 
         <Button
@@ -43,7 +45,7 @@ export default function Page() {
             backgroundColor: 'secondary.main',
           }}
         >
-          Back to home screen
+          {t('backToHomeScreen')}
         </Button>
       </Box>
     </Box>

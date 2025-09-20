@@ -1,10 +1,11 @@
 import { WelcomeCard } from '@/widgets/welcome-card/ui/WelcomeCard';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 describe('WelcomeCard', () => {
   test('renders default welcome message when user is a guest', () => {
-    render(<WelcomeCard />);
+    renderWithIntlProvider(<WelcomeCard />);
 
     const greetingText = screen.getByText(/welcome!/i);
     const additionalText = screen.getByText(
@@ -21,7 +22,7 @@ describe('WelcomeCard', () => {
   });
 
   test('shows personalized welcome message for authorized user', () => {
-    render(<WelcomeCard userName="Anna" />);
+    renderWithIntlProvider(<WelcomeCard userName="Anna" />);
 
     const greetingText = screen.getByText(/welcome back, anna!/i);
 

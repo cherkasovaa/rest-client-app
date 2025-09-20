@@ -14,9 +14,10 @@ import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '@/widgets/auth/model/useSignUp.ts';
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
 import { signUpSchema } from '@/widgets/auth/model/schemas.ts';
 import { ROUTES } from '@/shared/config/routes.ts';
+import { useTranslations } from 'next-intl';
 
 export function SignUpForm() {
   const {
@@ -28,6 +29,7 @@ export function SignUpForm() {
     resolver: zodResolver(signUpSchema),
   });
 
+  const t = useTranslations();
   const { isPendingSignUp, onSignUp } = useSignUp();
 
   return (
@@ -35,35 +37,43 @@ export function SignUpForm() {
       <form onSubmit={handleSubmit(onSignUp)}>
         <Stack direction={'column'} spacing={2}>
           <FormControl>
-            <FormLabel htmlFor={'userName'}>Name</FormLabel>
+            <FormLabel htmlFor={'userName'}>{t('form.name')}</FormLabel>
             <Input
               id={'userName'}
-              placeholder="Name"
+              placeholder={t('form.name')}
               {...register('userName')}
             />
-            <FormHelperText error>{errors.userName?.message}</FormHelperText>
+            <FormHelperText error>
+              {errors.userName?.message ? t(errors.userName?.message) : ''}
+            </FormHelperText>
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor={'email'}>Email address</FormLabel>
+            <FormLabel htmlFor={'email'}>{t('form.emailAddress')}</FormLabel>
             <Input
               id={'email'}
               placeholder="example@domain.com"
               {...register('email')}
             />
-            <FormHelperText error>{errors.email?.message}</FormHelperText>
+            <FormHelperText error>
+              {errors.email?.message ? t(errors.email?.message) : ''}
+            </FormHelperText>
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor={'password'}>Password</FormLabel>
+            <FormLabel htmlFor={'password'}>{t('form.password')}</FormLabel>
             <Input
               type={'password'}
               id={'password'}
               placeholder="*****"
               {...register('password')}
             />
-            <FormHelperText error>{errors.password?.message}</FormHelperText>
+            <FormHelperText error>
+              {errors.password?.message ? t(errors.password?.message) : ''}
+            </FormHelperText>
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor={'confirmPassword'}>Confirm password</FormLabel>
+            <FormLabel htmlFor={'confirmPassword'}>
+              {t('form.confirmPassword')}
+            </FormLabel>
             <Input
               type={'password'}
               id={'confirmPassword'}
@@ -71,7 +81,9 @@ export function SignUpForm() {
               {...register('confirmPassword')}
             />
             <FormHelperText error>
-              {errors.confirmPassword?.message}
+              {errors.confirmPassword?.message
+                ? t(errors.confirmPassword?.message)
+                : ''}
             </FormHelperText>
           </FormControl>
           <Button
@@ -87,10 +99,10 @@ export function SignUpForm() {
             loading={isPendingSignUp}
             type="submit"
           >
-            Sign up!
+            {t('signUp')}!
           </Button>
           <Typography>
-            Already have an account?{' '}
+            {t('alreadyHaveAccount')}?{' '}
             <Typography
               component={Link}
               href={ROUTES.SIGNIN}
@@ -102,7 +114,7 @@ export function SignUpForm() {
                 },
               }}
             >
-              Sign in!
+              {t('signIn')}!
             </Typography>
           </Typography>
         </Stack>

@@ -2,8 +2,10 @@ import { DEVELOPERS } from '@/shared/config/developers';
 import { LINK } from '@/widgets/footer/model/links';
 import { Box, Container, Link, Typography } from '@mui/material';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 export const Footer = () => {
+  const t = useTranslations();
   return (
     <Box
       component="footer"
@@ -56,7 +58,7 @@ export const Footer = () => {
                 },
               }}
             >
-              {developer.name}
+              {t(developer.name)}
             </Link>
           ))}
         </Box>

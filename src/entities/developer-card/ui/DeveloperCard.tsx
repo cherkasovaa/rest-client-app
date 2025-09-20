@@ -1,7 +1,10 @@
 import type { AppDeveloper } from '@/shared/model/types/appDevelopers';
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 export const DeveloperCard = ({ developer }: { developer: AppDeveloper }) => {
+  const t = useTranslations();
+
   return (
     <Card
       key={developer.github}
@@ -42,14 +45,20 @@ export const DeveloperCard = ({ developer }: { developer: AppDeveloper }) => {
             fontSize: '1.5rem',
           }}
         >
-          {developer.name}
+          {t(developer.name)}
         </Typography>
 
-        <Typography component="div" variant="body2">
-          {developer.role}
+        <Typography component="div" variant="body2" color="secondary">
+          {t(developer.role)}
         </Typography>
 
-        <Box>I have made: {developer.responsibilities.join(', ')}</Box>
+        <Box
+          sx={{
+            fontSize: '0.9rem',
+          }}
+        >
+          {t(developer.contribution)}
+        </Box>
       </CardContent>
     </Card>
   );

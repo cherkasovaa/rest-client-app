@@ -6,5 +6,5 @@ export interface AppDeveloper {
   photo: StaticImageData;
   github: string;
   nickname: string;
-  responsibilities: string[];
+  contribution: string;
 }

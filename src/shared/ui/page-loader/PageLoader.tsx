@@ -1,8 +1,11 @@
 'use client';
 
 import { Box, CircularProgress, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 export const PageLoader = () => {
+  const t = useTranslations();
+
   return (
     <Box
       sx={{
@@ -15,7 +18,7 @@ export const PageLoader = () => {
       }}
     >
       <CircularProgress />
-      <Typography>Loading the page...</Typography>
+      <Typography>{t('loadingPage')}...</Typography>
     </Box>
   );
 };

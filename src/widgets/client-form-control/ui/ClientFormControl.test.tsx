@@ -2,8 +2,9 @@ import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import * as pathMethods from '@/shared/lib/utils/pathMethods';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { ClientFormControl } from './ClientFormControl';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 vi.mock('@/shared/libs/utils/pathMethods');
 
@@ -22,8 +23,14 @@ describe('ClientFormComponent', () => {
 
   const user = userEvent.setup();
 
-  test('should render correctly with initial values', () => {
-    render(<ClientFormControl handleRequest={vi.fn()} isLoading={false} />);
+  test('should renderWithIntlProvider correctly with initial values', () => {
+    renderWithIntlProvider(
+      <ClientFormControl
+        request={null}
+        handleRequest={vi.fn()}
+        isLoading={false}
+      />
+    );
 
     const methodSelect = screen.getByRole('combobox');
     expect(methodSelect).toHaveTextContent('GET');
@@ -36,7 +43,13 @@ describe('ClientFormComponent', () => {
   });
 
   test('should update updatePathParams on endpoint change', async () => {
-    render(<ClientFormControl handleRequest={vi.fn()} isLoading={false} />);
+    renderWithIntlProvider(
+      <ClientFormControl
+        request={null}
+        handleRequest={vi.fn()}
+        isLoading={false}
+      />
+    );
 
     const endpointInput = screen.getByLabelText(/request url/i);
 
@@ -48,7 +61,13 @@ describe('ClientFormComponent', () => {
   });
 
   test('should update updatePathParams on method change', async () => {
-    render(<ClientFormControl handleRequest={vi.fn()} isLoading={false} />);
+    renderWithIntlProvider(
+      <ClientFormControl
+        request={null}
+        handleRequest={vi.fn()}
+        isLoading={false}
+      />
+    );
 
     const methodSelect = screen.getByRole('combobox');
     expect(methodSelect).toHaveTextContent('GET');
@@ -64,8 +83,12 @@ describe('ClientFormComponent', () => {
   test('should disable button if endpoint is empty and call sendRequest on button clicked', async () => {
     const handleRequest = vi.fn().mockResolvedValue(undefined);
 
-    render(
-      <ClientFormControl handleRequest={handleRequest} isLoading={false} />
+    renderWithIntlProvider(
+      <ClientFormControl
+        request={null}
+        handleRequest={handleRequest}
+        isLoading={false}
+      />
     );
 
     const endpointInput = screen.getByLabelText(/request url/i);

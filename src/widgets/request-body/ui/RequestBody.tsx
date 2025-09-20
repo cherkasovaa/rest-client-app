@@ -12,8 +12,10 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { Box, Button, FormControl, Stack } from '@mui/material';
 import type * as monaco from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const RequestBody = ({ body }: { body?: string }) => {
+  const t = useTranslations();
   const [language, setLanguage] = useState<string>(CONTENT_TYPES[0].language);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const [isReadonly, setIsReadonly] = useState<boolean>(
@@ -90,7 +92,7 @@ export const RequestBody = ({ body }: { body?: string }) => {
           }}
         >
           <AutoAwesomeIcon />
-          Prettify
+          {t('prettify')}
         </Button>
       </FormControl>
       <Box sx={{ position: 'relative', minHeight: '200px' }}>
@@ -111,7 +113,7 @@ export const RequestBody = ({ body }: { body?: string }) => {
           height="200px"
           theme="light"
           language={language}
-          loading={<div>...Loading</div>}
+          loading={<div>...{t('loading')}</div>}
           options={{
             readOnly: isReadonly,
             fontSize: 17,

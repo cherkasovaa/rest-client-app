@@ -16,11 +16,14 @@ import {
   type GridRowModel,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
+import { ruRU, enUS } from '@mui/x-data-grid/locales';
 
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, Snackbar } from '@mui/material';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { EditToolbar } from './EditToolbar';
+import { useLocale, useTranslations } from 'next-intl';
+import { LANG } from '@/shared/config/langs.ts';
 
 declare module '@mui/x-data-grid' {
   interface ToolbarPropsOverrides {
@@ -40,6 +43,15 @@ export const FullFeaturedCrudGrid = ({
   setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
   columns: GridColDef[];
 }) => {
+  const t = useTranslations();
+  const locale = useLocale();
+
+  const localeText = useMemo(() => {
+    return locale === LANG.RU
+      ? ruRU.components.MuiDataGrid.defaultProps.localeText
+      : enUS.components.MuiDataGrid.defaultProps.localeText;
+  }, [locale]);
+
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [error, setError] = useState<string | null>(null);
 
@@ -97,22 +109,22 @@ export const FullFeaturedCrudGrid = ({
     const value = newRow.value?.toString().trim();
 
     if (!key || key === '') {
-      setError('Key cannot be empty!');
+      setError(`${t('keyCannotBeEmpty')}!`);
       return rows.find((row) => row.id === newRow.id) || newRow;
     }
 
     if (/\s/.test(key)) {
-      setError(`Key "${key}" cannot contain spaces`);
+      setError(t('keyCannotContainSpaces', { key }));
       return rows.find((row) => row.id === newRow.id) || newRow;
     }
 
     if (!value || value === '') {
-      setError(`Value of "${key}" cannot be empty!`);
+      setError(t('valueCannotBeEmpty', { key }));
       return rows.find((row) => row.id === newRow.id) || newRow;
     }
 
     if (isKeyDuplicate(key, newRow.id)) {
-      setError(`Key "${key}" already exists`);
+      setError(t('keyAlreadyExists', { key }));
       return rows.find((row) => row.id === newRow.id) || newRow;
     }
 
@@ -126,11 +138,14 @@ export const FullFeaturedCrudGrid = ({
   };
 
   const columnsGrid: GridColDef[] = [
-    ...columns,
+    ...columns.map((column) => ({
+      ...column,
+      headerName: t(column.headerName || ''),
+    })),
     {
       field: 'actions',
       type: 'actions',
-      headerName: 'Actions',
+      headerName: t('actions'),
       cellClassName: 'actions',
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
@@ -146,7 +161,7 @@ export const FullFeaturedCrudGrid = ({
             <GridActionsCellItem
               icon={<CancelIcon />}
               key={uuidv4()}
-              label="Cancel"
+              label={t('cancel')}
               className="textPrimary"
               onClick={handleCancelClick(id)}
               color="inherit"
@@ -157,7 +172,7 @@ export const FullFeaturedCrudGrid = ({
         return [
           <GridActionsCellItem
             icon={<EditIcon />}
-            label="Edit"
+            label={t('edit')}
             className="textPrimary"
             onClick={handleEditClick(id)}
             color="inherit"
@@ -165,7 +180,7 @@ export const FullFeaturedCrudGrid = ({
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
-            label="Delete"
+            label={t('delete')}
             onClick={handleDeleteClick(id)}
             key={uuidv4()}
             color="inherit"
@@ -189,6 +204,7 @@ export const FullFeaturedCrudGrid = ({
       }}
     >
       <DataGrid
+        localeText={localeText}
         rows={rows}
         columns={columnsGrid}
         editMode="row"

@@ -3,12 +3,14 @@ import { useLoadingCallback } from '@/shared/lib/hooks/useLoadingCallback.ts';
 import { generateFirebaseAuthErrorMessage } from '@/shared/lib/utils/generateFirebaseAuthErrorMessage.ts';
 import { useToast } from '@/shared/ui/toast/useToast.tsx';
 import type { SignInFormModel } from '@/widgets/auth/model/schemas.ts';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shared/config/i18n/navigation.ts';
 import { useEffect } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { login } from '../../../../_api';
+import { useTranslations } from 'next-intl';
 
 export function useSignIn() {
+  const t = useTranslations();
   const router = useRouter();
   const { toastError } = useToast();
 
@@ -18,7 +20,7 @@ export function useSignIn() {
   const [onSignIn, isPendingSignIn] = useLoadingCallback(handleSignIn, {
     onError: (err) => {
       console.error(err);
-      toastError('Some error has occured');
+      toastError(t('somethingWentWrong'));
     },
   });
 

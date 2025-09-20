@@ -1,10 +1,11 @@
 import { PageLoader } from '@/shared/ui/page-loader/PageLoader';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 describe('PageLoader', () => {
   test('should render spinner and loading message', () => {
-    render(<PageLoader />);
+    renderWithIntlProvider(<PageLoader />);
 
     expect(screen.getByText(/loading the page.../i)).toBeInTheDocument();
   });

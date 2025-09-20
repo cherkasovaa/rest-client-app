@@ -27,9 +27,9 @@ export default async function Page() {
     redirect(ROUTES.SIGNIN);
   }
 
-  const requests = await requestService.getUserResponses(
-    tokens.decodedToken.uid
-  );
+  const requests = tokens
+    ? await requestService.getUserResponses(tokens.decodedToken.uid)
+    : [];
 
   return <HistoryPage requests={requests} />;
 }

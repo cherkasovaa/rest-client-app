@@ -1,9 +1,10 @@
 import { SignUpForm } from '@/widgets/auth';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { fireEvent, screen, cleanup, render } from '@testing-library/react';
+import { fireEvent, screen, cleanup } from '@testing-library/react';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 const renderForm = () => {
-  render(<SignUpForm />);
+  renderWithIntlProvider(<SignUpForm />);
 };
 
 vi.mock('next/navigation', () => ({

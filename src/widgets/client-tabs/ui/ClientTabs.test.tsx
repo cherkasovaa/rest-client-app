@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test } from 'vitest';
 import { ClientTabs } from './ClientTabs';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 describe('ClientTabs', () => {
   test('shoudl render all tabs and switch correctly', async () => {
@@ -9,7 +10,9 @@ describe('ClientTabs', () => {
     const headers = <div data-testid="headers">Headers Content</div>;
     const code = <div data-testid="code">Code Content</div>;
 
-    render(<ClientTabs body={body} headers={headers} code={code} />);
+    renderWithIntlProvider(
+      <ClientTabs body={body} headers={headers} code={code} />
+    );
 
     expect(screen.getByRole('tab', { name: 'BODY' })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'HEADERS' })).toBeInTheDocument();

@@ -1,25 +1,30 @@
 'use client';
 
 import { StyledToggleButtonGroup } from '@/entities/language-switcher/config/styledToggleButtonGroup';
+import { usePathname, useRouter } from '@/shared/config/i18n/navigation.ts';
 import { LANG } from '@/shared/config/langs';
-import { LS, LS_LANG } from '@/shared/lib/utils/localStorage';
 import type { Lang } from '@/shared/model/types/lang-types';
 import { ToggleButton } from '@mui/material';
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useLocale } from 'next-intl';
+import { type MouseEvent } from 'react';
 
 export const LanguageSwitcher = () => {
-  const [lang, setLang] = useState<Lang>(LS.get(LS_LANG) || LANG.EN);
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
 
-  useEffect(() => {
-    LS.set(LS_LANG, lang);
-  }, [lang]);
+  const handleToggleLang = (_event: MouseEvent, lang: Lang) => {
+    if (locale === lang) return;
 
-  const handleToggleLang = (_event: MouseEvent, value: Lang) => setLang(value);
+    router.push(pathname, {
+      locale: lang,
+    });
+  };
 
   return (
     <StyledToggleButtonGroup
       color="secondary"
-      value={lang}
+      value={locale}
       exclusive
       size="small"
       aria-label="Language"

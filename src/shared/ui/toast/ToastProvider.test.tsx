@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { screen, render, fireEvent } from '@testing-library/react';
 import { ToastProvider } from '@/shared/ui/toast/ToastProvider.tsx';
 import { useToast } from '@/shared/ui/toast/useToast.tsx';
+import { act } from 'react';
 
 const TestComponent = () => {
   const { toastError, hideToast } = useToast();
@@ -13,7 +14,7 @@ const TestComponent = () => {
   );
 };
 
-const renderTestComponent = () => {
+const renderTestComponent = async () => {
   render(
     <ToastProvider>
       <TestComponent />
@@ -23,7 +24,7 @@ const renderTestComponent = () => {
 
 describe('ToastProvider', () => {
   it('Show error when call toast error', async () => {
-    renderTestComponent();
+    await act(renderTestComponent);
 
     await vi.waitFor(() => {
       expect(screen.queryByText('some error')).not.toBeInTheDocument();
@@ -32,10 +33,11 @@ describe('ToastProvider', () => {
     const buttonShow = screen.getByText('show');
     const buttonHide = screen.getByText('hide');
 
-    fireEvent.click(buttonShow);
+    await act(async () => fireEvent.click(buttonShow));
     expect(screen.getByText('some error')).toBeInTheDocument();
 
-    fireEvent.click(buttonHide);
+    await act(async () => fireEvent.click(buttonHide));
+
     await vi.waitFor(() => {
       expect(screen.queryByText('some error')).not.toBeInTheDocument();
     });

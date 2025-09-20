@@ -1,16 +1,13 @@
-import type { Lang } from '@/shared/model/types/lang-types';
 import type { Variables } from '@/widgets/variables-table/model/constants';
 
 export const LS_VARIABLES = 'variables';
 export const LS_TEST = 'test';
-export const LS_LANG = 'lang';
 
-type LocalStorageKeys = 'variables' | 'test' | 'lang';
+type LocalStorageKeys = 'variables' | 'test';
 
 type LocalStorageData = {
   variables: Variables;
   test: string;
-  lang: Lang;
 };
 
 export const LS = {

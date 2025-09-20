@@ -1,10 +1,11 @@
 import { ROUTES } from '@/shared/config/routes';
 import { Header } from '@/widgets/header/ui/Header';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, test } from 'vitest';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 describe('Header', () => {
-  beforeEach(() => render(<Header />));
+  beforeEach(() => renderWithIntlProvider(<Header />));
 
   describe('renders', () => {
     test('renders RSSchool logo', () => {

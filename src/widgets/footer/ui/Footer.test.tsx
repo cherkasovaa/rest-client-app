@@ -1,11 +1,18 @@
 import { DEVELOPERS } from '@/shared/config/developers';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 import { LINK } from '@/widgets/footer/model/links';
 import { Footer } from '@/widgets/footer/ui/Footer';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, test } from 'vitest';
 
+const texts = {
+  'teamMembers.0.name': 'Akseniia',
+  'teamMembers.1.name': 'Tatyana',
+  'teamMembers.2.name': 'Alina',
+};
+
 describe('Footer', () => {
-  beforeEach(() => render(<Footer />));
+  beforeEach(() => renderWithIntlProvider(<Footer />));
 
   test('renders RSSchool logo', () => {
     expect(screen.getByAltText(/rsschool logo/i)).toBeInTheDocument();
@@ -28,7 +35,7 @@ describe('Footer', () => {
     test.each(DEVELOPERS)(
       'renders a github link for developer $name',
       ({ name, github }) => {
-        const link = screen.getByRole('link', { name });
+        const link = screen.getByRole('link', { name: texts[name as never] });
 
         expect(link).toBeInTheDocument();
         expect(link).toHaveAttribute('href', github);

@@ -6,39 +6,27 @@ import tatuanaPhoto from '@/shared/assets/developers/tatuana.jpg';
 
 export const DEVELOPERS: AppDeveloper[] = [
   {
-    name: 'Kseniia',
-    role: 'Developer',
+    name: 'teamMembers.0.name',
+    role: 'teamMembers.0.role',
     photo: akseeePhoto,
     github: 'https://github.com/akseee',
     nickname: 'akseee',
-    responsibilities: [
-      'RESTful client page',
-      'variables',
-      'unit & integration testing',
-    ],
+    contribution: 'teamMembers.0.contribution',
   },
   {
-    name: 'Tatuana',
-    role: 'Developer',
+    name: 'teamMembers.1.name',
+    role: 'teamMembers.1.role',
     photo: tatuanaPhoto,
     github: 'https://github.com/dem-tv',
     nickname: 'dem-tv',
-    responsibilities: [
-      'authorization via Firebase',
-      'unit & integration testing',
-    ],
+    contribution: 'teamMembers.1.contribution',
   },
   {
-    name: 'Alina',
-    role: 'Team Lead',
+    name: 'teamMembers.2.name',
+    role: 'teamMembers.2.role',
     photo: alinaPhoto,
     github: 'https://github.com/cherkasovaa/',
     nickname: 'cherkasovaa',
-    responsibilities: [
-      'project setup',
-      'main page implementation',
-      'history page',
-      'unit & integration testing',
-    ],
+    contribution: 'teamMembers.2.contribution',
   },
 ] as const;

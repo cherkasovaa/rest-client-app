@@ -4,12 +4,15 @@ import { generateFirebaseAuthErrorMessage } from '@/shared/lib/utils/generateFir
 import { useToast } from '@/shared/ui/toast/useToast.tsx';
 import type { SignUpFormModel } from '@/widgets/auth/model/schemas.ts';
 import { updateProfile } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { login } from '../../../../_api';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation.ts';
 
 export function useSignUp() {
+  const t = useTranslations();
+
   const router = useRouter();
   const { toastError } = useToast();
 
@@ -19,7 +22,7 @@ export function useSignUp() {
   const [onSignUp, isPendingSignUp] = useLoadingCallback(handleSignUp, {
     onError: (err) => {
       console.error(err);
-      toastError('Some error has occured');
+      toastError(t('somethingWentWrong'));
     },
   });
 

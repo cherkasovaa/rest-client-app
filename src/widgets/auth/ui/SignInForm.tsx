@@ -14,11 +14,13 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignIn } from '@/widgets/auth/model/useSignIn.ts';
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
 import { signInSchema } from '@/widgets/auth/model/schemas.ts';
 import { ROUTES } from '@/shared/config/routes.ts';
+import { useTranslations } from 'next-intl';
 
 export function SignInForm() {
+  const t = useTranslations();
   const {
     register,
     handleSubmit,
@@ -35,23 +37,27 @@ export function SignInForm() {
       <form onSubmit={handleSubmit(onSignIn)}>
         <Stack direction={'column'} spacing={2}>
           <FormControl>
-            <FormLabel htmlFor={'email'}>Email address</FormLabel>
+            <FormLabel htmlFor={'email'}>{t('form.emailAddress')}</FormLabel>
             <Input
               id={'email'}
               placeholder="example@domain.com"
               {...register('email')}
             />
-            <FormHelperText error>{errors.email?.message}</FormHelperText>
+            <FormHelperText error>
+              {errors.email?.message ? t(errors.email?.message) : ''}
+            </FormHelperText>
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor={'password'}>Password</FormLabel>
+            <FormLabel htmlFor={'password'}>{t('form.password')}</FormLabel>
             <Input
               type={'password'}
               id={'password'}
               placeholder="*****"
               {...register('password')}
             />
-            <FormHelperText error>{errors.password?.message}</FormHelperText>
+            <FormHelperText error>
+              {errors.password?.message ? t(errors.password?.message) : ''}
+            </FormHelperText>
           </FormControl>
           <Button
             sx={{
@@ -66,10 +72,10 @@ export function SignInForm() {
             loading={isPendingSignIn}
             type="submit"
           >
-            Sign in!
+            {t('signIn')}!
           </Button>
           <Typography>
-            Do not have an account?{' '}
+            {t('doNotHaveAccount')}?{' '}
             <Typography
               component={Link}
               href={ROUTES.SIGNUP}
@@ -81,7 +87,7 @@ export function SignInForm() {
                 },
               }}
             >
-              Sign up!
+              {t('signUp')}!
             </Typography>
           </Typography>
         </Stack>

@@ -1,21 +1,23 @@
 import { z } from 'zod';
 
-const emailSchema = z.email({ error: 'Incorrect email address' });
+const emailSchema = z.email({ error: 'form.incorrectEmailAddress' });
 const passwordSchema = z
   .string()
   .regex(/\d/, {
-    error: 'Password should contain at least 1 number',
+    error: 'form.passwordContainsNumber',
   })
   .regex(/[A-Z]/, {
-    error: 'Password should contain at least 1 uppercase letter',
+    error: 'form.passwordContainsUppercaseLetter',
   })
   .regex(/[a-z]/, {
-    error: 'Password should contain at least 1 lowercase letter',
+    error: 'form.passwordContainsLowercaseLetter',
   })
   .regex(/[!@#$%^&*()_+]/, {
-    error: 'Password should contain at least 1 special character(!@#$%^&*()_+)',
+    error: 'form.passwordContainsSpecial',
   })
-  .min(6);
+  .min(6, {
+    error: 'form.passwordMinLength',
+  });
 
 export const signInSchema = z.object({
   email: emailSchema,
@@ -28,11 +30,11 @@ export const signUpSchema = z
     password: passwordSchema,
     confirmPassword: z.string(),
     userName: z.string().regex(/^[A-ZА-ЯЁ]/, {
-      error: 'Name must start with uppercase letter',
+      error: 'form.nameStartsUppercaseLetter',
     }),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: 'The passwords did not match',
+    message: 'form.passwordNotMatched',
     path: ['confirmPassword'],
   });
 

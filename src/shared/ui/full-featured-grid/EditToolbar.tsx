@@ -8,8 +8,10 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import { v4 as uuidv4 } from 'uuid';
 import { Tooltip } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 export const EditToolbar = (props: GridSlotProps['toolbar']) => {
+  const t = useTranslations();
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
@@ -23,7 +25,7 @@ export const EditToolbar = (props: GridSlotProps['toolbar']) => {
 
   return (
     <Toolbar>
-      <Tooltip title="Add record">
+      <Tooltip title={t('addRecord')}>
         <ToolbarButton onClick={handleClick}>
           <AddIcon fontSize="large" />
         </ToolbarButton>

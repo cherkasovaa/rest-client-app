@@ -51,9 +51,10 @@ vi.mock('@monaco-editor/react', () => {
 
 import { CODE_LANGUAGES } from '@/shared/model/types/code-languages';
 import { generateCode } from '@/widgets/request-code/model/generateCode';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RequestCode } from './RequestCode';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 
 describe('RequestCode component', () => {
   const mockedGenerateCode = vi.mocked(generateCode);
@@ -81,7 +82,7 @@ describe('RequestCode component', () => {
   });
 
   test('should render initial editor content and generate button', () => {
-    render(<RequestCode />);
+    renderWithIntlProvider(<RequestCode />);
 
     expect(screen.getByTestId('editor')).toHaveTextContent(
       '// Select a way to generate code and click the button'
@@ -93,7 +94,7 @@ describe('RequestCode component', () => {
 
   test('should generateCode and update editor when selection Go and clicking the button', async () => {
     mockedGenerateCode.mockReturnValue('test passed');
-    render(<RequestCode />);
+    renderWithIntlProvider(<RequestCode />);
 
     const user = userEvent.setup();
 

@@ -1,8 +1,10 @@
 import { Button } from '@mui/material';
 import { useSignOut } from '@/widgets/auth/model/useSignOut.ts';
+import { useTranslations } from 'next-intl';
 
 export const SignOutButton = () => {
   const { handleSignOut, isPendingSignOut } = useSignOut();
+  const t = useTranslations();
 
   return (
     <Button
@@ -14,7 +16,7 @@ export const SignOutButton = () => {
         backgroundColor: 'secondary.main',
       }}
     >
-      Sign Out
+      {t('signOut')}
     </Button>
   );
 };

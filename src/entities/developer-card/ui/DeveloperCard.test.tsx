@@ -1,11 +1,12 @@
 import { DeveloperCard } from '@/entities/developer-card/ui/DeveloperCard';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
 import type { AppDeveloper } from '@/shared/model/types/appDevelopers';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, test } from 'vitest';
 
 const mockDev: AppDeveloper = {
-  name: 'User',
-  role: 'developer',
+  name: 'teamMembers.0.name',
+  role: 'teamMembers.0.role',
   photo: {
     src: '/path/to/photo',
     height: 100,
@@ -13,11 +14,13 @@ const mockDev: AppDeveloper = {
   },
   github: '/path/to/github',
   nickname: 'user',
-  responsibilities: ['project setup', 'implement header'],
+  contribution: 'teamMembers.0.contribution',
 };
 
 describe('DeveloperCard', () => {
-  beforeEach(() => render(<DeveloperCard developer={mockDev} />));
+  beforeEach(() =>
+    renderWithIntlProvider(<DeveloperCard developer={mockDev} />)
+  );
 
   test('renders photo', () => {
     const photo = screen.getByAltText(mockDev.name);
@@ -27,18 +30,10 @@ describe('DeveloperCard', () => {
   });
 
   test('renders name and role', () => {
-    const name = screen.getByText(/user/i);
-    const role = screen.getByText(/developer/i);
+    const name = screen.getByText(/Kseniia/i);
+    const role = screen.getByText(/Developer/i);
 
-    expect(name).toHaveTextContent(mockDev.name);
-    expect(role).toHaveTextContent(mockDev.role);
-  });
-
-  test('renders responsibilities', () => {
-    const resText = screen.getByText(/i have made/i);
-
-    expect(resText).toHaveTextContent(
-      /i have made: project setup, implement header/i
-    );
+    expect(name).toHaveTextContent('Akseniia');
+    expect(role).toHaveTextContent('Developer');
   });
 });

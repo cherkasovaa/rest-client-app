@@ -1,8 +1,12 @@
+'use client';
+
 import { ROUTES } from '@/shared/config/routes';
 import { Box, Button } from '@mui/material';
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation.ts';
+import { useTranslations } from 'next-intl';
 
 export const AuthButtons = () => {
+  const t = useTranslations();
   return (
     <Box
       sx={{
@@ -19,7 +23,7 @@ export const AuthButtons = () => {
           backgroundColor: 'secondary.main',
         }}
       >
-        Sign In
+        {t('signIn')}
       </Button>
       <Button
         component={Link}
@@ -30,7 +34,7 @@ export const AuthButtons = () => {
           backgroundColor: 'secondary.main',
         }}
       >
-        Sign up
+        {t('signUp')}
       </Button>
     </Box>
   );
