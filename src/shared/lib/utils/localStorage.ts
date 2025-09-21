@@ -22,7 +22,6 @@ export const LS = {
 
   get<Key extends LocalStorageKeys>(key: Key): LocalStorageData[Key] | null {
     const data = localStorage.getItem(key);
-    console.log('LocalStorageKeys', data);
     return data ? (JSON.parse(data) as LocalStorageData[Key]) : null;
   },
 };
