@@ -3,17 +3,14 @@
 import { LS, LS_VARIABLES } from '@/shared/lib/utils/localStorage';
 import { FullFeaturedCrudGrid } from '@/shared/ui/full-featured-grid/FullFeaturedGrid';
 import type { GridRowsProp } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { columns } from '../model/constants';
 import { rowsToVariables, variablesToRow } from '../utils/rowMethods';
 
-export const VariablesTable = () => {
-  const [gridRows, setGridRows] = useState<GridRowsProp>([]);
+const getInitialVariables = () => variablesToRow(LS.get(LS_VARIABLES) ?? {});
 
-  useEffect(() => {
-    const saved = LS.get(LS_VARIABLES);
-    setGridRows(variablesToRow(saved ?? {}));
-  }, []);
+export const VariablesTable = () => {
+  const [gridRows, setGridRows] = useState<GridRowsProp>(getInitialVariables);
 
   const handleSetRows = (
     newRows: GridRowsProp | ((prev: GridRowsProp) => GridRowsProp)

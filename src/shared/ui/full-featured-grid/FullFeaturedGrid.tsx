@@ -20,7 +20,7 @@ import { ruRU, enUS } from '@mui/x-data-grid/locales';
 
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, Snackbar } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { EditToolbar } from './EditToolbar';
 import { useLocale, useTranslations } from 'next-intl';
 import { LANG } from '@/shared/config/langs.ts';
@@ -34,7 +34,7 @@ declare module '@mui/x-data-grid' {
   }
 }
 
-export const FullFeaturedCrudGrid = ({
+export const FullFeaturedCrudGrid = memo(function FullFeaturedCrudGrid({
   rows,
   setRows,
   columns,
@@ -42,7 +42,7 @@ export const FullFeaturedCrudGrid = ({
   rows: GridRowsProp;
   setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
   columns: GridColDef[];
-}) => {
+}) {
   const t = useTranslations();
   const locale = useLocale();
 
@@ -55,140 +55,177 @@ export const FullFeaturedCrudGrid = ({
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [error, setError] = useState<string | null>(null);
 
-  const handleCloseError = () => {
+  const handleCloseError = useCallback(() => {
     setError(null);
-  };
+  }, []);
 
-  const isKeyDuplicate = (key: string, currentId?: string): boolean => {
-    if (!key || key.trim() === '') return false;
+  const isKeyDuplicate = useCallback(
+    (key: string, currentId?: string): boolean => {
+      if (!key || key.trim() === '') return false;
 
-    const normalized = key.toLowerCase().trim();
-    return rows.some((row) => {
-      return (
-        row.id !== currentId &&
-        row.key?.toString().toLowerCase().trim() === normalized
-      );
-    });
-  };
+      const normalized = key.toLowerCase().trim();
+      return rows.some((row) => {
+        return (
+          row.id !== currentId &&
+          row.key?.toString().toLowerCase().trim() === normalized
+        );
+      });
+    },
+    [rows]
+  );
 
-  const handleRowEditStop: GridEventListener<'rowEditStop'> = (
-    params,
-    event
-  ) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-    }
-  };
+  const handleRowEditStop: GridEventListener<'rowEditStop'> = useCallback(
+    (params, event) => {
+      if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+        event.defaultMuiPrevented = true;
+      }
+    },
+    []
+  );
 
-  const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
+  const handleEditClick = useCallback(
+    (id: GridRowId) => () => {
+      setRowModesModel((prevRowModesModel) => ({
+        ...prevRowModesModel,
+        [id]: { mode: GridRowModes.Edit },
+      }));
+    },
+    []
+  );
 
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
+  const handleSaveClick = useCallback(
+    (id: GridRowId) => () => {
+      setRowModesModel((prevRowModesModel) => ({
+        ...prevRowModesModel,
+        [id]: { mode: GridRowModes.View },
+      }));
+    },
+    []
+  );
 
-  const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-  };
+  const handleDeleteClick = useCallback(
+    (id: GridRowId) => () => {
+      setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+    },
+    [setRows]
+  );
 
-  const handleCancelClick = (id: GridRowId) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
+  const handleCancelClick = useCallback(
+    (id: GridRowId) => () => {
+      setRowModesModel((prevRowModesModel) => ({
+        ...prevRowModesModel,
+        [id]: { mode: GridRowModes.View, ignoreModifications: true },
+      }));
 
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow!.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
-    }
-  };
+      const editedRow = rows.find((row) => row.id === id);
+      if (editedRow!.isNew) {
+        setRows(rows.filter((row) => row.id !== id));
+      }
+    },
+    [rows, setRows]
+  );
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const key = newRow.key?.toString().trim();
-    const value = newRow.value?.toString().trim();
+  const processRowUpdate = useCallback(
+    (newRow: GridRowModel) => {
+      const key = newRow.key?.toString().trim();
+      const value = newRow.value?.toString().trim();
 
-    if (!key || key === '') {
-      setError(`${t('keyCannotBeEmpty')}!`);
-      return rows.find((row) => row.id === newRow.id) || newRow;
-    }
+      if (!key || key === '') {
+        setError(`${t('keyCannotBeEmpty')}!`);
+        return rows.find((row) => row.id === newRow.id) || newRow;
+      }
 
-    if (/\s/.test(key)) {
-      setError(t('keyCannotContainSpaces', { key }));
-      return rows.find((row) => row.id === newRow.id) || newRow;
-    }
+      if (/\s/.test(key)) {
+        setError(t('keyCannotContainSpaces', { key }));
+        return rows.find((row) => row.id === newRow.id) || newRow;
+      }
 
-    if (!value || value === '') {
-      setError(t('valueCannotBeEmpty', { key }));
-      return rows.find((row) => row.id === newRow.id) || newRow;
-    }
+      if (!value || value === '') {
+        setError(t('valueCannotBeEmpty', { key }));
+        return rows.find((row) => row.id === newRow.id) || newRow;
+      }
 
-    if (isKeyDuplicate(key, newRow.id)) {
-      setError(t('keyAlreadyExists', { key }));
-      return rows.find((row) => row.id === newRow.id) || newRow;
-    }
+      if (isKeyDuplicate(key, newRow.id)) {
+        setError(t('keyAlreadyExists', { key }));
+        return rows.find((row) => row.id === newRow.id) || newRow;
+      }
 
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
-  };
+      const updatedRow = { ...newRow, isNew: false };
+      setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+      return updatedRow;
+    },
+    [isKeyDuplicate, rows, setRows, t]
+  );
 
-  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-    setRowModesModel(newRowModesModel);
-  };
+  const handleRowModesModelChange = useCallback(
+    (newRowModesModel: GridRowModesModel) => {
+      setRowModesModel(newRowModesModel);
+    },
+    []
+  );
 
-  const columnsGrid: GridColDef[] = [
-    ...columns.map((column) => ({
-      ...column,
-      headerName: t(column.headerName || ''),
-    })),
-    {
-      field: 'actions',
-      type: 'actions',
-      headerName: t('actions'),
-      cellClassName: 'actions',
-      getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+  const columnsGrid = useMemo<GridColDef[]>(() => {
+    return [
+      ...columns.map((column) => ({
+        ...column,
+        headerName: t(column.headerName || ''),
+      })),
+      {
+        field: 'actions',
+        type: 'actions',
+        headerName: t('actions'),
+        cellClassName: 'actions',
+        getActions: ({ id }) => {
+          const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
-        if (isInEditMode) {
+          if (isInEditMode) {
+            return [
+              <GridActionsCellItem
+                key={uuidv4()}
+                icon={<SaveIcon />}
+                label="Save"
+                onClick={handleSaveClick(id)}
+              />,
+              <GridActionsCellItem
+                icon={<CancelIcon />}
+                key={uuidv4()}
+                label={t('cancel')}
+                className="textPrimary"
+                onClick={handleCancelClick(id)}
+                color="inherit"
+              />,
+            ];
+          }
+
           return [
             <GridActionsCellItem
+              icon={<EditIcon />}
+              label={t('edit')}
+              className="textPrimary"
+              onClick={handleEditClick(id)}
+              color="inherit"
               key={uuidv4()}
-              icon={<SaveIcon />}
-              label="Save"
-              onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
-              icon={<CancelIcon />}
+              icon={<DeleteIcon />}
+              label={t('delete')}
+              onClick={handleDeleteClick(id)}
               key={uuidv4()}
-              label={t('cancel')}
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
               color="inherit"
             />,
           ];
-        }
-
-        return [
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label={t('edit')}
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-            key={uuidv4()}
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label={t('delete')}
-            onClick={handleDeleteClick(id)}
-            key={uuidv4()}
-            color="inherit"
-          />,
-        ];
+        },
       },
-    },
-  ];
+    ];
+  }, [
+    columns,
+    handleCancelClick,
+    handleDeleteClick,
+    handleEditClick,
+    handleSaveClick,
+    rowModesModel,
+    t,
+  ]);
 
   return (
     <Box
@@ -235,4 +272,4 @@ export const FullFeaturedCrudGrid = ({
       </Snackbar>
     </Box>
   );
-};
+});

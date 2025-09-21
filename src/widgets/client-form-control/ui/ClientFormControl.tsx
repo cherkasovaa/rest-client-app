@@ -34,6 +34,14 @@ export const ClientFormControl = ({
     void handleRequest();
   };
 
+  const renderHttpConfigMethod = (httpMethod: string) => {
+    return (
+      <MenuItem key={httpMethod} value={httpMethod}>
+        {httpMethod}
+      </MenuItem>
+    );
+  };
+
   return (
     <Box>
       <form onSubmit={handleOnSubmit}>
@@ -52,13 +60,7 @@ export const ClientFormControl = ({
             label={t('method')}
             onChange={(e) => setMethodSafe(String(e.target.value))}
           >
-            {HTTP_CONFIG.METHODS.map((m) => {
-              return (
-                <MenuItem key={m} value={m}>
-                  {m}
-                </MenuItem>
-              );
-            })}
+            {HTTP_CONFIG.METHODS.map(renderHttpConfigMethod)}
           </Select>
           <TextField
             fullWidth

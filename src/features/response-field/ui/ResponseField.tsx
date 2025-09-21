@@ -2,8 +2,9 @@ import type { ApiResponse } from '@/shared/model/types/api';
 import { Editor } from '@monaco-editor/react';
 import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { memo } from 'react';
 
-export const ResponseField = ({
+export const ResponseField = memo(function ResponseField({
   response,
   loading,
   error,
@@ -11,7 +12,7 @@ export const ResponseField = ({
   response: ApiResponse | null;
   loading: boolean;
   error?: string | null;
-}) => {
+}) {
   const t = useTranslations();
 
   return (
@@ -33,4 +34,4 @@ export const ResponseField = ({
       />
     </Box>
   );
-};
+});

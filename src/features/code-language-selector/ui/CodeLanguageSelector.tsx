@@ -9,6 +9,7 @@ import {
   Select,
   type SelectChangeEvent,
 } from '@mui/material';
+import { useCallback } from 'react';
 
 export const CodeLanguageSelector = ({
   value,
@@ -17,16 +18,27 @@ export const CodeLanguageSelector = ({
   value: CodeLanguage;
   onChange: (language: CodeLanguage) => void;
 }) => {
-  const handleChange = (event: SelectChangeEvent<string>) => {
-    const selectedTarget = event.target.value;
-    const language = CODE_LANGUAGES.find(
-      (lang) => lang.target === selectedTarget
-    );
+  const handleChange = useCallback(
+    (event: SelectChangeEvent) => {
+      const selectedTarget = event.target.value;
+      const language = CODE_LANGUAGES.find(
+        (lang) => lang.target === selectedTarget
+      );
 
-    if (language) {
-      onChange(language);
-    }
-  };
+      if (language) {
+        onChange(language);
+      }
+    },
+    [onChange]
+  );
+
+  const renderLanguageItem = useCallback((lang: CodeLanguage) => {
+    return (
+      <MenuItem key={`${lang.language}-${lang.variant}`} value={lang.target}>
+        {lang.language} (<span style={{ color: 'grey' }}>{lang.variant}</span>)
+      </MenuItem>
+    );
+  }, []);
 
   return (
     <FormControl fullWidth>
@@ -37,15 +49,7 @@ export const CodeLanguageSelector = ({
         label="Language"
         onChange={handleChange}
       >
-        {CODE_LANGUAGES.map((lang) => (
-          <MenuItem
-            key={`${lang.language}-${lang.variant}`}
-            value={lang.target}
-          >
-            {lang.language} (
-            <span style={{ color: 'grey' }}>{lang.variant}</span>)
-          </MenuItem>
-        ))}
+        {CODE_LANGUAGES.map(renderLanguageItem)}
       </Select>
     </FormControl>
   );
