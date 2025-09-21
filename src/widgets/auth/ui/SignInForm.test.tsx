@@ -1,0 +1,113 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { fireEvent, screen, cleanup } from '@testing-library/react';
+import { SignInForm } from '@/widgets/auth';
+import { renderWithIntlProvider } from '@/shared/lib/test-utils/renderWithIntlProvider.tsx';
+
+const renderForm = () => {
+  renderWithIntlProvider(<SignInForm />);
+};
+
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn().mockReturnValue({
+    refresh: vi.fn(),
+  }),
+}));
+
+vi.mock('@/widgets/auth/model/useSignIn', () => ({
+  useSignIn: vi.fn().mockReturnValue({
+    isPendingSignIn: false,
+    onSignIn: vi.fn(),
+  }),
+}));
+
+describe('Sign in fields validation', () => {
+  beforeEach(cleanup);
+
+  it('When email address is invalid show an error', async () => {
+    const errorText = 'Incorrect email address';
+    renderForm();
+    const input = screen.getByLabelText('Email address') as HTMLInputElement;
+
+    fireEvent.change(input, {
+      target: { value: 'invalidemail' },
+    });
+
+    await vi.waitFor(() => {
+      const error = screen.queryByText(errorText);
+      expect(error).toBeInTheDocument();
+    });
+
+    fireEvent.change(input, {
+      target: { value: 'valid@email.com' },
+    });
+
+    await vi.waitFor(() => {
+      const error = screen.queryByText(errorText);
+      expect(error).not.toBeInTheDocument();
+    });
+  });
+
+  it('Show password validation errors', async () => {
+    const errorTextLength = 'Too small: expected string to have >=6 characters';
+    const errorTextNumber = 'Password should contain at least 1 number';
+    const errorTextUppercase =
+      'Password should contain at least 1 uppercase letter';
+    const errorTextSpecialSymbols =
+      'Password should contain at least 1 special character(!@#$%^&*()_+)';
+
+    renderForm();
+    const input = screen.getByLabelText('Password') as HTMLInputElement;
+
+    fireEvent.change(input, {
+      target: { value: 'd' },
+    });
+
+    await vi.waitFor(() => {
+      const error = screen.queryByText(errorTextNumber);
+      expect(error).toBeInTheDocument();
+    });
+
+    fireEvent.change(input, {
+      target: { value: 'd1' },
+    });
+
+    await vi.waitFor(() => {
+      const error = screen.queryByText(errorTextUppercase);
+      expect(error).toBeInTheDocument();
+    });
+
+    fireEvent.change(input, {
+      target: { value: 'd1D' },
+    });
+
+    await vi.waitFor(() => {
+      const error = screen.queryByText(errorTextSpecialSymbols);
+      expect(error).toBeInTheDocument();
+    });
+
+    fireEvent.change(input, {
+      target: { value: 'd1D@' },
+    });
+
+    await vi.waitFor(() => {
+      const error = screen.queryByText(errorTextLength);
+      expect(error).toBeInTheDocument();
+    });
+
+    fireEvent.change(input, {
+      target: { value: 'd1D@55555' },
+    });
+
+    await vi.waitFor(() => {
+      const errorLength = screen.queryByText(errorTextLength);
+      const errorNumber = screen.queryByText(errorTextNumber);
+      const errorUppercase = screen.queryByText(errorTextUppercase);
+      const errorSpecialSymbols = screen.queryByText(errorTextSpecialSymbols);
+
+      expect(errorLength).not.toBeInTheDocument();
+      expect(errorNumber).not.toBeInTheDocument();
+      expect(errorUppercase).not.toBeInTheDocument();
+      expect(errorSpecialSymbols).not.toBeInTheDocument();
+    });
+  });
+});
