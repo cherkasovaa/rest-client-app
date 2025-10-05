@@ -1,6 +1,6 @@
 # Rest Client App
 
-![Static Badge](https://img.shields.io/badge/status-in_progress-blue)
+![Static Badge](https://img.shields.io/badge/status-done-green)
 
 REST Client App is a lightweight tool for interacting with RESTful APIs, allowing users to create and send HTTP requests, manage headers and bodies, and review their request history.
 
