@@ -1,0 +1,1 @@
+[Description of why this folder exists](https://deepwiki.com/feature-sliced/documentation/3.2-next.js-integration#nextjs-with-app-router-v134)
